@@ -20,25 +20,27 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Always good to see">
-<meta property="og:type" content="website">
-<meta property="og:title" content="aplyc1a&#39;s blogs">
-<meta property="og:url" content="http://example.com/index.html">
+<meta name="description" content="二进制免杀入门1 免杀制作视角1.1 免杀目标任何可用于攻击或破坏的实体都需要免杀，且免杀与查杀是动态对抗的。实际上，程序的实际形态与结构比较复杂，因此不同形态类型的程序使用的免杀技术是存在一定区别的。 1.2 流行免杀工具   名称 国内流行度 专用免杀工具    msfvenom 非常高 否   cobalt_strike 非常高 否   veil 高 是   msf-vasion 高 是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="免杀-二进制免杀入门">
+<meta property="og:url" content="http://example.com/2021/06/21/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%85%8D%E6%9D%80%E5%AE%9E%E6%88%98%E7%A0%94%E7%A9%B6/index.html">
 <meta property="og:site_name" content="aplyc1a&#39;s blogs">
-<meta property="og:description" content="Always good to see">
+<meta property="og:description" content="二进制免杀入门1 免杀制作视角1.1 免杀目标任何可用于攻击或破坏的实体都需要免杀，且免杀与查杀是动态对抗的。实际上，程序的实际形态与结构比较复杂，因此不同形态类型的程序使用的免杀技术是存在一定区别的。 1.2 流行免杀工具   名称 国内流行度 专用免杀工具    msfvenom 非常高 否   cobalt_strike 非常高 否   veil 高 是   msf-vasion 高 是">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-22T04:12:00.000Z">
+<meta property="article:modified_time" content="2021-06-21T12:22:39.247Z">
 <meta property="article:author" content="aplyc1a">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/06/21/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%85%8D%E6%9D%80%E5%AE%9E%E6%88%98%E7%A0%94%E7%A9%B6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/06/21/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%85%8D%E6%9D%80%E5%AE%9E%E6%88%98%E7%A0%94%E7%A9%B6/","path":"2021/06/21/二进制免杀实战研究/","title":"免杀-二进制免杀入门"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>aplyc1a's blogs</title>
+<title>免杀-二进制免杀入门 | aplyc1a's blogs</title>
   
 
 
@@ -92,7 +94,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -105,6 +107,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%85%8D%E6%9D%80%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">二进制免杀入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%85%8D%E6%9D%80%E5%88%B6%E4%BD%9C%E8%A7%86%E8%A7%92"><span class="nav-number">1.1.</span> <span class="nav-text">1 免杀制作视角</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%85%8D%E6%9D%80%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 免杀目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%B5%81%E8%A1%8C%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 流行免杀工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E5%AF%B9%E8%B1%A1%E5%BD%A2%E6%80%81"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 对象形态</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-1-%E7%8B%AC%E7%AB%8B%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1.3.1 独立文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-2-%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">1.3.2 加载器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-3-%E6%96%87%E4%BB%B6%E7%AF%A1%E6%94%B9"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">1.3.3 文件篡改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-4-dll%E6%B3%A8%E5%85%A5-%E5%8A%AB%E6%8C%81"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">1.3.4 dll注入&#x2F;劫持</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-5-%E6%97%A0%E6%96%87%E4%BB%B6%E6%89%A7%E8%A1%8C"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">1.3.5 无文件执行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9D%80%E8%BD%AF%E6%A3%80%E6%B5%8B%E8%A7%86%E8%A7%92"><span class="nav-number">1.2.</span> <span class="nav-text">2 杀软检测视角</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%81%B6%E6%84%8F%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 恶意文件检测技术</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-%E7%89%B9%E5%BE%81%E7%A0%81%E6%89%AB%E6%8F%8F%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.1.1 特征码扫描技术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-%E6%A0%A1%E9%AA%8C%E5%92%8C%E6%89%AB%E6%8F%8F%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.1.2 校验和扫描技术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-%E8%99%9A%E6%8B%9F%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">2.1.3 虚拟行为分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-%E5%90%AF%E5%8F%91%E5%BC%8F%E5%BC%95%E6%93%8E%E6%9F%A5%E6%9D%80"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">2.1.4 启发式引擎查杀</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-5-%E4%B8%BB%E5%8A%A8%E9%98%B2%E5%BE%A1"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">2.1.5 主动防御</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-6-%E4%BA%91%E6%9F%A5%E6%9D%80"><span class="nav-number">1.2.1.6.</span> <span class="nav-text">2.1.6 云查杀</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-7-%E5%A4%9A%E5%BC%95%E6%93%8E%E6%9F%A5%E6%9D%80"><span class="nav-number">1.2.1.7.</span> <span class="nav-text">2.1.7 多引擎查杀</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-8-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%BC%95%E6%93%8E"><span class="nav-number">1.2.1.8.</span> <span class="nav-text">2.1.8 人工智能引擎</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E6%9D%80%E6%AF%92%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 杀毒软件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%8D%E6%9D%80%E6%8A%80%E6%9C%AF"><span class="nav-number">1.3.</span> <span class="nav-text">3 免杀技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5-%E6%96%87%E4%BB%B6%E5%85%8D%E6%9D%80-%E9%9D%99%E6%80%81%E5%85%8D%E6%9D%80"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 第一阶段-文件免杀&#x2F;静态免杀</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5-%E5%8F%8D%E8%A1%8C%E4%B8%BA%E6%A3%80%E6%B5%8B-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%85%8D%E6%9D%801"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 第二阶段-反行为检测&#x2F;运行时免杀1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5-%E5%86%85%E5%AD%98%E5%85%8D%E6%9D%80-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%85%8D%E6%9D%802"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 第三阶段 内存免杀&#x2F;运行时免杀2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E5%85%B6%E4%BB%96-%E9%9D%9E%E5%B8%B8%E8%A7%84%E5%85%8D%E6%9D%80"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 其他-非常规免杀</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-%E5%85%8D%E6%9D%80%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">0x01 免杀测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-%E5%AE%9A%E5%88%B6%E4%B8%8E%E5%BC%80%E5%8F%91"><span class="nav-number">3.</span> <span class="nav-text">0x02 定制与开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%96%87%E4%BB%B6%E5%85%8D%E6%9D%80"><span class="nav-number">3.1.</span> <span class="nav-text">1 文件免杀</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-shellcode%E6%B7%B7%E6%B7%86%E5%99%A8"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 shellcode混淆器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-1-%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">1.2.1 函数指针加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E5%9E%8B%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">3.1.2.1.1.</span> <span class="nav-text"># 函数指针型加载器</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-2-%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">1.2.2 线程创建类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#CreateThread%E5%8A%A0%E8%BD%BD%E5%99%A8-1"><span class="nav-number">3.1.2.2.1.</span> <span class="nav-text"># CreateThread加载器-1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#CreateThread%E5%8A%A0%E8%BD%BD%E5%99%A8-2"><span class="nav-number">3.1.2.2.2.</span> <span class="nav-text"># CreateThread加载器-2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#CreateThread%E5%8A%A0%E8%BD%BD%E5%99%A8-3"><span class="nav-number">3.1.2.2.3.</span> <span class="nav-text"># CreateThread加载器-3</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#CreateThread%E5%8A%A0%E8%BD%BD%E5%99%A8-4"><span class="nav-number">3.1.2.2.4.</span> <span class="nav-text"># CreateThread加载器-4</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-3-%E7%BA%BF%E7%A8%8B%E5%8A%AB%E6%8C%81%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">3.1.2.3.</span> <span class="nav-text">1.2.3 线程劫持类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#VirtualAllocEx%E5%8A%A0%E8%BD%BD%E5%99%A8-1"><span class="nav-number">3.1.2.3.1.</span> <span class="nav-text"># VirtualAllocEx加载器-1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#VirtualAllocEx%E5%8A%A0%E8%BD%BD%E5%99%A8-2"><span class="nav-number">3.1.2.3.2.</span> <span class="nav-text"># VirtualAllocEx加载器-2</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-4-%E5%8A%A8%E6%80%81%E5%87%BD%E6%95%B0%E5%AF%BB%E5%9D%80%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">3.1.2.4.</span> <span class="nav-text">1.2.4 动态函数寻址加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%87%BD%E6%95%B0%E5%AF%BB%E5%9D%80%E5%8A%A0%E8%BD%BD%E5%99%A8-1"><span class="nav-number">3.1.2.4.1.</span> <span class="nav-text"># 动态函数寻址加载器-1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%87%BD%E6%95%B0%E5%AF%BB%E5%9D%80%E5%8A%A0%E8%BD%BD%E5%99%A8-2"><span class="nav-number">3.1.2.4.2.</span> <span class="nav-text"># 动态函数寻址加载器-2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E5%88%86%E7%A6%BB%E5%85%8D%E6%9D%80"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3 分离免杀</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E5%8A%A0%E5%A3%B3%E5%85%8D%E6%9D%80"><span class="nav-number">3.1.4.</span> <span class="nav-text">1.4 加壳免杀</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-%E8%84%8F%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.1.5.</span> <span class="nav-text">1.5 脏语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8F%8D%E8%A1%8C%E4%B8%BA%E6%A3%80%E6%B5%8B"><span class="nav-number">3.2.</span> <span class="nav-text">2 反行为检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%8D%E6%9D%80%E6%95%88%E6%9E%9C"><span class="nav-number">3.3.</span> <span class="nav-text">3 免杀效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-%E9%83%A8%E5%88%86%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">0x03 部分工具使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Msfvenom"><span class="nav-number">4.1.</span> <span class="nav-text">1 Msfvenom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-CobaltStrike"><span class="nav-number">4.2.</span> <span class="nav-text">2 CobaltStrike</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-veil"><span class="nav-number">4.3.</span> <span class="nav-text">3 veil</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-venom"><span class="nav-number">4.4.</span> <span class="nav-text">4 venom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Empire"><span class="nav-number">4.5.</span> <span class="nav-text">5 Empire</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-theFatRAT"><span class="nav-number">4.6.</span> <span class="nav-text">6 theFatRAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Backdoor-Factory"><span class="nav-number">4.7.</span> <span class="nav-text">7 Backdoor-Factory</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0xFF-%E9%99%84%E5%BD%95%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0"><span class="nav-number">5.</span> <span class="nav-text">0xFF 附录技术文章</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -147,587 +150,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/%E4%B8%BB%E6%9C%BA%E6%95%8F%E6%84%9F%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="aplyc1a">
-      <meta itemprop="description" content="Always good to see">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="aplyc1a's blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/21/%E4%B8%BB%E6%9C%BA%E6%95%8F%E6%84%9F%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/" class="post-title-link" itemprop="url">后渗透-主机敏感数据搜集</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-21 20:12:00 / Modified: 04:20:05" itemprop="dateCreated datePublished" datetime="2021-06-21T20:12:00-08:00">2021-06-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="0x00-文件目录操作"><a href="#0x00-文件目录操作" class="headerlink" title="0x00 文件目录操作"></a>0x00 文件目录操作</h2><h3 id="1-查找文件"><a href="#1-查找文件" class="headerlink" title="1.查找文件"></a>1.查找文件</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> /r 目录名 %变量名 <span class="keyword">in</span> (匹配模式<span class="number">1</span>,匹配模式<span class="number">2</span>) <span class="keyword">do</span> 命令</span><br><span class="line"><span class="keyword">for</span> /r d: %i <span class="keyword">in</span> (*) <span class="keyword">do</span> @<span class="built_in">echo</span> %i</span><br><span class="line"><span class="keyword">for</span> /r d: %i <span class="keyword">in</span> (*.txt,*.jpg) <span class="keyword">do</span> @<span class="built_in">echo</span> %i</span><br><span class="line"><span class="keyword">for</span> /r d: %i <span class="keyword">in</span> (*shell.jsp) <span class="keyword">do</span> @<span class="built_in">echo</span> %i</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-查看文件内容"><a href="#2-查看文件内容" class="headerlink" title="2.查看文件内容"></a>2.查看文件内容</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> &quot;D:\www\shell.jsp&quot;</span><br></pre></td></tr></table></figure>
-
-<p>powershell:</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Content</span> <span class="string">&quot;D:\www\shell.jsp&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-删除文件"><a href="#3-删除文件" class="headerlink" title="3.删除文件"></a>3.删除文件</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#删文件</span><br><span class="line"><span class="built_in">del</span> index.js</span><br><span class="line">#删文件夹</span><br><span class="line"><span class="built_in">rd</span> app</span><br></pre></td></tr></table></figure>
-
-<p>powershell:</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">remove-item</span> w.ps1 <span class="literal">-Force</span> <span class="literal">-Recurse</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="4-查看目录"><a href="#4-查看目录" class="headerlink" title="4.查看目录"></a>4.查看目录</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#下载目录</span><br><span class="line"><span class="built_in">dir</span> C:\Users\<span class="variable">%username%</span>\Downloads</span><br><span class="line">#桌面</span><br><span class="line"><span class="built_in">dir</span> C:\Users\<span class="variable">%username%</span>\Desktop</span><br><span class="line">#微信</span><br><span class="line"><span class="built_in">dir</span> C:\Users\<span class="variable">%username%</span>\Documents\WeChat Files\wx*\FileStorage\File\</span><br><span class="line">#磁盘盘符数</span><br><span class="line">powershell -Command &quot;[Environment]::GetLogicalDrives()&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="0x01-注册表"><a href="#0x01-注册表" class="headerlink" title="0x01 注册表"></a>0x01 注册表</h2><h3 id="1-常见注册表项"><a href="#1-常见注册表项" class="headerlink" title="1.常见注册表项"></a>1.常见注册表项</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#启动项</span><br><span class="line">HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce</span><br><span class="line">#账户</span><br><span class="line">HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names</span><br><span class="line">REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa</span><br><span class="line">REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa /v LimitBlankPasswordUse</span><br><span class="line">#网口配置文件</span><br><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\</span><br><span class="line">#隐藏文件置<span class="number">0</span></span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Hidden\SHOWALL</span><br><span class="line">#网络连接历史</span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles</span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged</span><br></pre></td></tr></table></figure>
-<h3 id="2-查看"><a href="#2-查看" class="headerlink" title="2.查看"></a>2.查看</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa</span><br><span class="line">REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa /v LimitBlankPasswordUse</span><br></pre></td></tr></table></figure>
-<p>powershell:</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$key</span>=<span class="built_in">Get-ItemProperty</span> <span class="literal">-Path</span> <span class="string">&quot;Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion&quot;</span></span><br><span class="line"><span class="variable">$key</span>``.CommonFilesDir</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-添加"><a href="#3-添加" class="headerlink" title="3.添加"></a>3.添加</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v &quot;Keyname&quot; /t REG_SZ /d &quot;C:\Users\Administrator\Desktop\shell.exe&quot; /f </span><br></pre></td></tr></table></figure>
-
-<h3 id="4-导出"><a href="#4-导出" class="headerlink" title="4.导出"></a>4.导出</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg export HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa AppBkUp.reg</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x02-密码收集"><a href="#0x02-密码收集" class="headerlink" title="0x02 密码收集"></a>0x02 密码收集</h2><h3 id="1-企业域内账号凭据"><a href="#1-企业域内账号凭据" class="headerlink" title="1 企业域内账号凭据"></a>1 企业域内账号凭据</h3><p>1&gt; C:/User/账户名/pip/pip.ini</p>
-<p>pip.ini 内网中可能还有http代理信息，代理信息中可能含有账户名及密码。</p>
-<p>2&gt;</p>
-<h3 id="2-无线密码"><a href="#2-无线密码" class="headerlink" title="2 无线密码"></a>2 无线密码</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#执行下面命令，密码导出在生成的xml文件中</span></span><br><span class="line">netsh WLAN export profile key=<span class="built_in">clear</span> folder=.</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-mobaxterm"><a href="#3-mobaxterm" class="headerlink" title="3 mobaxterm"></a>3 mobaxterm</h3><p>对于安装版的moba，可以通过读取注册表，得到明文密码。</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reg query HKEY_CURRENT_USER\Software\Mobatek\MobaXterm</span><br><span class="line">reg query HKEY_CURRENT_USER\Software\Mobatek\MobaXterm\P</span><br></pre></td></tr></table></figure>
-
-<p>更多：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/yang34/p/14236230.html">https://www.cnblogs.com/yang34/p/14236230.html</a></p>
-<h3 id="4-XShell"><a href="#4-XShell" class="headerlink" title="4 XShell"></a>4 XShell</h3><p><a target="_blank" rel="noopener" href="https://github.com/dzxs/Xdecrypt">https://github.com/dzxs/Xdecrypt</a></p>
-<h3 id="5-浏览器"><a href="#5-浏览器" class="headerlink" title="5 浏览器"></a>5 浏览器</h3><p>提供以下两种方法：</p>
-<p><strong>5.1 工具</strong>：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/AlessandroZ/LaZagne/releases">https://github.com/AlessandroZ/LaZagne/releases</a></p>
-<p><strong>5.2 可操作桌面时</strong>：</p>
-<p>火狐-&gt;打开菜单-&gt;我的密码</p>
-<p>Chrome-&gt;设置-&gt;自动填充-&gt;密码</p>
-<h3 id="6-数据库密码"><a href="#6-数据库密码" class="headerlink" title="6 数据库密码"></a>6 数据库密码</h3><p>本地web目录下找配置目录中的配置文件</p>
-<h3 id="x-to-be-continue"><a href="#x-to-be-continue" class="headerlink" title="[x] to be continue"></a>[x] to be continue</h3><p>filezilla/teamviewer/vnc/系统哈希/navicat</p>
-<h2 id="0x03-敏感数据发现"><a href="#0x03-敏感数据发现" class="headerlink" title="0x03 敏感数据发现"></a>0x03 敏感数据发现</h2><h3 id="1-回收站分析"><a href="#1-回收站分析" class="headerlink" title="1 回收站分析"></a>1 回收站分析</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FOR</span> /f <span class="string">&quot;skip=1 tokens=1,2 delims= &quot;</span> %c <span class="keyword">in</span> (<span class="string">&#x27;wmic useraccount get name,sid&#x27;</span>) <span class="keyword">do</span> <span class="built_in">dir</span> /a /b C:\<span class="variable">$Recycle</span>.Bin\%d\ &gt;%c.txt</span><br><span class="line">PowerShell <span class="literal">-Command</span>  <span class="string">&quot;<span class="variable">$Recycler</span> =(New-Object -ComObject Shell.Application).NameSpace(0xa);foreach(<span class="variable">$file</span> in <span class="variable">$Recycler</span>.items())&#123;echo &quot;</span>---------------------<span class="string">&quot;;<span class="variable">$file</span>.path;<span class="variable">$file</span>.ExtendedProperty(\&quot;</span>&#123;<span class="number">9</span>B174B33<span class="literal">-40FF</span><span class="literal">-11D2</span><span class="literal">-A27E</span><span class="literal">-00C04FC30871</span>&#125; <span class="number">2</span>\<span class="string">&quot;)+&#x27;\&#x27;+<span class="variable">$file</span>.name&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-常见目录"><a href="#2-常见目录" class="headerlink" title="2 常见目录"></a>2 常见目录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 桌面</span></span><br><span class="line">C:\Users\%username%\Desktop</span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载目录</span></span><br><span class="line">C:\Users\%username%\Downloads</span><br><span class="line"><span class="meta">#</span><span class="bash"> 微信下载目录</span></span><br><span class="line">C:\Users\%username%\Documents\WeChat Files\微信号\FileStorage\File\归档日期</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-VMware"><a href="#3-VMware" class="headerlink" title="3 VMware"></a>3 VMware</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">一些传送的文件</span></span><br><span class="line">C:\Users\%username%\AppData\Local\Temp\vmware-%username%\VMwareDnD</span><br><span class="line"><span class="meta">#</span><span class="bash">每台vmware的<span class="built_in">log</span>日志都含有启动操作信息。</span></span><br><span class="line">C:\Users\%username%\AppData\Local\Temp\vmware-%username%\</span><br><span class="line"><span class="meta">#</span><span class="bash">vmware内主机的备注信息</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="0x04-历史记录"><a href="#0x04-历史记录" class="headerlink" title="0x04 历史记录"></a>0x04 历史记录</h2><h3 id="1-Git-Bash历史记录"><a href="#1-Git-Bash历史记录" class="headerlink" title="1 Git-Bash历史记录:"></a>1 Git-Bash历史记录:</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\%<span class="title">username</span>%\.<span class="title">bash_history</span></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Users</span>\%<span class="title">username</span>%\.<span class="title">gitconfig</span></span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-运行框历史记录"><a href="#2-运行框历史记录" class="headerlink" title="2 运行框历史记录"></a>2 运行框历史记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reg query HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</span><br><span class="line">reg query HKEY_USERS\&lt;sid&gt;\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-powershell历史记录"><a href="#3-powershell历史记录" class="headerlink" title="3 powershell历史记录"></a>3 powershell历史记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Content (Get-PSReadLineOption).HistorySavePath</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-DNS缓存记录"><a href="#4-DNS缓存记录" class="headerlink" title="4 DNS缓存记录"></a>4 DNS缓存记录</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ipconfig</span> /displaydns</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="0x00-历史记录"><a href="#0x00-历史记录" class="headerlink" title="0x00 历史记录"></a>0x00 历史记录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /root/ 及 /home/*/</span></span><br><span class="line">.bash_history</span><br><span class="line">.zsh_history</span><br><span class="line">.mysql_history</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x01-各类凭据"><a href="#0x01-各类凭据" class="headerlink" title="0x01 各类凭据"></a>0x01 各类凭据</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> web服务类</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -- 定位到服务目录下的配置目录。查看配置文件中的数据库口令</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 登录用户</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 结合 <span class="built_in">history</span>|grep ssh 及~/.ssh/authorized_keys拿到其他设备的登录权限。</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> redis</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> -- 定位配置文件中的requirepass</span></span><br><span class="line">find / -name redis.conf</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 密码搜集</span></span><br><span class="line">grep -rn &quot;pass&quot; -a / | grep -v &quot;php\|jsp\|\.js\|\|.java&quot;</span><br><span class="line">find / -name *.properties -o -name *.xml -o -name *.conf -o -name *.json -exec grep -Hn &quot;passw&quot; &#123;&#125; \;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/*MySQL数据库内找密码*/</span><br><span class="line">SELECT TABLE_NAME FROM `information_schema`.`COLUMNS` where `COLUMN_NAME` like &#x27;%pass%&#x27;;</span><br><span class="line">SELECT TABLE_NAME FROM `information_schema`.`COLUMNS` where `COLUMN_NAME` like &#x27;%pwd%&#x27;;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/%E7%9B%AE%E6%A0%87%E8%B5%84%E4%BA%A7%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="aplyc1a">
-      <meta itemprop="description" content="Always good to see">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="aplyc1a's blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/21/%E7%9B%AE%E6%A0%87%E8%B5%84%E4%BA%A7%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" class="post-title-link" itemprop="url">渗透测试-资产信息收集</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-21 20:12:00 / Modified: 04:17:56" itemprop="dateCreated datePublished" datetime="2021-06-21T20:12:00-08:00">2021-06-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="0x01-渗透测试-资产信息收集"><a href="#0x01-渗透测试-资产信息收集" class="headerlink" title="0x01 渗透测试-资产信息收集"></a>0x01 渗透测试-资产信息收集</h2><h3 id="1-目标单位清单信息收集"><a href="#1-目标单位清单信息收集" class="headerlink" title="1 目标单位清单信息收集"></a>1 目标单位清单信息收集</h3><h4 id="1-1-通用搜索引擎查询"><a href="#1-1-通用搜索引擎查询" class="headerlink" title="1.1 通用搜索引擎查询"></a>1.1 通用搜索引擎查询</h4><p>搜索企业关键字。如果搜索引擎支持语法查询，可以使用语法快速过滤结果（参考google hacking）。</p>
-<p>得到的结果往往不全，需要结合其他方式进行扩展与补充。</p>
-<h4 id="1-2-网络安全搜索引擎"><a href="#1-2-网络安全搜索引擎" class="headerlink" title="1.2 网络安全搜索引擎"></a>1.2 网络安全搜索引擎</h4><p>使用网络安全搜索引擎的语法查询过滤出目标单位相关的资产。不同的网络安全搜索引擎有不同的侧重点。前4种对国内覆盖比较全，最后1种是针对全网的神器。</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>官网</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>fofa</td>
-<td><a target="_blank" rel="noopener" href="https://fofa.so/">https://fofa.so/</a></td>
-</tr>
-<tr>
-<td>censys</td>
-<td><a target="_blank" rel="noopener" href="https://censys.io/">https://censys.io/</a></td>
-</tr>
-<tr>
-<td>quark</td>
-<td><a target="_blank" rel="noopener" href="https://quake.360.cn/quake/welcome">https://quake.360.cn/quake/welcome</a></td>
-</tr>
-<tr>
-<td>zoomeye</td>
-<td><a target="_blank" rel="noopener" href="https://www.zoomeye.org/">https://www.zoomeye.org/</a></td>
-</tr>
-<tr>
-<td>shodan</td>
-<td><a target="_blank" rel="noopener" href="https://www.shodan.io/">https://www.shodan.io/</a></td>
-</tr>
-</tbody></table>
-<p>前两个比较好用，也写了API查询脚本，附在toolkits仓库中，但是从实际使用情况来看，这类搜索引擎的结果中往往含有大量误报。</p>
-<h4 id="1-3-企业注册信息查询"><a href="#1-3-企业注册信息查询" class="headerlink" title="1.3 企业注册信息查询"></a>1.3 企业注册信息查询</h4><p>可以使用企查查、爱企查、天眼查，搜索企业注册信息。重点关注股权结构下企业名下控股的其他子公司。</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>官网</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>企查查</td>
-<td><a target="_blank" rel="noopener" href="https://www.qcc.com/">https://www.qcc.com/</a></td>
-</tr>
-<tr>
-<td>爱企查</td>
-<td><a target="_blank" rel="noopener" href="https://aiqicha.baidu.com/">https://aiqicha.baidu.com/</a></td>
-</tr>
-<tr>
-<td>天眼查</td>
-<td><a target="_blank" rel="noopener" href="https://www.tianyancha.com/">https://www.tianyancha.com/</a></td>
-</tr>
-</tbody></table>
-<p><strong>1.4 工信部备案信息查询</strong></p>
-<p>查询企业名下的所有注册域名信息，但是要求必须提供企业的标准名称全称，不支持模糊搜索。</p>
-<p><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/#/Integrated/index">https://beian.miit.gov.cn/#/Integrated/index</a></p>
-<h3 id="2-IP资产梳理"><a href="#2-IP资产梳理" class="headerlink" title="2 IP资产梳理"></a>2 IP资产梳理</h3><h4 id="2-1-IP正则"><a href="#2-1-IP正则" class="headerlink" title="2.1 IP正则"></a>2.1 IP正则</h4><p>顾名思义，用于匹配字符串中的IP。</p>
-<p>C语言：（IP及端口）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IP_REGX <span class="meta-string">&quot;((25[0-5]|2[0-4][0-9]|1[0-9]&#123;2&#125;|[1-9]?[0-9])\\.)&#123;3&#125;(25[0-5]|2[0-4][0-9]|1[0-9]&#123;2&#125;|[1-9]?[0-9])&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PORT_REGX <span class="meta-string">&quot;(:[1-5][0-9]&#123;4&#125;/)|(:6[0-4][0-9]&#123;3&#125;/)|(:65[0-4][0-9]&#123;2&#125;/)|(:655[0-2][0-9]&#123;1&#125;/)|(:6553[0-5]/)|(:[1-9][0-9]&#123;0,3&#125;/)&quot;</span></span></span><br></pre></td></tr></table></figure>
-
-<p>Python：（IP）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.findall(<span class="string">r&quot;\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.)&#123;3&#125;(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b&quot;</span>, string_ip)</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="2-2-IP转C段"><a href="#2-2-IP转C段" class="headerlink" title="2.2 IP转C段"></a>2.2 IP转C段</h4><p>用于将各种类型的IP段统一处理成单IP清单形式。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input:ip.txt</span><br><span class="line">executing: python3 info-ipsection.py</span><br><span class="line">output:ip_result.txt</span><br><span class="line"># 归档在 https://github.com/aplyc1a/toolkits中。</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="3-域名资产梳理"><a href="#3-域名资产梳理" class="headerlink" title="3 域名资产梳理"></a>3 域名资产梳理</h3><h4 id="3-1-常用域名服务器"><a href="#3-1-常用域名服务器" class="headerlink" title="3.1 常用域名服务器"></a>3.1 常用域名服务器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">国内：</span></span><br><span class="line">114.114.114.114  # 运营商通用DNS</span><br><span class="line">114.114.115.115  # 运营商通用DNS</span><br><span class="line">114.114.114.119  # 运营商通用DNS</span><br><span class="line">114.114.114.110  # 运营商通用DNS</span><br><span class="line">223.5.5.5        # 阿里公共DNS</span><br><span class="line">223.6.6.6        # 阿里公共DNS</span><br><span class="line">180.76.76.76     # 百度公共DNS</span><br><span class="line">119.29.29.29     # 腾讯DNSpod</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">国外：</span></span><br><span class="line">8.8.8.8          # google公共DNS</span><br><span class="line">8.8.4.4          # google公共DNS</span><br><span class="line">208.67.222.222   # OpenDNS</span><br><span class="line">208.67.220.220   # OpenDNS</span><br><span class="line">208.67.222.123   # OpenDNS Family</span><br><span class="line">208.67.220.123   # OpenDNS Family</span><br><span class="line">199.91.73.222    # V2EX DNS</span><br><span class="line">178.79.131.110   # V2EX DNS</span><br><span class="line">216.146.35.35    # Dyn DNS</span><br><span class="line">216.146.36.36    # Dyn DNS</span><br><span class="line">8.26.56.26       # Comodo Secure</span><br><span class="line">8.20.247.20      # Comodo Secure</span><br><span class="line">156.154.70.1     # UltraDNS</span><br><span class="line">156.154.71.1     # UltraDNS</span><br><span class="line">199.85.126.10    # Norton ConnectSafe</span><br><span class="line">199.85.127.10    # Norton ConnectSafe</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="3-2-子域名挖掘"><a href="#3-2-子域名挖掘" class="headerlink" title="3.2 子域名挖掘"></a>3.2 子域名挖掘</h4><h5 id="3-2-1-利用子域名历史解析记录"><a href="#3-2-1-利用子域名历史解析记录" class="headerlink" title="3.2.1 利用子域名历史解析记录"></a>3.2.1 利用子域名历史解析记录</h5><p><a target="_blank" rel="noopener" href="https://www.dnsgrep.cn/">https://www.dnsgrep.cn/</a></p>
-<p><a target="_blank" rel="noopener" href="https://securitytrails.com/list/apex_domain/%E5%85%B7%E4%BD%93%E5%9F%9F%E5%90%8D">https://securitytrails.com/list/apex_domain/具体域名</a></p>
-<h5 id="3-2-2-利用枚举工具"><a href="#3-2-2-利用枚举工具" class="headerlink" title="3.2.2 利用枚举工具"></a>3.2.2 利用枚举工具</h5><p>子域名挖掘机5.0：支持多级枚举。</p>
-<p>subDomainsBrute：python2写的字典枚举工具。</p>
-<h5 id="3-2-3-DNS域传送配置漏洞"><a href="#3-2-3-DNS域传送配置漏洞" class="headerlink" title="3.2.3 DNS域传送配置漏洞"></a>3.2.3 DNS域传送配置漏洞</h5><p>DNS服务器配置不当，导致匿名用户利用DNS域传送协议获取某个域的所有记录。 通过可以实现DNS域传送协议的程序，尝试匿名进行DNS域传送，获取记录。</p>
-<p>非常少见。对于有域传送漏洞的DNS服务器，可以使用以下命令:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig @某漏洞的DNSServer -t axfr 待查的域名</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-3-旁站挖掘"><a href="#3-3-旁站挖掘" class="headerlink" title="3.3 旁站挖掘"></a>3.3 旁站挖掘</h4><p><a target="_blank" rel="noopener" href="https://c.webscan.cc/">https://c.webscan.cc/</a></p>
-<p><a target="_blank" rel="noopener" href="https://chapangzhan.com/">https://chapangzhan.com/</a></p>
-<p><a target="_blank" rel="noopener" href="http://s.tool.chinaz.com/same">http://s.tool.chinaz.com/same</a></p>
-<h4 id="3-4-域名转IP"><a href="#3-4-域名转IP" class="headerlink" title="3.4 域名转IP"></a>3.4 域名转IP</h4><p>手工查询有3种方式：</p>
-<p>1、手工ping。</p>
-<p>2、手工nslookup。nslookup domain DNSServer</p>
-<p>3、手工dig。dig domain @DNSServer</p>
-<p>工具查询，写好了一个通过dig批量查询所有DNS record并进行导出的python脚本。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input:domain.txt</span><br><span class="line">executing: python3 info-dnsdigger.py</span><br><span class="line">output:nslookup.csv</span><br><span class="line"># 归档在 https://github.com/aplyc1a/toolkits中。</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-5-IP真实性判定"><a href="#3-5-IP真实性判定" class="headerlink" title="3.5 IP真实性判定"></a>3.5 IP真实性判定</h4><h5 id="3-5-1-检测"><a href="#3-5-1-检测" class="headerlink" title="3.5.1 检测"></a>3.5.1 检测</h5><p>基本原理是判断一个域名是否绑定在某个固定的IP上。</p>
-<p>如果在进行域名转IP的过程中发现以下现象，说明得到的IP不准确，可能存在CDN或其他waf类设备：</p>
-<ul>
-<li>1.多次ping域名，IP地址不唯一。</li>
-<li>2.选择不同的DNS服务器进行查询或查询结果中发现A记录的IP不唯一。</li>
-<li>3.DNS查询时发现CNAME指向了某waf类或cdn域名。</li>
-<li>4.使用在线工具发现多地返回的地址不唯一。（如，<a target="_blank" rel="noopener" href="https://myssl.com/cdn_check.html%E3%80%81https://www.yunsee.cn/%E3%80%81http://ping.chinaz.com%E3%80%81http://ping.aizhan.com%E3%80%81http://ce.cloud.360.cn%EF%BC%89">https://myssl.com/cdn_check.html、https://www.yunsee.cn/、http://ping.chinaz.com、http://ping.aizhan.com、http://ce.cloud.360.cn）</a></li>
-</ul>
-<h5 id="3-5-2-确定"><a href="#3-5-2-确定" class="headerlink" title="3.5.2 确定"></a>3.5.2 确定</h5><p>一旦识别到了CDN，就要考虑有没有办法绕过CDN发现真实IP：</p>
-<ul>
-<li>1.统计其他子域名，总结出可能的C段。对C段进行端口服务发现。</li>
-<li>2.利用公开的DNS历史解析记录数据库，发现该域名绑定过的IP。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">https://dnsdb.io/zh-cn/</span><br><span class="line">https://x.threatbook.cn/</span><br><span class="line">http://toolbar.netcraft.com/site_report?url=</span><br><span class="line">http://viewdns.info/</span><br><span class="line">https://tools.ipip.net/cdn.php</span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li><p>3.网络安全搜索引擎。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.fofa查询,过滤页面关键字。body=&quot;抓手&quot;、title=&quot;beijing&quot;、icp=&quot;京ICP证030173号&quot;</span><br><span class="line">2.censys查询，过滤cdn与目标间的ssl证书。parsed.names: xyz123boot.com and tags.raw: trusted 或直接搜证书的散列值。在结果中看IPv4主机地址。</span><br></pre></td></tr></table></figure></li>
-<li><p>4.邮件订阅功能。如果目标含有RSS邮件订阅功能，通过分析邮件标头内的发送人信息，有时能获得目标的真实IP。</p>
-</li>
-<li><p>5.F5 LTM做CDN时，set-cookie关键字的value字段含有目标的真实IP。可以先将value值的第一段转为16进制，分为4部分，再由后往前，依次推出IP地址。</p>
-</li>
-</ul>
-<h3 id="4-资产梳理"><a href="#4-资产梳理" class="headerlink" title="4 资产梳理"></a>4 资产梳理</h3><h4 id="4-1-web资产发现"><a href="#4-1-web资产发现" class="headerlink" title="4.1 web资产发现"></a>4.1 web资产发现</h4><p>webfinder.jar</p>
-<p>goby</p>
-<p>网络安全搜索引擎搜IP</p>
-<h4 id="4-2-web组件指纹识别"><a href="#4-2-web组件指纹识别" class="headerlink" title="4.2 web组件指纹识别"></a>4.2 web组件指纹识别</h4><p>whatweb</p>
-<h4 id="4-3-web路径爆破"><a href="#4-3-web路径爆破" class="headerlink" title="4.3 web路径爆破"></a>4.3 web路径爆破</h4><p><strong>Windows</strong>：御剑</p>
-<p><strong>Linux</strong>：DirBuster、Dirmap</p>
-<h4 id="4-4-其他服务"><a href="#4-4-其他服务" class="headerlink" title="4.4 其他服务"></a>4.4 其他服务</h4><p>nessus</p>
-<p>goby</p>
-<p>nmap</p>
-<h3 id="5-其他信息收集方式"><a href="#5-其他信息收集方式" class="headerlink" title="5 其他信息收集方式"></a>5 其他信息收集方式</h3><h4 id="5-1-图片搜索"><a href="#5-1-图片搜索" class="headerlink" title="5.1 图片搜索"></a>5.1 图片搜索</h4><p>利用百度识图、google识图等工具，在网上找到相似图片或原图，进而发现其他相关信息。</p>
-<h4 id="5-2-icon指纹识别"><a href="#5-2-icon指纹识别" class="headerlink" title="5.2 icon指纹识别"></a>5.2 icon指纹识别</h4><p>fofa：icon搜索</p>
-<p>shodan：http.favicon.hash搜索</p>
-<p>zoomeye：iconhash搜索</p>
-<h4 id="5-3-证书查询"><a href="#5-3-证书查询" class="headerlink" title="5.3 证书查询"></a>5.3 证书查询</h4><p><a target="_blank" rel="noopener" href="https://censys.io/">https://censys.io/</a></p>
-<p><a target="_blank" rel="noopener" href="https://crt.sh/">https://crt.sh/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/%E7%A4%BE%E5%B7%A5%E8%87%AA%E7%84%B6%E4%BA%BA%E4%BF%A1%E6%81%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="aplyc1a">
-      <meta itemprop="description" content="Always good to see">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="aplyc1a's blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/21/%E7%A4%BE%E5%B7%A5%E8%87%AA%E7%84%B6%E4%BA%BA%E4%BF%A1%E6%81%AF/" class="post-title-link" itemprop="url">社工工程-自然人身份收集</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-21 20:12:00 / Modified: 04:19:17" itemprop="dateCreated datePublished" datetime="2021-06-21T20:12:00-08:00">2021-06-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>人，是网络安全全流程中最大的弱点。针对人的攻击往往有出奇不意的效果。而想要利用人的弱点进行攻击，那么对目标的信息收集与了解就是非常重要的了。这篇文章记录了一些常用的用于对人进行身份信息收集的技术。这些技术常被用于溯源取证、社工攻击。</p>
-<h2 id="0x00-社工分析中的身份信息收集"><a href="#0x00-社工分析中的身份信息收集" class="headerlink" title="0x00 社工分析中的身份信息收集"></a>0x00 社工分析中的身份信息收集</h2><p>关于人的社工分析有很多维度的信息都值得被关注。但不管怎样，开展身份信息社工工作往往都是从一些关于人的最基本的信息开始的，身份信息的收集过程就是尽可能使用有限信息关联出其他信息的过程。</p>
-<p>这里，将关于人的信息，简单分为两大类。</p>
-<p>第一类，基本信息。如：<strong>姓名</strong>，<strong>昵称</strong>，<strong>手机号码</strong>，<strong>邮箱地址</strong>，<strong>各类证件</strong>，<strong>社交账号</strong>。这类信息能在溯源中帮助确定人的身份。是人在进行社交过程中不可避免使用的信息，用来在社会中表明他的身份，是在社会中生活的名片。</p>
-<p>第二类，其他信息。如：<strong>居住地</strong>、<strong>爱好</strong>、<strong>家庭状况</strong>、<strong>婚姻状态</strong>、<strong>职业</strong>。这类信息能帮助我们更好的了解一个人的生活习惯与生活状态，代表人的特点。在生成定制化的社工字典时很有用。</p>
-<p>下面介绍常用到的信息收集方法。</p>
-<h3 id="1-搜索引擎关键字检索"><a href="#1-搜索引擎关键字检索" class="headerlink" title="1 搜索引擎关键字检索"></a>1 搜索引擎关键字检索</h3><p>最傻但往往最有效的办法，就是关键字搜索。但想要达到比较好的效果，依赖不少条件：</p>
-<p>1.关键字不能过于过于大众化，可以选择多个与目标相关的关键字组合；</p>
-<p>2.目标必须在互联网上有一定的活跃度;</p>
-<p>3.尽量使用google、duckduckgo等国外搜索引擎。他们的屏蔽的网页与结果较少。</p>
-<h3 id="2-已注册网站查询"><a href="#2-已注册网站查询" class="headerlink" title="2 已注册网站查询"></a>2 已注册网站查询</h3><p>互联网上存在一类网站，这类网站旨在收集并存储用户的各种活动信息用以构建用户画像，或收集历次信息泄露事件中的数据库。这里先不讨论此类网站动机如何，是否真实有效，但一定程度上也给其他人提供了获得目标更多信息的方式。通过泛社工库查询，可以获得目标注册过的社交网站、甚至旧密码。</p>
-<h4 id="2-1-REG007"><a href="#2-1-REG007" class="headerlink" title="2.1 REG007"></a>2.1 REG007</h4><p>查询<strong>邮箱</strong>、<strong>手机号</strong>注册过哪些社交平台：<a target="_blank" rel="noopener" href="http://www.reg007.com/">www.reg007.com</a></p>
-<h4 id="2-2-手工查询"><a href="#2-2-手工查询" class="headerlink" title="2.2 手工查询"></a>2.2 手工查询</h4><p>使用个网站的注册功能输入目标的邮箱地址或手机号，查看页面是否提示该邮箱、手机号被占用。</p>
-<h3 id="3-社工库查询"><a href="#3-社工库查询" class="headerlink" title="3 社工库查询"></a>3 社工库查询</h3><p>搭建社工库泄露用户隐私数据是犯法的。公网上很难找到，提供泄露数据细节的社工库，如果真的有，那么其动机也是值得高度怀疑的，使用时输入的信息极有可能被记录，用于溯源与黑吃黑。比较多的是一类脱敏后的网站，帮助用户查询自己的信息是否泄露。这两种方式都能帮助判断目标是否注册了某平台的账号。</p>
-<h4 id="3-1-泄露检查查询"><a href="#3-1-泄露检查查询" class="headerlink" title="3.1 泄露检查查询"></a>3.1 泄露检查查询</h4><table>
-<thead>
-<tr>
-<th>网站名</th>
-<th>地址</th>
-<th>可查询项</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Firefox Monitor</td>
-<td><a target="_blank" rel="noopener" href="https://monitor.firefox.com/">https://monitor.firefox.com</a></td>
-<td>邮箱</td>
-</tr>
-<tr>
-<td>HaveIBeenPwned</td>
-<td><a target="_blank" rel="noopener" href="https://haveibeenpwned.com/">https://haveibeenpwned.com</a></td>
-<td>邮箱</td>
-</tr>
-<tr>
-<td>Aleph</td>
-<td><a target="_blank" rel="noopener" href="https://aleph.occrp.org/">https://aleph.occrp.org/</a></td>
-<td>名称、手机号码、邮箱</td>
-</tr>
-<tr>
-<td>snusbase</td>
-<td><a target="_blank" rel="noopener" href="https://snusbase.com/">https://snusbase.com/</a></td>
-<td>邮箱、名称、IP、电话、哈希、密码</td>
-</tr>
-<tr>
-<td>checkusernames</td>
-<td><a target="_blank" rel="noopener" href="https://checkusernames.com/">https://checkusernames.com/</a></td>
-<td>名称</td>
-</tr>
-<tr>
-<td>Intelligence X</td>
-<td><a target="_blank" rel="noopener" href="https://intelx.io/">https://intelx.io/</a></td>
-<td>邮箱、IP、CIDR、比特币地址</td>
-</tr>
-<tr>
-<td>dehashed</td>
-<td><a target="_blank" rel="noopener" href="http://www.dehashed.com/">http://www.dehashed.com/</a></td>
-<td>邮箱、用户名、IP</td>
-</tr>
-<tr>
-<td>IsLeaked</td>
-<td><a target="_blank" rel="noopener" href="https://isleaked.com/">https://isleaked.com/</a></td>
-<td>邮箱</td>
-</tr>
-<tr>
-<td>KnowEm</td>
-<td><a target="_blank" rel="noopener" href="https://knowem.com/">https://knowem.com/</a></td>
-<td>名称</td>
-</tr>
-</tbody></table>
-<h4 id="3-2-社工库查询"><a href="#3-2-社工库查询" class="headerlink" title="3.2 社工库查询"></a>3.2 社工库查询</h4><h3 id="4-姓名确认术"><a href="#4-姓名确认术" class="headerlink" title="4 姓名确认术"></a>4 姓名确认术</h3><h4 id="4-1-通过手机号确定姓名"><a href="#4-1-通过手机号确定姓名" class="headerlink" title="4.1 通过手机号确定姓名"></a>4.1 通过手机号确定姓名</h4><p>1&gt; 支付宝</p>
-<p>当手机号绑定了支付宝且完成了实名认证时，通过支付宝转账功能可以查到对方的姓名。</p>
-<p>如果对方的姓名只有两个字，只需手工猜出姓即可。</p>
-<p>如果对方的姓名多于两个字，可以知道最后一个名，并通过枚举姓的方式确定到姓。</p>
-<p>通过以上的方式，能保证在未实际转账的情况下获得姓名中的绝大部分。如果使用支付宝使用<strong>工商银行</strong>/<strong>网商银行</strong>进行转账，且转账成功，那么在银行app的查询明细中能看到姓名全称。</p>
-<p>ps: 微信的“<strong>银行卡或手机号转账</strong>”也有相同的效果，但是开通微信手机号转账的人很少。</p>
-<p>2&gt; 钉钉</p>
-<p>如果目标使用过钉钉，可以使用在钉钉内使用手机号搜索，可以直接查出用户名。</p>
-<p>3&gt; 社工库</p>
-<h4 id="4-2-百家姓频数表"><a href="#4-2-百家姓频数表" class="headerlink" title="4.2 百家姓频数表"></a>4.2 百家姓频数表</h4><p>鉴于有时需要用到姓名猜测，有一个关于姓的频数统计表还是蛮有作用的，能帮我们从高频到低频尽快的猜到正确的姓。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">李 王 张 刘 陈 杨 赵 黄 周 吴 徐 孙 胡 朱 高 林 何 郭 马 罗 梁 宋 郑 谢 韩 唐 冯 于 董 萧 程 曹 袁 邓 许 傅 沈 曾 彭 吕 苏 卢 蒋 蔡 贾 丁 魏 薛 叶 阎 余 潘 杜 戴 夏 钟 汪 田 任 姜 范 方 石 姚 谭 廖 邹 熊 金 陆 郝 孔 白 崔 康 毛 邱 秦 江 史 顾 侯 邵 孟 龙 万 段 漕 钱 汤 尹 黎 易 常 武 乔 贺 赖 龚 文 庞 樊 兰 殷 施 陶 洪 翟 安 颜 倪 严 牛 温 芦 季 俞 章 鲁 葛 伍 韦 申 尤 毕 聂 丛 焦 向 柳 邢 路 岳 齐 沿 梅 莫 庄 辛 管 祝 左 涂 谷 祁 时 舒 耿 牟 卜 路 詹 关 苗 凌 费 纪 靳 盛 童 欧 甄 项 曲 成 游 阳 裴 席 卫 查 屈 鲍 位 覃 霍 翁 隋 植 甘 景 薄 单 包 司 柏 宁 柯 阮 桂 闵 欧阳 解 强 柴 华 车 冉 房 边 滕 晋 苑 邬 臧 畅 宫 来  苟 全 褚 廉 简 娄 盖 符 奚 木 穆 党 燕 郎 邸 冀 谈 姬 屠 连 郜 晏 栾 郁 商 蒙 计 喻 揭 窦 迟 宇 敖 糜 鄢 冷 卓 花 仇 艾 蓝 都 巩 稽 井 练 仲 乐 虞 卞 封 竺 冼 原 官 衣 楚 佟 栗 匡 宗 应 台 巫 鞠 僧 桑 荆 谌 银 扬 </span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="5-社交账号社工术"><a href="#5-社交账号社工术" class="headerlink" title="5 社交账号社工术"></a>5 社交账号社工术</h3><h4 id="5-1-微信、支付宝"><a href="#5-1-微信、支付宝" class="headerlink" title="5.1 微信、支付宝"></a>5.1 微信、支付宝</h4><p>微信、支付宝直接在添加好友处搜手机号</p>
-<h4 id="5-2-QQ、快手、抖音、百度云网盘、京东、脉脉、网易云、微博"><a href="#5-2-QQ、快手、抖音、百度云网盘、京东、脉脉、网易云、微博" class="headerlink" title="5.2 QQ、快手、抖音、百度云网盘、京东、脉脉、网易云、微博"></a>5.2 QQ、快手、抖音、百度云网盘、京东、脉脉、网易云、微博</h4><p>将手机号存入通讯录，然后在以下社交账号内开启通讯录同步，点<strong>添加/发现好友</strong>，获得对方社交账号。（需要开启应用访问通讯录权限）</p>
-<h4 id="5-3-搜索引擎关键词查找"><a href="#5-3-搜索引擎关键词查找" class="headerlink" title="5.3 搜索引擎关键词查找"></a>5.3 搜索引擎关键词查找</h4><p>在google、duckduckgo上搜索手机号</p>
-<h4 id="5-4-社工库"><a href="#5-4-社工库" class="headerlink" title="5.4 社工库"></a>5.4 社工库</h4><h3 id="6-位置信息"><a href="#6-位置信息" class="headerlink" title="6 位置信息"></a>6 位置信息</h3><h4 id="6-1-时区"><a href="#6-1-时区" class="headerlink" title="6.1 时区"></a>6.1 时区</h4><p>通过人的社交时间、语言、分享动态推断目标大致所在的时区。</p>
-<h4 id="6-2-精确位置"><a href="#6-2-精确位置" class="headerlink" title="6.2 精确位置"></a>6.2 精确位置</h4><p><strong>屌丝级</strong>：<strong>各类带有地理位置元数据的文件</strong>、<strong>keep</strong>、<strong>行者</strong>、<strong>朋友圈</strong>分享的位置记录</p>
-<p><strong>黑客级</strong>：欺骗用户安装能够实时获取GPS坐标的APP、诱导用户点击获取位置的链接</p>
-<p><strong>政府级</strong>：利用小区基站实现定位、利用信令漏洞定位</p>
-<h4 id="6-3-通过IP查地理位置"><a href="#6-3-通过IP查地理位置" class="headerlink" title="6.3 通过IP查地理位置"></a>6.3 通过IP查地理位置</h4><p>IP地理位置查询：<a target="_blank" rel="noopener" href="https://qifu.baidu.com/?activeKey=SEARCH_IP">https://qifu.baidu.com/?activeKey=SEARCH_IP</a></p>
-<p>IP地址定位：<a target="_blank" rel="noopener" href="https://www.ipuu.net/">https://www.ipuu.net</a></p>
-<h3 id="7-邮箱信息收集"><a href="#7-邮箱信息收集" class="headerlink" title="7 邮箱信息收集"></a>7 邮箱信息收集</h3><p>显然的，腾讯系的邮箱基本都是以数字打头的，暴露了QQ号。</p>
-<p>部分网易126，163邮箱以手机号命名，暴露了手机号。</p>
-<p>部分邮箱以名称+数字命名，暴露了姓名。</p>
-<h4 id="7-1-收方回溯发方地址"><a href="#7-1-收方回溯发方地址" class="headerlink" title="7.1 收方回溯发方地址"></a>7.1 收方回溯发方地址</h4><p>查看邮件信件代码，标头内可以看到发送者的地址信息。</p>
-<p>如果邮件表头内含有”X-Originating-IP:”的key值，value值即为发送者的IP。比较常见的QQ邮箱、126邮箱，都有本字段。</p>
-<p>如果没有该字段，可以考虑标头内的Received字段。（多个Received字段时考虑最底部的，不一定有，有也不一定准）</p>
-<h4 id="7-2-发方写邮件探针"><a href="#7-2-发方写邮件探针" class="headerlink" title="7.2 发方写邮件探针"></a>7.2 发方写邮件探针</h4><p>原理是通过在邮件内容中嵌入动态加载的外部图片，当收信人点开邮件时就会在图片服务器上留下IP。</p>
-<p>具体方式是以源代码或文本模式写一封邮件，在邮件正文中嵌入图片html格式的图片链接。可以将图片自身的大小设的非常小，且将img字段设为不可见。这样攻击者打开邮件也无法感知。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;http://n.sinaimg.cn/sinacn04/787/w440h347/20180725/5fc6-hftenia0102640.jpg&quot; w=&quot;440&quot; h=&quot;347&quot; wh=&quot;1.27&quot; alt=&quot;一组萌萌哒小猫咪表情包&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="8-脱敏恢复"><a href="#8-脱敏恢复" class="headerlink" title="8  脱敏恢复"></a>8  脱敏恢复</h3><h4 id="8-1-身份证号脱敏恢复"><a href="#8-1-身份证号脱敏恢复" class="headerlink" title="8.1 身份证号脱敏恢复"></a>8.1 身份证号脱敏恢复</h4><p>身份证号是的编排是有一定规律可循的。除了最后1位是校验位外，其余各位与出生地、出生日期、性别、出生编号系系相关，因此即使是经脱敏处理的身份证号，仍能通过程序分析的方式过滤出可能的身份证序列组合。</p>
-<p>这里写了一个<a target="_blank" rel="noopener" href="https://github.com/aplyc1a/toolkits/blob/master/0x01%20%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/info-sfz.py">脱敏身份证恢复工具</a>，支持对身份证后4、6位及身份证内生日的爆破。</p>
-<h4 id="8-2-手机号脱敏恢复"><a href="#8-2-手机号脱敏恢复" class="headerlink" title="8.2 手机号脱敏恢复"></a>8.2 手机号脱敏恢复</h4><p>介绍怎么尽可能的恢复手机号的所有位数，但在此之前需要一定的知识介绍。</p>
-<p>手机号码的11位是有规律可循的。</p>
-<table>
-<thead>
-<tr>
-<th>1-3位</th>
-<th>4-7位</th>
-<th>8-11位</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>移动接入码</td>
-<td>地区编码</td>
-<td>用户号码</td>
-</tr>
-</tbody></table>
-<p><strong>移动接入码</strong></p>
-<table>
-<thead>
-<tr>
-<th>运营商类型</th>
-<th>移动接入码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>电信</td>
-<td>133 149 153 173 174 177 180 181 189 191 199</td>
-</tr>
-<tr>
-<td>联通</td>
-<td>130 131 132 145 146 155 156 166 167 171 175 176 185 186</td>
-</tr>
-<tr>
-<td>移动</td>
-<td>134 135 136 137 138 139 147 148 150 151 152 157 158 159 172  178 182 183 184 187 188 195 198</td>
-</tr>
-<tr>
-<td>虚拟运营商</td>
-<td>162  165 167 170 171</td>
-</tr>
-</tbody></table>
-<p>移动接入码是由运营商去向工信部申请，由工信部统一颁发的，每颁发一次，都会发布一个《电信网号码资源使用证书》。通过下载历年的证书我们能获得不同号段的分配说明。这里有个问题，国家这些年一直在推携号转网，初衷是帮助用户能够自主切换号码的运营商，如果真的全面推展开，且大家的使用积极性很高的化，那移动接入码就不再能准确区分手机号码是哪家运营商的了，但从目前的结果来看，通过移动接入码来判断运营商归属仍然是一个高度有效的方法。</p>
-<p><strong>地区编码</strong></p>
-<p>地区编码的具体数值分配由各运营商管理，因此很难给出一个通用的结构组成。所幸，网上有人专门通过爬虫等方式收集了运营商的地区编码数据库。如下所示：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/dannyhu926/phone_location">https://github.com/dannyhu926/phone_location</a></p>
-<h5 id="8-2-1-已知目标手机号前3后4位-城市"><a href="#8-2-1-已知目标手机号前3后4位-城市" class="headerlink" title="8.2.1 已知目标手机号前3后4位+城市"></a>8.2.1 已知目标手机号前3后4位+城市</h5><p>使用下面这个shell命令简单分析以下，可以发现，如果移动接入码固定的情况下，一个城市的前7位（移动接入码+地区编码）的可能性不超过5000,更普遍的情况下是可以控制在500以内的。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array=( 134 135 136 137 138 139 147 148 150 151 152 157 158 159 172 178 182 183 184 187 188 195 198 130 131 132 145 146 155 156 166 167 171 175 176 185 186 133 149 153 173 174 177 180 181 189 191 199 )</span><br><span class="line">for i in $&#123;array[@]&#125;; do     cat phone_location.sql |grep &quot;&#x27;$i&#x27;&quot;|awk &#x27;&#123;print $8&#125;&#x27;|sort -nr | uniq -c|sort -nr|head -n 1; done</span><br></pre></td></tr></table></figure>
-
-
-
-<p>因此，这时，如果已知手机号前3后4位时，如果知道目标所处的位置将能极大的缩小目标号码的可能范围。结果的可能数&lt;=5000。</p>
-<h5 id="8-2-2-已知目标手机号后4位-城市"><a href="#8-2-2-已知目标手机号后4位-城市" class="headerlink" title="8.2.2 已知目标手机号后4位+城市"></a>8.2.2 已知目标手机号后4位+城市</h5><p>使用下面的shell命令简单分析一下，可以发现，如果只知道目标所处的城市，那么前7位的可能性不超过20000。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear;cat phone_location.sql |awk &#x27;&#123;print $8&#125;&#x27;|sort -nr|uniq -c |sort -nr|head -n 10</span><br></pre></td></tr></table></figure>
-
-<p>因此，总的来说这种情况下需要遍历的手机号可能不超过20000。</p>
-<h5 id="8-2-3-已知后4位"><a href="#8-2-3-已知后4位" class="headerlink" title="8.2.3 已知后4位"></a>8.2.3 已知后4位</h5><p>如果只知道后4位别的一概不知，则要尝试482049次，才能保证遍历到正确的目标号码。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear;cat phone_location.sql |grep &quot;INSERT&quot;|grep &quot;phone_location&quot;|wc -l</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="9-其他"><a href="#9-其他" class="headerlink" title="9 其他"></a>9 其他</h3><p>围绕得到的基本信息，可以在社交帐号内进行进一步的信息挖掘，获得其他信息。</p>
-<h4 id="9-1-字典定制化"><a href="#9-1-字典定制化" class="headerlink" title="9.1 字典定制化"></a>9.1 字典定制化</h4><p>理想情况下的一个人的互联网账户都要满足登录密码需要满足长度、复杂度、无意义、唯一性的要求，但实际操作起来这是几乎不可能的。</p>
-<p>实际场景下对口令的选取往往围绕用户自身及周边的特点展开。如果信息收集的足够彻底，我们可以依据以下的信息，生成关键词根，通过词根间的组合填充，进而生成定制化字典。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;人&quot;:&#123;</span><br><span class="line">        &quot;拼音全称1&quot;:&quot;chuanjianguo&quot;,</span><br><span class="line">		&quot;拼音全称2&quot;:&quot;ChuanJianguo&quot;,</span><br><span class="line">		&quot;拼音简写1&quot;:&quot;CJg&quot;,</span><br><span class="line">		&quot;拼音简写2&quot;:&quot;cjg&quot;,</span><br><span class="line">		&quot;拼音全称3&quot;:&quot;jianguo&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;生日&quot;:&#123;</span><br><span class="line">        &quot;生日全部1&quot;:&quot;20210512&quot;,</span><br><span class="line">		&quot;生日部分&quot;:&quot;0512&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;电话&quot;: &#123;</span><br><span class="line">	    &quot;手机号后6位&quot;:&quot;123456&quot;,</span><br><span class="line">		&quot;手机号后4位&quot;:&quot;3456&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;学校&quot;:&#123;</span><br><span class="line">	    &quot;学号&quot;:&quot;123456&quot;,</span><br><span class="line">		&quot;毕业或入学年份&quot;:&quot;2021&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;sfz&quot;:&#123;</span><br><span class="line">		&quot;sfz后6位&quot;:&quot;654321&quot;,</span><br><span class="line">		&quot;sfz后4位&quot;:&quot;4321&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;爱好/宠物&quot;:&#123;</span><br><span class="line">		&quot;关键字&quot;:&quot;xiuer&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;公司&quot;:&#123;</span><br><span class="line">		&quot;name1&quot;:&quot;Google&quot;,</span><br><span class="line">		&quot;name2&quot;:&quot;GG&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;其他&quot;:&#123;</span><br><span class="line">	    &quot;通用词缀&quot;:&quot;略&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="9-2-口令哈希逆向查询"><a href="#9-2-口令哈希逆向查询" class="headerlink" title="9.2 口令哈希逆向查询"></a>9.2 口令哈希逆向查询</h4><p>在线密文密码查询网站，有时能帮助我们得到明文密码。</p>
-<p><a target="_blank" rel="noopener" href="https://cmd5.com/">https://cmd5.com/</a></p>
-<h4 id="9-3-图片搜索"><a href="#9-3-图片搜索" class="headerlink" title="9.3 图片搜索"></a>9.3 图片搜索</h4><p><strong>百度识图</strong>：<a target="_blank" rel="noopener" href="https://image.baidu.com/?fr=shitu">https://image.baidu.com/?fr=shitu</a></p>
-<p><strong>谷歌识图</strong>：<a target="_blank" rel="noopener" href="https://images.google.com/">https://images.google.com/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%85%8D%E6%9D%80%E5%AE%9E%E6%88%98%E7%A0%94%E7%A9%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -740,9 +173,9 @@
       <meta itemprop="name" content="aplyc1a's blogs">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/21/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%85%8D%E6%9D%80%E5%AE%9E%E6%88%98%E7%A0%94%E7%A9%B6/" class="post-title-link" itemprop="url">免杀-二进制免杀入门</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          免杀-二进制免杀入门
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -766,7 +199,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="二进制免杀入门"><a href="#二进制免杀入门" class="headerlink" title="二进制免杀入门"></a>二进制免杀入门</h2><h3 id="1-免杀制作视角"><a href="#1-免杀制作视角" class="headerlink" title="1 免杀制作视角"></a>1 免杀制作视角</h3><h4 id="1-1-免杀目标"><a href="#1-1-免杀目标" class="headerlink" title="1.1 免杀目标"></a>1.1 免杀目标</h4><p>任何可用于攻击或破坏的实体都需要免杀，且免杀与查杀是动态对抗的。实际上，程序的实际形态与结构比较复杂，因此不同形态类型的程序使用的免杀技术是存在一定区别的。</p>
+        <h2 id="二进制免杀入门"><a href="#二进制免杀入门" class="headerlink" title="二进制免杀入门"></a>二进制免杀入门</h2><h3 id="1-免杀制作视角"><a href="#1-免杀制作视角" class="headerlink" title="1 免杀制作视角"></a>1 免杀制作视角</h3><h4 id="1-1-免杀目标"><a href="#1-1-免杀目标" class="headerlink" title="1.1 免杀目标"></a>1.1 免杀目标</h4><p>任何可用于攻击或破坏的实体都需要免杀，且免杀与查杀是动态对抗的。实际上，程序的实际形态与结构比较复杂，因此不同形态类型的程序使用的免杀技术是存在一定区别的。</p>
 <h4 id="1-2-流行免杀工具"><a href="#1-2-流行免杀工具" class="headerlink" title="1.2 流行免杀工具"></a>1.2 流行免杀工具</h4><table>
 <thead>
 <tr>
@@ -1796,7 +1229,6 @@
 
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LyShark/p/13785619.html">https://www.cnblogs.com/LyShark/p/13785619.html</a><br>《黑客免杀攻防》-2013<br>《杀不死的密码》–2010-06<br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4191">https://xz.aliyun.com/t/4191</a><br><a target="_blank" rel="noopener" href="https://bbs.ichunqiu.com/thread-53045-1-1.html">https://bbs.ichunqiu.com/thread-53045-1-1.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ssw6/p/12091506.html">https://www.cnblogs.com/ssw6/p/12091506.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41874930/article/details/107842074">https://blog.csdn.net/qq_41874930/article/details/107842074</a></p>
 
-      
     </div>
 
     
@@ -1804,95 +1236,25 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/21/%E6%90%AD%E5%BB%BAIRC%E7%A7%81%E6%9C%89%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="prev" title="搭建IRC私有服务器">
+                  <i class="fa fa-chevron-left"></i> 搭建IRC私有服务器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/21/%E7%A4%BE%E5%B7%A5%E8%87%AA%E7%84%B6%E4%BA%BA%E4%BF%A1%E6%81%AF/" rel="next" title="社工工程-自然人身份收集">
+                  社工工程-自然人身份收集 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/%E6%90%AD%E5%BB%BAIRC%E7%A7%81%E6%9C%89%E6%9C%8D%E5%8A%A1%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="aplyc1a">
-      <meta itemprop="description" content="Always good to see">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="aplyc1a's blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/21/%E6%90%AD%E5%BB%BAIRC%E7%A7%81%E6%9C%89%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">搭建IRC私有服务器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-21 19:13:52 / Modified: 03:26:02" itemprop="dateCreated datePublished" datetime="2021-06-21T19:13:52-08:00">2021-06-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="IRC私有聊天室搭建"><a href="#IRC私有聊天室搭建" class="headerlink" title="IRC私有聊天室搭建"></a>IRC私有聊天室搭建</h1><h2 id="搭建unrealircd服务器"><a href="#搭建unrealircd服务器" class="headerlink" title="搭建unrealircd服务器"></a>搭建unrealircd服务器</h2><p>这里以unrealircd为例搭建IRC服务器。</p>
-<p><strong>下载</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://www.unrealircd.org/download/5.2</span><br><span class="line"><span class="meta">#</span><span class="bash"> windows或linux版选其一</span></span><br><span class="line">https://www.unrealircd.org/downloads/unrealircd-5.2.0.1.tar.gz</span><br><span class="line">https://www.unrealircd.org/downloads/unrealircd-5.2.0.1.exe</span><br></pre></td></tr></table></figure>
-
-<p><strong>完整性验证</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gpg --keyserver keys.gnupg.net --recv-keys 0xA7A21B0A108FF4A9</span><br><span class="line">gpg --verify unrealircd-5.2.0.1.tar.gz.asc unrealircd-5.2.0.1.tar.gz</span><br><span class="line">gpg --verify unrealircd-5.2.0.1.exe.asc unrealircd-5.2.0.1.exe</span><br></pre></td></tr></table></figure>
-
-<p><strong>编译</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">./Config</span><br><span class="line"><span class="meta">#</span><span class="bash">接着是一些选项，默认就好，一路回车，有报错就按照提示解决，最后会要求给出参数用来生成加密证书</span></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">cd ~/unrealircd</span><br><span class="line">cp conf/examples/example.conf conf/unrealircd.conf</span><br><span class="line"><span class="meta">#</span><span class="bash">修改相关参数</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_104838.png"></p>
-<p><strong>运行</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su walrus</span><br><span class="line">./unrealircd start</span><br><span class="line"><span class="meta">#</span><span class="bash">此时对外监听了3个irc连接端口</span></span><br><span class="line"><span class="meta">#</span><span class="bash">6667（明文）</span></span><br><span class="line"><span class="meta">#</span><span class="bash">6697（TLS/SSL）</span></span><br><span class="line"><span class="meta">#</span><span class="bash">6900（TLS/SSL）</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_105319.png"></p>
-<h2 id="HexChat接入IRC服务器"><a href="#HexChat接入IRC服务器" class="headerlink" title="HexChat接入IRC服务器"></a>HexChat接入IRC服务器</h2><p><strong>首次使用配置</strong></p>
-<p>菜单(HexChat)=&gt;NetworkList=&gt;网络，新建一个irc网络服务器，配置好网络服务器地址及连接方式，进行连接即可。（如果是是经过TLS/SSL加密的需要勾上SSL加密选项）</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_115351.png"></p>
-<p>做好以上配置后，关闭页面，即可连接即可。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_142343.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
