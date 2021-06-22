@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="常见典型日志位置1 登录日志   路径 作用    &#x2F;var&#x2F;log&#x2F;audit&#x2F;audit.log 审计日志   &#x2F;var&#x2F;log&#x2F;messages 记录Linux操作系统常见的系统和服务错误信息   &#x2F;var&#x2F;log&#x2F;secure 系统安全日志，记录大部分应用输入账户信息后的登陆情况   &#x2F;var&#x2F;log&#x2F;lastlog 记录最后一次用户成功登陆的时间、登陆IP等信息。lastlog   &#x2F;v">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux取证辅助技术(4)-常见日志">
+<meta property="og:url" content="http://example.com/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(4)-%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E4%BD%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="aplyc1a&#39;s blogs">
+<meta property="og:description" content="常见典型日志位置1 登录日志   路径 作用    &#x2F;var&#x2F;log&#x2F;audit&#x2F;audit.log 审计日志   &#x2F;var&#x2F;log&#x2F;messages 记录Linux操作系统常见的系统和服务错误信息   &#x2F;var&#x2F;log&#x2F;secure 系统安全日志，记录大部分应用输入账户信息后的登陆情况   &#x2F;var&#x2F;log&#x2F;lastlog 记录最后一次用户成功登陆的时间、登陆IP等信息。lastlog   &#x2F;v">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-22T18:16:19.000Z">
+<meta property="article:modified_time" content="2021-06-22T03:16:02.684Z">
+<meta property="article:author" content="aplyc1a">
+<meta property="article:tag" content="取证">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(4)-%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E4%BD%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(4)-%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E4%BD%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/","path":"2021/06/22/Linux取证辅助技术(4)-常见日志位置记录/","title":"Linux取证辅助技术(4)-常见日志"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux取证辅助技术(4)-常见日志 | aplyc1a's blogs</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">aplyc1a's blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%85%B8%E5%9E%8B%E6%97%A5%E5%BF%97%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">常见典型日志位置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%99%BB%E5%BD%95%E6%97%A5%E5%BF%97"><span class="nav-number">1.1.</span> <span class="nav-text">1 登录日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%90%AF%E5%8A%A8%E5%92%8C%E5%86%85%E6%A0%B8%E6%97%A5%E5%BF%97"><span class="nav-number">1.2.</span> <span class="nav-text">2 启动和内核日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-web%E6%97%A5%E5%BF%97"><span class="nav-number">1.3.</span> <span class="nav-text">3 web日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%98%B2%E7%81%AB%E5%A2%99%E6%97%A5%E5%BF%97"><span class="nav-number">1.4.</span> <span class="nav-text">4 防火墙日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%85%B6%E4%BB%96-var-log%E6%97%A5%E5%BF%97"><span class="nav-number">1.5.</span> <span class="nav-text">5 其他&#x2F;var&#x2F;log日志</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">aplyc1a</p>
+  <div class="site-description" itemprop="description">Always good to see</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(4)-%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E4%BD%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux取证辅助技术(4)-常见日志
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 10:16:19" itemprop="dateCreated datePublished" datetime="2021-06-22T10:16:19-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 19:16:02" itemprop="dateModified" datetime="2021-06-21T19:16:02-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="常见典型日志位置"><a href="#常见典型日志位置" class="headerlink" title="常见典型日志位置"></a>常见典型日志位置</h2><h3 id="1-登录日志"><a href="#1-登录日志" class="headerlink" title="1 登录日志"></a>1 登录日志</h3><table>
+<thead>
+<tr>
+<th>路径</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/var/log/audit/audit.log</td>
+<td>审计日志</td>
+</tr>
+<tr>
+<td>/var/log/messages</td>
+<td>记录Linux操作系统常见的系统和服务错误信息</td>
+</tr>
+<tr>
+<td>/var/log/secure</td>
+<td>系统安全日志，记录大部分应用输入账户信息后的登陆情况</td>
+</tr>
+<tr>
+<td>/var/log/lastlog</td>
+<td>记录最后一次用户成功登陆的时间、登陆IP等信息。lastlog</td>
+</tr>
+<tr>
+<td>/var/log/btmp</td>
+<td>记录Linux登陆失败的用户、时间以及远程IP地址。lastb</td>
+</tr>
+<tr>
+<td>/var/log/wtmp</td>
+<td>永久记录用户登录事件。last</td>
+</tr>
+</tbody></table>
+<p>特别地，前三种日志中的登录事件可以在使用systemd的linux下使用journalctl命令进行访问。关于ftp、telnet的登录日志也记录在该文件中。</p>
+<h3 id="2-启动和内核日志"><a href="#2-启动和内核日志" class="headerlink" title="2 启动和内核日志"></a>2 启动和内核日志</h3><p>内核相关：/var/log/dmesg（或dmesg命令）、/var/log/kern.log</p>
+<p>启动日志：/var/log/boot</p>
+<h3 id="3-web日志"><a href="#3-web日志" class="headerlink" title="3 web日志"></a>3 web日志</h3><p>web日志的默认路径如下，如果不存在，则需要查看web配置文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">debian-nginx:		/var/log/nginx/access.log</span><br><span class="line">debian-apache:	/var/log/apache2/access.log </span><br><span class="line">centos-apache:		/var/log/httpd/access_log</span><br><span class="line">centos-nginx:		/var/log/nginx/access.log </span><br></pre></td></tr></table></figure>
+
+<p>nginx配置文件：nginx.conf（一般是/etc/nginx/nginx.conf）</p>
+<p>Debian-apache配置文件：httpd.conf（一般是/etc/httpd/conf/httpd.conf）</p>
+<p>Centos-httpd配置文件：一般定位下来是在000-default.conf与default-ssl.conf中。</p>
+<h3 id="4-防火墙日志"><a href="#4-防火墙日志" class="headerlink" title="4 防火墙日志"></a>4 防火墙日志</h3><p>iptables：</p>
+<p>如果开启了日志开关（/etc/syslog.conf内添加 kern.warning /var/log/iptables.log），则根据开关内的配置位置进行输出。开启时默认输出在/var/log/messages。</p>
+<p>firewalld：</p>
+<p>从dmesg中过滤出相关的信息。</p>
+<h3 id="5-其他-var-log日志"><a href="#5-其他-var-log日志" class="headerlink" title="5 其他/var/log日志"></a>5 其他/var/log日志</h3><p>其他日志：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/var/log/cron ：记录crond计划任务服务执行情况</span><br><span class="line">/var/log/maillog ：邮件系统日志</span><br><span class="line">/var/log/syslog ：记录警告信息</span><br><span class="line">/var/log/xferlog ：记录FTP会话</span><br><span class="line">/var/log/daemon.log 系统进程日志</span><br></pre></td></tr></table></figure>
+
+<p>注意：如果有日志转储功能开启，根据/etc/logrotate.conf找到转储后的日志文件进行分析。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8F%96%E8%AF%81/" rel="tag"># 取证</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(3)-%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E6%81%A2%E5%A4%8D/" rel="prev" title="Linux取证辅助技术(3)-文件删除恢复">
+                  <i class="fa fa-chevron-left"></i> Linux取证辅助技术(3)-文件删除恢复
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/22/%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF/" rel="next" title="门罗币挖矿">
+                  门罗币挖矿 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">aplyc1a</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="0x00 GnuPG用法GPG是非常强大的一款数据加密及签名工具，GPG全称GnuPG，官方地址https:&#x2F;&#x2F;www.gnupg.org&#x2F;。这一工具能够帮助不同用户之间进行高强度加密的互相认证的数据共享与消息传递。Linux下可以使用源安装GnuPG，windows下也有Gpg4win、WinGPG等多种实现。 GPG的常见工作场景包括： 1、数据加密：核心是对称加密数据，公钥加密对称密钥。 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPG加密工具使用">
+<meta property="og:url" content="http://example.com/2021/06/22/GPG%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="aplyc1a&#39;s blogs">
+<meta property="og:description" content="0x00 GnuPG用法GPG是非常强大的一款数据加密及签名工具，GPG全称GnuPG，官方地址https:&#x2F;&#x2F;www.gnupg.org&#x2F;。这一工具能够帮助不同用户之间进行高强度加密的互相认证的数据共享与消息传递。Linux下可以使用源安装GnuPG，windows下也有Gpg4win、WinGPG等多种实现。 GPG的常见工作场景包括： 1、数据加密：核心是对称加密数据，公钥加密对称密钥。 2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/.com//aplyc1a/articles.MDRes/gpg4usb/2021-06-18_163625.png">
+<meta property="og:image" content="http://example.com/.com//.MDRes%5Cgpg4usb%5Cimage-20210618164516471.png">
+<meta property="article:published_time" content="2021-06-22T19:50:10.000Z">
+<meta property="article:modified_time" content="2021-06-22T03:51:21.184Z">
+<meta property="article:author" content="aplyc1a">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//aplyc1a/articles.MDRes/gpg4usb/2021-06-18_163625.png">
+
+
+<link rel="canonical" href="http://example.com/2021/06/22/GPG%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/06/22/GPG%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/","path":"2021/06/22/GPG加密工具使用/","title":"GPG加密工具使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GPG加密工具使用 | aplyc1a's blogs</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">aplyc1a's blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-GnuPG%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">0x00 GnuPG用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AF%86%E9%92%A5%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">1 密钥生命周期管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%88%9B%E5%BB%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%9F%A5%E7%9C%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%AF%BC%E5%85%A5"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%AF%BC%E5%87%BA"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E5%88%A0%E9%99%A4"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E5%90%8A%E9%94%80"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6 吊销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-KeyServer"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7  KeyServer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-1-%E4%B8%8A%E4%BC%A0%E5%85%AC%E9%92%A5"><span class="nav-number">1.1.7.1.</span> <span class="nav-text">1.7.1 上传公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-2-%E4%B8%8B%E8%BD%BD%E5%85%AC%E9%92%A5"><span class="nav-number">1.1.7.2.</span> <span class="nav-text">1.7.2 下载公钥</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-%E6%8C%87%E7%BA%B9"><span class="nav-number">1.1.8.</span> <span class="nav-text">1.8 指纹</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%A7%A3%E5%AF%86"><span class="nav-number">1.2.</span> <span class="nav-text">2 数据加解密</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%8A%A0%E8%A7%A3%E5%AF%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 加解密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%AD%BE%E5%90%8D"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 签名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-gpg4usb"><span class="nav-number">2.</span> <span class="nav-text">0x01 gpg4usb</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">aplyc1a</p>
+  <div class="site-description" itemprop="description">Always good to see</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/GPG%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GPG加密工具使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 11:50:10" itemprop="dateCreated datePublished" datetime="2021-06-22T11:50:10-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 19:51:21" itemprop="dateModified" datetime="2021-06-21T19:51:21-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="0x00-GnuPG用法"><a href="#0x00-GnuPG用法" class="headerlink" title="0x00 GnuPG用法"></a>0x00 GnuPG用法</h1><p>GPG是非常强大的一款数据加密及签名工具，GPG全称GnuPG，官方地址<a target="_blank" rel="noopener" href="https://www.gnupg.org/%E3%80%82%E8%BF%99%E4%B8%80%E5%B7%A5%E5%85%B7%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9%E4%B8%8D%E5%90%8C%E7%94%A8%E6%88%B7%E4%B9%8B%E9%97%B4%E8%BF%9B%E8%A1%8C%E9%AB%98%E5%BC%BA%E5%BA%A6%E5%8A%A0%E5%AF%86%E7%9A%84%E4%BA%92%E7%9B%B8%E8%AE%A4%E8%AF%81%E7%9A%84%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB%E4%B8%8E%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E3%80%82Linux%E4%B8%8B%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%BA%90%E5%AE%89%E8%A3%85GnuPG%EF%BC%8Cwindows%E4%B8%8B%E4%B9%9F%E6%9C%89Gpg4win%E3%80%81WinGPG%E7%AD%89%E5%A4%9A%E7%A7%8D%E5%AE%9E%E7%8E%B0%E3%80%82">https://www.gnupg.org/。这一工具能够帮助不同用户之间进行高强度加密的互相认证的数据共享与消息传递。Linux下可以使用源安装GnuPG，windows下也有Gpg4win、WinGPG等多种实现。</a></p>
+<p>GPG的常见工作场景包括：</p>
+<p>1、数据加密：核心是对称加密数据，公钥加密对称密钥。</p>
+<p>2、数据签名：核心是私钥对数据或数据的散列值进行加密获得签名。</p>
+<p>3、数据验签：使用公钥对数据或签名文件进行解密，可以实现对来源的认证及完整性校验。</p>
+<p>4、安全通信：核心是通信双方均使用对方的公钥对数据进行加密</p>
+<p>5、数字信封：通信双方发信时均使用对方证书中的公钥对消息进行加密，发往对方的消息还包含用各自私钥签名后的签名文件。</p>
+<p>关于GPG的命令行使用可以参考下面的链接，已经介绍的非常详细了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://www.ruanyifeng.com/blog/2013/07/gpg.htm</span><br><span class="line">https://www.jianshu.com/p/7f19ceacf57cl</span><br></pre></td></tr></table></figure>
+
+<p>下面是我依据以上两位大佬的教程捋出的速查手册。</p>
+<h2 id="1-密钥生命周期管理"><a href="#1-密钥生命周期管理" class="headerlink" title="1 密钥生命周期管理"></a>1 密钥生命周期管理</h2><h3 id="1-1-创建"><a href="#1-1-创建" class="headerlink" title="1.1 创建"></a>1.1 创建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --full-generate-key</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-查看"><a href="#1-2-查看" class="headerlink" title="1.2 查看"></a>1.2 查看</h3><p><strong>查看公钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpg --list-keys</span><br><span class="line">gpg -k</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看私钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpg --list-secret-keys</span><br><span class="line">gpg -K</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-3-导入"><a href="#1-3-导入" class="headerlink" title="1.3 导入"></a>1.3 导入</h3><p><strong>导入私钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --import private-key.asc</span><br></pre></td></tr></table></figure>
+
+<p><strong>导入公钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --import public-key.asc</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-4-导出"><a href="#1-4-导出" class="headerlink" title="1.4 导出"></a>1.4 导出</h3><p><strong>导出私钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --armor --output private-key.asc --export-secret-keys aplyc1a@protonmail.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>导出公钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --armor --output public-key.asc --<span class="built_in">export</span> aplyc1a@protonmail.com</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-5-删除"><a href="#1-5-删除" class="headerlink" title="1.5 删除"></a>1.5 删除</h3><p><strong>删除私钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --delete-secret-key aplyc1a@protonmail.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除公钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --delete-key aplyc1a@protonmail.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-吊销"><a href="#1-6-吊销" class="headerlink" title="1.6 吊销"></a>1.6 吊销</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpg --gen-revoke aplyc1a@protonmail.com</span><br><span class="line">gpg --send-keys 2DBA87CF</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-KeyServer"><a href="#1-7-KeyServer" class="headerlink" title="1.7  KeyServer"></a>1.7  KeyServer</h3><h4 id="1-7-1-上传公钥"><a href="#1-7-1-上传公钥" class="headerlink" title="1.7.1 上传公钥"></a>1.7.1 上传公钥</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --send-keys [用户ID] --keyserver hkp://subkeys.pgp.net</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-7-2-下载公钥"><a href="#1-7-2-下载公钥" class="headerlink" title="1.7.2 下载公钥"></a>1.7.2 下载公钥</h4><p>gpg –keyserver ${PGP Key Server} –search-keys ${KeyID}</p>
+<h3 id="1-8-指纹"><a href="#1-8-指纹" class="headerlink" title="1.8 指纹"></a>1.8 指纹</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --fingerpint 2DBA87CF</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-数据加解密"><a href="#2-数据加解密" class="headerlink" title="2 数据加解密"></a>2 数据加解密</h2><h3 id="2-1-加解密"><a href="#2-1-加解密" class="headerlink" title="2.1 加解密"></a>2.1 加解密</h3><p><strong>加密</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -r参数为接收者公钥</span></span><br><span class="line">gpg --recipient <span class="variable">$&#123;KeyID&#125;</span> --output sercet.txt --encrypt data.txt</span><br><span class="line">gpg -e -r <span class="variable">$&#123;KeyID&#125;</span> data.txt</span><br><span class="line">gpg -r <span class="variable">$&#123;KeyID&#125;</span> -ea data.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>解密</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --decrypt --output data.txt sercet.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-签名"><a href="#2-2-签名" class="headerlink" title="2.2 签名"></a>2.2 签名</h3><p><strong>明文+附加签名</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -a ascii码</span></span><br><span class="line"><span class="comment"># -s/--sign</span></span><br><span class="line">gpg -s data.txt</span><br><span class="line">gpg -sa data.txt</span><br><span class="line"><span class="comment"># 从意思上来看，-sa等价于--clearsign将附加了签名的文件整体ascii化。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>独立签名</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpg --detach-sign data.txt</span><br><span class="line">gpg --detach-sign -a data.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>加密并签名</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --local-user [发信者ID] --recipient [接收者ID] --armor --sign --encrypt demo.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>验证签名</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --verify data.gpg.sig data.gpg</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="0x01-gpg4usb"><a href="#0x01-gpg4usb" class="headerlink" title="0x01 gpg4usb"></a>0x01 gpg4usb</h1><p>同时这里也简单介绍另一款跨平台的gpg工具，<strong>gpg4usb</strong>:</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://www.gpg4usb.org/download/gpg4usb-0.3.3-2.zip">https://www.gpg4usb.org/download/gpg4usb-0.3.3-2.zip</a></p>
+<p>首次使用需要<strong>创建一个新的密钥对</strong>。</p>
+<p><img src="/.com//aplyc1a\articles.MDRes\gpg4usb\2021-06-18_163625.png" alt="2021-06-18_163625"></p>
+<p>创建密钥对时要提供名称邮箱地址等信息，这些信息与密钥对绑定起来用于告知此密钥对的创建者身份。</p>
+<p>信息输入完毕点确定，稍等片刻提示密钥创建成功。</p>
+<p>gpg4usb功能简单，使用容易，基本上可以达到上手就会的效果。功能方面主要有文本处理和文件处理两大块，通过对这些功能的简单组合能构建出意想不到的效果。这个工具非常适合在邮件加密场景中使用。</p>
+<p><img src="/.com//.MDRes%5Cgpg4usb%5Cimage-20210618164516471.png" alt="image-20210618164516471"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/22/%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7KeePassXC/" rel="prev" title="密码管理工具KeePassXC">
+                  <i class="fa fa-chevron-left"></i> 密码管理工具KeePassXC
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/22/%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/" rel="next" title="磁盘加密工具">
+                  磁盘加密工具 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">aplyc1a</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="浏览器安全打开浏览器浏览网页的过程中实际上会存在很多的安全风险。这一节主要记录反审查场景下的浏览器安全。 1 前端动态脚本从web前端技术栈的角度来看，网站拥有者能通过JS等动态脚本在用户浏览器侧实现很多功能（如：客户端情报分析、控制浏览器、窃取cookie、0day利用等）。下面给出的这个网站能帮助我们了解浏览器究竟能泄露什么信息： 1https:&#x2F;&#x2F;panopticlick.eff.orght">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器匿名安全">
+<meta property="og:url" content="http://example.com/2021/06/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8C%BF%E5%90%8D%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:site_name" content="aplyc1a&#39;s blogs">
+<meta property="og:description" content="浏览器安全打开浏览器浏览网页的过程中实际上会存在很多的安全风险。这一节主要记录反审查场景下的浏览器安全。 1 前端动态脚本从web前端技术栈的角度来看，网站拥有者能通过JS等动态脚本在用户浏览器侧实现很多功能（如：客户端情报分析、控制浏览器、窃取cookie、0day利用等）。下面给出的这个网站能帮助我们了解浏览器究竟能泄露什么信息： 1https:&#x2F;&#x2F;panopticlick.eff.orght">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_002402.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_122610.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_120616.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_110322.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_123216.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_153748.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_154136.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_152435.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_195547.png">
+<meta property="og:image" content="http://example.com/.com//Users/HASEE/AppData/Roaming/Typora/typora-user-images/image-20210618200241475.png">
+<meta property="article:published_time" content="2021-06-22T19:50:10.000Z">
+<meta property="article:modified_time" content="2021-06-22T03:50:40.044Z">
+<meta property="article:author" content="aplyc1a">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_002402.png">
+
+
+<link rel="canonical" href="http://example.com/2021/06/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8C%BF%E5%90%8D%E5%AE%89%E5%85%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/06/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8C%BF%E5%90%8D%E5%AE%89%E5%85%A8/","path":"2021/06/22/浏览器匿名安全/","title":"浏览器匿名安全"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>浏览器匿名安全 | aplyc1a's blogs</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">aplyc1a's blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8"><span class="nav-number">1.</span> <span class="nav-text">浏览器安全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%89%8D%E7%AB%AF%E5%8A%A8%E6%80%81%E8%84%9A%E6%9C%AC"><span class="nav-number">1.1.</span> <span class="nav-text">1 前端动态脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-NoScript"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 NoScript</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-uBlock-origin"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 uBlock origin</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%B5%81%E5%AA%92%E4%BD%93%E6%B3%84%E9%9C%B2"><span class="nav-number">1.2.</span> <span class="nav-text">2 流媒体泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-DNS%E8%AF%B7%E6%B1%82%E6%B3%84%E9%9C%B2"><span class="nav-number">1.3.</span> <span class="nav-text">3 DNS请求泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E8%AF%81%E4%B9%A6%E5%AE%89%E5%85%A8"><span class="nav-number">1.4.</span> <span class="nav-text">4 证书安全</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-Firefox%E6%A3%80%E6%9F%A5%E8%AF%81%E4%B9%A6"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 Firefox检查证书</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-Chrome%E6%A3%80%E6%9F%A5%E8%AF%81%E4%B9%A6"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Chrome检查证书</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E5%AE%89%E5%85%A8"><span class="nav-number">1.5.</span> <span class="nav-text">5 搜索引擎安全</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-DuckDuckGo"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 DuckDuckGo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-searx"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 searx</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">aplyc1a</p>
+  <div class="site-description" itemprop="description">Always good to see</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8C%BF%E5%90%8D%E5%AE%89%E5%85%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浏览器匿名安全
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 11:50:10" itemprop="dateCreated datePublished" datetime="2021-06-22T11:50:10-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 19:50:40" itemprop="dateModified" datetime="2021-06-21T19:50:40-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="浏览器安全"><a href="#浏览器安全" class="headerlink" title="浏览器安全"></a>浏览器安全</h3><p>打开浏览器浏览网页的过程中实际上会存在很多的安全风险。这一节主要记录反审查场景下的浏览器安全。</p>
+<h4 id="1-前端动态脚本"><a href="#1-前端动态脚本" class="headerlink" title="1 前端动态脚本"></a>1 前端动态脚本</h4><p>从web前端技术栈的角度来看，网站拥有者能通过JS等动态脚本在用户浏览器侧实现很多功能（如：客户端情报分析、控制浏览器、窃取cookie、0day利用等）。下面给出的这个网站能帮助我们了解浏览器究竟能泄露什么信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://panopticlick.eff.orghttps://coveryourtracks.eff.org/kcarter?aat=1https://wzyboy.im/post/1130.html</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-1-NoScript"><a href="#1-1-NoScript" class="headerlink" title="1.1 NoScript"></a>1.1 NoScript</h5><p>Firefox有一个可以称之为神器的插件，名叫NoScript。NoScript通过对网页资源的加载进行控制实现对浏览器客户端的信息保护，确保浏览器在受信任的站点运行动态内容。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_002402.png" alt="2021-06-20_002402"></p>
+<p>首次使用这个插件时可能比较难受，需要对访问的各种网站进行加载策略配置，等待对常见资源的策略清单收集的差不多的时候，使用将会变得比较容易。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_122610.png" alt="2021-06-20_122610"></p>
+<p>默认情况下，每当访问一个从未打开的网页都需要对网站资源进行配置，Noscript支持5种预置的访问策略控制，每种策略的资源加载种类也可以具体在Noscript的设置选项中进行配置。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_120616.png" alt="2021-06-20_120616"></p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_110322.png" alt="2021-06-20_110322"></p>
+<p>NoScript还会贴心的提示当前页面屏蔽了多少动态对象的加载。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_123216.png" alt="2021-06-20_123216"></p>
+<h5 id="1-2-uBlock-origin"><a href="#1-2-uBlock-origin" class="headerlink" title="1.2 uBlock origin"></a>1.2 uBlock origin</h5><p>uBlock是另一款FireFox上热门的隐私保护工具，支持对多种浏览器可能涉及的隐私问题的选项设置。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_153748.png" alt="2021-06-21_153748"></p>
+<p>工具的复杂度较NoScript要高一些，说实话本人并没怎么使用过。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_154136.png" alt="2021-06-21_154136"></p>
+<h4 id="2-流媒体泄露"><a href="#2-流媒体泄露" class="headerlink" title="2 流媒体泄露"></a>2 流媒体泄露</h4><p>实际上，对任何页面上可能会产生的udp报文而言，都可能在代理场景下产生泄漏问题。虽然socks5标准支持udp，但并非每一个socks5工具都支持代理udp，这就导致本地机器可能直接向目标设备发送udp报文。如果我们本身的tcp流量是经过代理的，这时udp流量便泄露了我们的真实IP。</p>
+<p>比如不少流媒体协议，流媒体协议往往应用于视频、音频等需要大数据量的场景，为了传输速率，普遍基于面向非连接的UDP协议。历史上关于流媒体协议族泄露用户真实IP的报道与文章已经层出不穷了。比如，WebRTC是用于实时语音对话或视频对话的流媒体类的API，它默认使用UDP方式进行传输。</p>
+<p><a target="_blank" rel="noopener" href="https://webrtc.org.cn/is-webrtc-safe/">https://webrtc.org.cn/is-webrtc-safe/</a></p>
+<h4 id="3-DNS请求泄露"><a href="#3-DNS请求泄露" class="headerlink" title="3 DNS请求泄露"></a>3 DNS请求泄露</h4><p>当我们没配置DNSoverHTTPS或DNSoverSocks5时就会产生这种问题。正常来说我们访问一个网页，要先向DNS服务器发一个域名解析请求获得网站真实地址，之后再向真实设备发请求。如果目标域名是运营商的黑名单，那通过分析短时间内的发包请求可以关联出代理服务器的地址，如果进一步反向溯源的话可能会定位到我们，当然只是可能，具体能不能定位到取决于从公网逐渐向小网逐层深入时是不是固定IP，有没有数据包记录等等。</p>
+<p>下图是Firefox的代理设置页面，如果开启了DNS over Socks5就能绕过GFW对DNS流量的劫持，将实际请求放在远端发送。反之就会引发DNS泄露问题，产生一定的问题。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_152435.png" alt="2021-06-21_152435"></p>
+<h4 id="4-证书安全"><a href="#4-证书安全" class="headerlink" title="4 证书安全"></a>4 证书安全</h4><p>浏览器的证书安全常常被人忽略。简单来说，如果浏览器被导入了不可信证书，将无法感知到https协商过程出现证书调包问题。而通过证书调包，中间人可以实现对数据的篡改与监听，实际上Web安全中非常出名的Burpsuite工具就使用了这种原理，企业网中实现对员工的数据监控也是基于这一原理。</p>
+<p>想要完全明白为什么会出现中间人问题，需要搞明白https网站的加密协商原理。HTTPS本质是HTTP套了一层加密，这套TLS/SSL加密最核心是实际上通过对称加密实现的。然而如何让浏览器客户端与服务器之间在公开网络中决定<strong>使用什么样的对称加密算法</strong>及<strong>对称密钥的内容</strong>是个比较棘手的问题。为了确保这些信息不为其他人所知，这里引入了非对称加密，非对称加密体系的核心时公钥与私钥，私钥用于签名与解密、公钥用于加密与验签。具体解决方案如下：浏览器客户端与服务器在商定对称加密的具体方式时由服务器告知浏览器客户端公钥，这个公钥是依附在一张证书中的，客户端使用这个公钥来加密指定的算法及密钥，服务器使用私钥解出这些内容，协商便基本完成。</p>
+<p>基本协商过程就是这样，但是中间有点问题。网站服务器将公钥回复给浏览器客户端时，客户端需要想办法确认这个公钥到底是不是服务器的公钥，而对公钥身份的认证就要用到证书，这也是为什么公钥要依附在证书里发给浏览器客户端的原因。这时，对公钥的认证就转化为了对证书的认证。证书验证通常是个信任链传导问题，通俗来说，要检查一个证书是否可信，需要按照证书内提供的信息去询问给它签发证书的机构这本证书是否可信。证书就是这么一个东西，提供对公钥的信任背书。现代浏览器客户端内往往内置了大量的CA颁发机构，常见的各种https网站中的证书向上回溯时都可以回溯到这些CA颁发机构上，因此访问这些网站时不会跳出感叹号告诉你有安全风险。反之，一旦https协商过程中用到的证书的颁发机构不在范围内，就会跳出告警页面询问你是否添加例外。BurpSuite和大型企业为了实现对https流量的控制，会让浏览器导入一份已自己作为证书颁发机构的CA证书。当用户向web网站发起https请求时，它们将网站返回的证书替换成自己的证书，客户端使用被替换的证书后实际将与中间人进行协商，而后续中间人再与网站进行协商，进而完美的插入双方的通信过程而双方无法感知。</p>
+<p>因此可以看出如果浏览器预制或被导入了攻击者的证书颁发机构CA证书，将会对隐私安全造成极大的安全风险。当然，不可否认的是想要切实的实施这种攻击，攻击复杂度是比较高的，攻击者需要想尽办法先搞定我们的浏览器，之后使用ARP欺骗在局域网或在流量路由转发中实施流量拦截才行。</p>
+<h5 id="4-1-Firefox检查证书"><a href="#4-1-Firefox检查证书" class="headerlink" title="4.1 Firefox检查证书"></a>4.1 Firefox检查证书</h5><p>方法一：在URL框中查看当前网页的证书信息，如果不是浏览器原生的证书，浏览器会给出相应的提示。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_195547.png" alt="2021-06-18_195547"></p>
+<p>方法二：“打开应用程序菜单”=&gt;“隐私与安全”=&gt;“证书”=&gt;“查看证书”=&gt;“证书颁发机构”</p>
+<h5 id="4-2-Chrome检查证书"><a href="#4-2-Chrome检查证书" class="headerlink" title="4.2 Chrome检查证书"></a>4.2 Chrome检查证书</h5><p>方法一：查看地址栏中的证书信息。</p>
+<p><img src="/.com//Users\HASEE\AppData\Roaming\Typora\typora-user-images\image-20210618200241475.png" alt="image-20210618200241475"></p>
+<p>方法二：”设置”=&gt;”隐私设置和安全性”=&gt;”安全”=&gt;”管理证书”=&gt;”受信任的根证书颁发机构”</p>
+<h4 id="5-搜索引擎安全"><a href="#5-搜索引擎安全" class="headerlink" title="5 搜索引擎安全"></a>5 搜索引擎安全</h4><p>搜索引擎通过获取搜索记录进行分析已经不是个秘密了，商业公司是要赚钱的，对搜索记录筛查、提取、分析进而用于广告投放，是这些搜索公司业务中比较重要的一部分。当这项技术通过账号与政府、运营商联合起来使用后就能用于精准定位。</p>
+<p>下面给出一些比较注重用户隐私的搜索引擎，以及使用不安全搜索引擎时的安全设置。</p>
+<h5 id="5-1-DuckDuckGo"><a href="#5-1-DuckDuckGo" class="headerlink" title="5.1 DuckDuckGo"></a>5.1 DuckDuckGo</h5><p>DuckDuckGo是一款互联网搜索引擎，它注重用户隐私避免个性化检索所致的数据收集问题。它与其它搜索引擎不同的地方在于其不会分析自己的用户、对所有使用同一组关键词的用户显示同样的结果。</p>
+<p><strong>搜索地址：</strong><a target="_blank" rel="noopener" href="https://duckduckgo.com/">https://duckduckgo.com/</a></p>
+<h5 id="5-2-searx"><a href="#5-2-searx" class="headerlink" title="5.2 searx"></a>5.2 searx</h5><p>DuckDuckGo是一款基于<code>Python</code>的完全开源免费搜索引擎平台，不会存储你的任何搜索信息它注重用户隐私避免个性化检索所致的数据收集问题。用户甚至可以在自己本地搭建。</p>
+<p><strong>安装方式：</strong><a target="_blank" rel="noopener" href="https://searx.github.io/searx/admin/installation.html">https://searx.github.io/searx/admin/installation.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/22/%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/" rel="prev" title="磁盘加密工具">
+                  <i class="fa fa-chevron-left"></i> 磁盘加密工具
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">aplyc1a</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

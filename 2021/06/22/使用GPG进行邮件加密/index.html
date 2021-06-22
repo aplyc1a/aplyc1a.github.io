@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="使用GPG进行邮件加密step1：获得某人对外发布的公钥，导入该公钥到gpg中。在这一过程中要注意发布的公钥的格式。 常见的对外发布的公钥是以文本及文件形式存在的。如果是以可见字符ascii形式（也就是gpg的–armor参数）存在的，则内容形式形如如下所示: 1234567891011-----BEGIN PGP PUBLIC KEY BLOCK-----Version: GnuPG v1mQE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPG邮件加密">
+<meta property="og:url" content="http://example.com/2021/06/22/%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86/index.html">
+<meta property="og:site_name" content="aplyc1a&#39;s blogs">
+<meta property="og:description" content="使用GPG进行邮件加密step1：获得某人对外发布的公钥，导入该公钥到gpg中。在这一过程中要注意发布的公钥的格式。 常见的对外发布的公钥是以文本及文件形式存在的。如果是以可见字符ascii形式（也就是gpg的–armor参数）存在的，则内容形式形如如下所示: 1234567891011-----BEGIN PGP PUBLIC KEY BLOCK-----Version: GnuPG v1mQE">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_114927.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_115246.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_115922.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_120021.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_120624.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_123535.png">
+<meta property="article:published_time" content="2021-06-22T19:50:10.000Z">
+<meta property="article:modified_time" content="2021-06-22T03:51:06.516Z">
+<meta property="article:author" content="aplyc1a">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_114927.png">
+
+
+<link rel="canonical" href="http://example.com/2021/06/22/%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/06/22/%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86/","path":"2021/06/22/使用GPG进行邮件加密/","title":"GPG邮件加密"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GPG邮件加密 | aplyc1a's blogs</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">aplyc1a's blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86"><span class="nav-number">1.</span> <span class="nav-text">使用GPG进行邮件加密</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">aplyc1a</p>
+  <div class="site-description" itemprop="description">Always good to see</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GPG邮件加密
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 11:50:10" itemprop="dateCreated datePublished" datetime="2021-06-22T11:50:10-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 19:51:06" itemprop="dateModified" datetime="2021-06-21T19:51:06-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="使用GPG进行邮件加密"><a href="#使用GPG进行邮件加密" class="headerlink" title="使用GPG进行邮件加密"></a>使用GPG进行邮件加密</h1><p><strong>step1</strong>：获得某人对外发布的公钥，导入该公钥到gpg中。在这一过程中要注意发布的公钥的格式。</p>
+<p>常见的对外发布的公钥是以文本及文件形式存在的。如果是以可见字符ascii形式（也就是gpg的–armor参数）存在的，则内容形式形如如下所示:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP PUBLIC KEY BLOCK-----</span><br><span class="line">Version: GnuPG </span><br><span class="line">v1mQENBGDMWxgBCACgtdOB293iBw5tS0TgED85oImKq62i6azbkk4p/Ueq0ctXX5Do</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">Cqu8i2ILRvMCMqP0rY/HJdgrwYIRs96zu4xTXgpQWkCoSPAg00bBii/cuBLm7BENdr</span><br><span class="line">9YuBSP1AtFPzvCNvb5asDEcZUa+iRTYNpdLwHJehlbcbIhUHYG9CZyGg==</span><br><span class="line">=z44q</span><br><span class="line">-----END PGP PUBLIC KEY BLOCK-----</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP PUBLIC KEY BLOCK-----</span><br><span class="line">mQINBFS7wI8BEAChYhCa6QqmhpZkM63GN78qq4OI7MYvz+rIVo2At1zBu4TNmHqr</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">mBwe169oZ6C2n3SNQFYE7QgwOlu69JbQZ+KrdFi8oZng/lJBFwcCe3gesly6MPJ1M</span><br><span class="line">3NQDCz+b/8UNQbBWF+okwobdl869P06GZtOgG0eh88=</span><br><span class="line">=s1R6</span><br><span class="line">-----END PGP PUBLIC KEY BLOCK-----</span><br></pre></td></tr></table></figure>
+
+<p>具体导入公钥时，图形化类工具的导入都千篇一律。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_114927.png" alt="2021-06-19_114927"></p>
+<p>命令行导入也很简单。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_115246.png" alt="2021-06-19_115246"></p>
+<p>step2：准备好以下3部分内容，将他们通过对方的公钥加密后发送给对方。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.自己想要告知对方的内容</span><br><span class="line">2.自己的公钥。(gpg --armor --output public-key.asc --export aplyc1a@local.me)</span><br><span class="line">3.前两部分内容的签名。[可选](gpg --sign --armor data12.txt)</span><br></pre></td></tr></table></figure>
+
+<p>下面是具体的3部分消息组合起来的内容：</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_115922.png" alt="2021-06-19_115922"></p>
+<p>使用对方公钥加密后的内容如下：</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_120021.png" alt="2021-06-19_120021"></p>
+<p>step3：对方收到来信后，用自己的私钥可以解密出密件内容。从而获得了我们的公钥。收件方也可以用这个公钥尝试对签名进行验签，验证我们这个密钥对的有效性。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_120624.png" alt="2021-06-19_120624"></p>
+<p>用命令来操作就是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpg --decrypt --output plain_msg.txt  received_msg.txt</span><br><span class="line">gpg --verify plain_msg.sig.txt plain_msg.data.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>step4</strong>：在完成上面3步后，双方就可以使用对方的公钥加密内容进行通信了。在密件中还可以带上签名文件，帮助对方判断内容来源的真实性。</p>
+<p>上面提到的都是对文本的加密，对文件的加解密则更简单。下面是具体命令，使用命令行解密时还会自动验签。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 发信者对文件的加密</span></span><br><span class="line">gpg --local-user [发信者ID] --recipient [接收者ID] --armor --sign --encrypt demo.txt</span><br><span class="line"><span class="meta">#</span><span class="bash"> 收信人对文件的解密，解密时会自动验证签名</span></span><br><span class="line">gpg --decrypt --output data.txt msg.txt.asc</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_123535.png" alt="2021-06-19_123535"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/22/%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF/" rel="prev" title="门罗币挖矿">
+                  <i class="fa fa-chevron-left"></i> 门罗币挖矿
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/22/%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7KeePassXC/" rel="next" title="密码管理工具KeePassXC">
+                  密码管理工具KeePassXC <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">aplyc1a</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

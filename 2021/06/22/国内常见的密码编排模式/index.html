@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="密码编排模式分析口令爆破效果的好坏与字典的质量系系相关，为了在实战中取得高效的成果，故而花了一段时间分析口令，故成此文。 口令用来鉴权，安全性要求我们要将口令设置的足够复杂且不混用，使得在枚举爆破时攻击者花费的时间代价是不可承受的，然而，现实与理想条件下是截然不同的，围绕人这一因素，弱口令的出现无法避免。 同时，在实际口令爆破登录中，可以发现针对不同角色的口令爆破，惯用密码的类型也有差异。但是不管">
+<meta property="og:type" content="article">
+<meta property="og:title" content="国内常见的密码编排模式">
+<meta property="og:url" content="http://example.com/2021/06/22/%E5%9B%BD%E5%86%85%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AF%86%E7%A0%81%E7%BC%96%E6%8E%92%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="aplyc1a&#39;s blogs">
+<meta property="og:description" content="密码编排模式分析口令爆破效果的好坏与字典的质量系系相关，为了在实战中取得高效的成果，故而花了一段时间分析口令，故成此文。 口令用来鉴权，安全性要求我们要将口令设置的足够复杂且不混用，使得在枚举爆破时攻击者花费的时间代价是不可承受的，然而，现实与理想条件下是截然不同的，围绕人这一因素，弱口令的出现无法避免。 同时，在实际口令爆破登录中，可以发现针对不同角色的口令爆破，惯用密码的类型也有差异。但是不管">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-22T18:16:09.000Z">
+<meta property="article:modified_time" content="2021-06-22T03:22:55.672Z">
+<meta property="article:author" content="aplyc1a">
+<meta property="article:tag" content="社工">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/06/22/%E5%9B%BD%E5%86%85%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AF%86%E7%A0%81%E7%BC%96%E6%8E%92%E6%A8%A1%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/06/22/%E5%9B%BD%E5%86%85%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AF%86%E7%A0%81%E7%BC%96%E6%8E%92%E6%A8%A1%E5%BC%8F/","path":"2021/06/22/国内常见的密码编排模式/","title":"国内常见的密码编排模式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>国内常见的密码编排模式 | aplyc1a's blogs</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">aplyc1a's blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E7%BC%96%E6%8E%92%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">密码编排模式分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-%E6%99%AE%E9%80%9A%E8%B4%A6%E6%88%B7%E5%8F%A3%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">0x00 普通账户口令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%94%A8%E6%88%B7%E5%8F%A3%E4%BB%A4%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">1 用户口令分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-%E5%A7%93%E5%90%8D-%E8%BF%9E%E6%8E%A5%E7%AC%A6%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89-%E6%95%B0%E5%AD%97"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1 姓名+连接符（可选）+数字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-%E5%A7%93%E5%90%8D-%E8%BF%9E%E6%8E%A5%E7%AC%A6%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89-%E5%AD%97%E7%AC%A6"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.2 姓名+连接符（可选）+字符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-%E4%B8%AA%E4%BA%BA%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.3 个人属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-%E9%94%AE%E7%9B%98%E7%A9%BA%E9%97%B4%E6%8E%92%E5%B8%83"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">1.4 键盘空间排布</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-5-%E7%9F%AD%E8%AF%AD"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">1.5 短语</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BC%B1%E5%8F%A3%E4%BB%A4%E7%BB%9F%E8%AE%A1%E8%A7%84%E5%BE%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">2 弱口令统计规律</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%8F%A3%E4%BB%A4%E7%88%86%E7%A0%B4%E4%B9%8B%E6%80%9D"><span class="nav-number">1.1.3.</span> <span class="nav-text">3 口令爆破之思</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-%E7%9B%AE%E6%A0%87%E6%98%AF%E8%87%AA%E7%84%B6%E4%BA%BA"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">3.1.目标是自然人</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-%E7%9B%AE%E6%A0%87%E6%98%AF%E7%BD%91%E7%AB%99"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">3.2.目标是网站</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">aplyc1a</p>
+  <div class="site-description" itemprop="description">Always good to see</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E5%9B%BD%E5%86%85%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AF%86%E7%A0%81%E7%BC%96%E6%8E%92%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          国内常见的密码编排模式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 10:16:09" itemprop="dateCreated datePublished" datetime="2021-06-22T10:16:09-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 19:22:55" itemprop="dateModified" datetime="2021-06-21T19:22:55-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="密码编排模式分析"><a href="#密码编排模式分析" class="headerlink" title="密码编排模式分析"></a>密码编排模式分析</h2><p>口令爆破效果的好坏与字典的质量系系相关，为了在实战中取得高效的成果，故而花了一段时间分析口令，故成此文。</p>
+<p>口令用来鉴权，安全性要求我们要将口令设置的足够复杂且不混用，使得在枚举爆破时攻击者花费的时间代价是不可承受的，然而，现实与理想条件下是截然不同的，围绕人这一因素，弱口令的出现无法避免。</p>
+<p>同时，在实际口令爆破登录中，可以发现针对不同角色的口令爆破，惯用密码的类型也有差异。但是不管怎样，为了方便人记住，大多数密码都是现实生活中某些特点在虚拟世界中的投影。</p>
+<h3 id="0x00-普通账户口令"><a href="#0x00-普通账户口令" class="headerlink" title="0x00 普通账户口令"></a>0x00 普通账户口令</h3><p>这里以网上公开途径获得到的国内的口令数据源为例，统计后，可以发现常见弱口令的构成无外乎以下几方面：</p>
+<p>1.元素在键盘上的空间位置。</p>
+<p>2.家人的生日、手机号、姓名。</p>
+<p>3.情绪词汇。</p>
+<p>4.一些吉利或上口的数字。</p>
+<h4 id="1-用户口令分析"><a href="#1-用户口令分析" class="headerlink" title="1 用户口令分析"></a>1 用户口令分析</h4><p>翻阅数据源可以看到，绝大部分的口令都存在一定的安全问题，在下面给出的一些常见构型中，越是使用大众化常见的词汇，越是容易在字典匹配，越是使用个人信息相关的也越容易被通过社工字典方式得到匹配。总之，这些构型都存在安全问题：</p>
+<h5 id="1-1-姓名-连接符（可选）-数字"><a href="#1-1-姓名-连接符（可选）-数字" class="headerlink" title="1.1 姓名+连接符（可选）+数字"></a>1.1 姓名+连接符（可选）+数字</h5><p>各种姓名的变形+数字（生日、手机号、吉利数字、顺口溜数字）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">liming</span><br><span class="line">limingliming</span><br><span class="line">liming20210814</span><br><span class="line">liming0814</span><br><span class="line">lm20210814</span><br><span class="line">lm0814~~</span><br><span class="line">lm18801239876</span><br><span class="line">liming9876</span><br><span class="line">liming@2333</span><br><span class="line">liming2333</span><br><span class="line">liming666</span><br><span class="line">lm666888</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-2-姓名-连接符（可选）-字符"><a href="#1-2-姓名-连接符（可选）-字符" class="headerlink" title="1.2 姓名+连接符（可选）+字符"></a>1.2 姓名+连接符（可选）+字符</h5><p>主要是各种姓名的变形+字符（键盘上相邻字符、短语、单词）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">limingqwe123</span><br><span class="line">liming123</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3-个人属性"><a href="#1-3-个人属性" class="headerlink" title="1.3 个人属性"></a>1.3 个人属性</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">18801239876</span><br><span class="line">20210814</span><br><span class="line">woaini1314</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-4-键盘空间排布"><a href="#1-4-键盘空间排布" class="headerlink" title="1.4 键盘空间排布"></a>1.4 键盘空间排布</h5><p>密码与键盘排布系系相关，主要分为电脑键盘与手机输入法9键两种</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">123456</span><br><span class="line">qq123456</span><br><span class="line">111111</span><br><span class="line">1q2w3e4r</span><br><span class="line">qwe123</span><br><span class="line">zxc123456</span><br><span class="line">88888888</span><br><span class="line">1598753</span><br><span class="line">741258</span><br><span class="line">a123456789</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-5-短语"><a href="#1-5-短语" class="headerlink" title="1.5 短语"></a>1.5 短语</h5><p>不少都是非常情绪化的词汇，爱情、脏话、追星等等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">laopo520</span><br><span class="line">love5201314</span><br><span class="line">loveyou1314</span><br><span class="line">wodemima</span><br><span class="line">bianhao89757</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-弱口令统计规律"><a href="#2-弱口令统计规律" class="headerlink" title="2 弱口令统计规律"></a>2 弱口令统计规律</h4><p>下面以某公开途径获得的弱口令统计计数为例，前200的弱口令如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line">224979 123456</span><br><span class="line"> 62064 123456789</span><br><span class="line"> 58345 111111</span><br><span class="line"> 36464 123123</span><br><span class="line"> 29223 000000</span><br><span class="line"> 22532 5201314</span><br><span class="line"> 16103 aaaaaa</span><br><span class="line"> 15617 a123456</span><br><span class="line"> 10602 123321</span><br><span class="line">  8229 1314520</span><br><span class="line">  8217 7758521</span><br><span class="line">  7122 123456a</span><br><span class="line">  7076 12345678</span><br><span class="line">  6793 1234567890</span><br><span class="line">  6663 wangyut2</span><br><span class="line">  6377 123123123</span><br><span class="line">  6208 woaini</span><br><span class="line">  5798 1234567</span><br><span class="line">  5694 123</span><br><span class="line">  4761 112233</span><br><span class="line">  4729 11111111</span><br><span class="line">  4673 9958123</span><br><span class="line">  4468 zxcvbnm</span><br><span class="line">  4459 qq123456</span><br><span class="line">  4421 666666</span><br><span class="line">  4355 5211314</span><br><span class="line">  4340 7758258</span><br><span class="line">  4158 123654</span><br><span class="line">  4136 hm9958123</span><br><span class="line">  3979 a123456789</span><br><span class="line">  3947 asdasd</span><br><span class="line">  3825 147258369</span><br><span class="line">  3754 520520</span><br><span class="line">  3688 110110</span><br><span class="line">  3661 woaini1314</span><br><span class="line">  3605 100200</span><br><span class="line">  3273 1111111</span><br><span class="line">  2880 asd123</span><br><span class="line">  2813 147258</span><br><span class="line">  2802 a123123</span><br><span class="line">  2770 123456789a</span><br><span class="line">  2715 q123456</span><br><span class="line">  2713 159357</span><br><span class="line">  2653 159753</span><br><span class="line">  2594 00000000</span><br><span class="line">  2531 888888</span><br><span class="line">  2480 654321</span><br><span class="line">  2475 121212</span><br><span class="line">  2422 qwe123</span><br><span class="line">  2386 qwertyuiop</span><br><span class="line">  2375 asdfghjkl</span><br><span class="line">  2333 123qwe</span><br><span class="line">  2291 1314521</span><br><span class="line">  2232 789456123</span><br><span class="line">  2222 88888888</span><br><span class="line">  2209 123000</span><br><span class="line">  2191 liuchang</span><br><span class="line">  2088 321321</span><br><span class="line">  2070 qazwsx</span><br><span class="line">  2012 asd123456</span><br><span class="line">  1997 qqqqqq</span><br><span class="line">  1947 aa123456</span><br><span class="line">  1940 z123456</span><br><span class="line">  1913 987654321</span><br><span class="line">  1778 456852</span><br><span class="line">  1766 521521</span><br><span class="line">  1765 woaini123</span><br><span class="line">  1717 woaini520</span><br><span class="line">  1679 741852963</span><br><span class="line">  1654 xx123456</span><br><span class="line">  1625 qweqwe</span><br><span class="line">  1622 qwerty</span><br><span class="line">  1618 abc123</span><br><span class="line">  1610 222222</span><br><span class="line">  1596 1qaz2wsx</span><br><span class="line">  1571 qweasdzxc</span><br><span class="line">  1571 31415926</span><br><span class="line">  1567 123456aa</span><br><span class="line">  1555 zxc123</span><br><span class="line">  1544 110120</span><br><span class="line">  1539 1q2w3e4r</span><br><span class="line">  1535 qazwsxedc</span><br><span class="line">  1535 111222</span><br><span class="line">  1523 123456qq</span><br><span class="line">  1502 555555</span><br><span class="line">  1446 qwe123456</span><br><span class="line">  1418 999999</span><br><span class="line">  1416 456123</span><br><span class="line">  1408 iloveyou</span><br><span class="line">  1401 woaini521</span><br><span class="line">  1382 a5201314</span><br><span class="line">  1378 12301230</span><br><span class="line">  1373 abc123456</span><br><span class="line">  1362 w123456</span><br><span class="line">  1359 789456</span><br><span class="line">  1357 1111111111</span><br><span class="line">  1357 0000000</span><br><span class="line">  1347 caonima</span><br><span class="line">  1336 a111111</span><br><span class="line">  1326 zxcvbnm123</span><br><span class="line">  1321 1234560</span><br><span class="line">  1312 123654789</span><br><span class="line">  1310 123456q</span><br><span class="line">  1310 1</span><br><span class="line">  1306 102030</span><br><span class="line">  1303 1230123</span><br><span class="line">  1282 asdfgh</span><br><span class="line">  1279 753951</span><br><span class="line">  1257 asdasdasd</span><br><span class="line">  1226 123698745</span><br><span class="line">  1204 201314</span><br><span class="line">  1199 7758520</span><br><span class="line">  1196 333333</span><br><span class="line">  1189 zhang123</span><br><span class="line">  1181 12345</span><br><span class="line">  1181 1234</span><br><span class="line">  1179 0123456789</span><br><span class="line">  1175 584520</span><br><span class="line">  1130 123123a</span><br><span class="line">  1122 aini1314</span><br><span class="line">  1108 123456abc</span><br><span class="line">  1094 25257758</span><br><span class="line">  1064 a000000</span><br><span class="line">  1044 qweasd</span><br><span class="line">  1020 134679</span><br><span class="line">  1004 111111111</span><br><span class="line">  1003 741852</span><br><span class="line">  1000 95368452</span><br><span class="line">   999 147852369</span><br><span class="line">   996 wocaonima</span><br><span class="line">   994 qaz123</span><br><span class="line">   992 5845201314</span><br><span class="line">   987 963852741</span><br><span class="line">   985 1q2w3e</span><br><span class="line">   982 7777777</span><br><span class="line">   975 1111</span><br><span class="line">   952 147852</span><br><span class="line">   951 101010</span><br><span class="line">   942 woainima</span><br><span class="line">   936 0000000000</span><br><span class="line">   917 q123456789</span><br><span class="line">   916 zxc123456</span><br><span class="line">   916 as123456</span><br><span class="line">   909 zzzzzz</span><br><span class="line">   905 456456</span><br><span class="line">   899 qq123123</span><br><span class="line">   882 456789</span><br><span class="line">   879 1233211234567</span><br><span class="line">   871 123456asd</span><br><span class="line">   856 123789</span><br><span class="line">   850 xuliang</span><br><span class="line">   839 3344520</span><br><span class="line">   821 woaiwojia</span><br><span class="line">   816 qq5201314</span><br><span class="line">   810 111111a</span><br><span class="line">   805 123456123</span><br><span class="line">   802 1q2w3e4r5t</span><br><span class="line">   795 963852</span><br><span class="line">   793 7895123</span><br><span class="line">   787 951753</span><br><span class="line">   786 5201314a</span><br><span class="line">   777 0123456</span><br><span class="line">   775 778899</span><br><span class="line">   775 211314</span><br><span class="line">   773 buzhidao</span><br><span class="line">   763 a123456a</span><br><span class="line">   761 abcd1234</span><br><span class="line">   761 321654</span><br><span class="line">   760 asdfasdf</span><br><span class="line">   757 zxczxc</span><br><span class="line">   745 wang123</span><br><span class="line">   739 xiaoxiao</span><br><span class="line">   738 yangyang</span><br><span class="line">   732 5845211314</span><br><span class="line">   731 010203</span><br><span class="line">   726 windows</span><br><span class="line">   724 11223344</span><br><span class="line">   720 password</span><br><span class="line">   719 020332007051</span><br><span class="line">   711 789789</span><br><span class="line">   706 mm123123</span><br><span class="line">   706 a1314520</span><br><span class="line">   703 11111</span><br><span class="line">   702 131421</span><br><span class="line">   702 1234qwer</span><br><span class="line">   702 123456789q</span><br><span class="line">   695 123abc</span><br><span class="line">   692 12345678910</span><br><span class="line">   683 aa123123</span><br><span class="line">   680 a12345</span><br><span class="line">   676 q1w2e3r4</span><br><span class="line">   664 110120119</span><br><span class="line">   653 5201314520</span><br><span class="line">   649 qaz123456</span><br><span class="line">   648 123qweasd</span><br><span class="line">   648 0000</span><br><span class="line">   640 584521</span><br><span class="line">   640 123321123</span><br><span class="line">   640 111222333</span><br><span class="line">   637 123456987</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-口令爆破之思"><a href="#3-口令爆破之思" class="headerlink" title="3 口令爆破之思"></a>3 口令爆破之思</h4><p>两种思路：</p>
+<h5 id="3-1-目标是自然人"><a href="#3-1-目标是自然人" class="headerlink" title="3.1.目标是自然人"></a>3.1.目标是自然人</h5><p>先撞普通用户的通用弱口令，再过社工字典。</p>
+<p>社工字典的生成：<a target="_blank" rel="noopener" href="http://github.com/aplyc1a/RainCode">http://github.com/aplyc1a/RainCode</a></p>
+<h5 id="3-2-目标是网站"><a href="#3-2-目标是网站" class="headerlink" title="3.2.目标是网站"></a>3.2.目标是网站</h5><p>每个用户撞一遍普通用户的通用弱口令。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A4%BE%E5%B7%A5/" rel="tag"># 社工</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/22/Linux%E5%85%A5%E4%BE%B5%E7%97%95%E8%BF%B9%E5%8F%96%E8%AF%81(8)-%E6%9F%A5%E6%89%BE%E5%90%8E%E9%97%A8/" rel="prev" title="Linux入侵事件取证(8)-查找后门">
+                  <i class="fa fa-chevron-left"></i> Linux入侵事件取证(8)-查找后门
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(1)-%E8%BD%AF%E4%BB%B6%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C/" rel="next" title="Linux取证辅助技术(1)-软件完整性校验">
+                  Linux取证辅助技术(1)-软件完整性校验 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">aplyc1a</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
