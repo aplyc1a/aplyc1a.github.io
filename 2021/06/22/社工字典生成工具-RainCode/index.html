@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="网上的社工字典生成工具有很多，但不少工具的定制化程度很低，用起来比较难受，最重要的是没有区分目标对象的类型。之前花了一定时间研究了口令编排的习惯模式，发现语言习惯（如：英语语系、汉语语系）、不同身份类型（上班族、学生）、以及帐号的拥有者（如：虚拟用户、测试用户、普通用户）的字典模式是有一定差别的。网上的工具没有很好的考虑这方面问题，要么导致口令没有包含在内，要么导致字典过大。因此，写了一个比较容易">
+<meta property="og:type" content="article">
+<meta property="og:title" content="社工字典生成工具RainCode">
+<meta property="og:url" content="http://example.com/2021/06/22/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7-RainCode/index.html">
+<meta property="og:site_name" content="aplyc1a&#39;s blogs">
+<meta property="og:description" content="网上的社工字典生成工具有很多，但不少工具的定制化程度很低，用起来比较难受，最重要的是没有区分目标对象的类型。之前花了一定时间研究了口令编排的习惯模式，发现语言习惯（如：英语语系、汉语语系）、不同身份类型（上班族、学生）、以及帐号的拥有者（如：虚拟用户、测试用户、普通用户）的字典模式是有一定差别的。网上的工具没有很好的考虑这方面问题，要么导致口令没有包含在内，要么导致字典过大。因此，写了一个比较容易">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-22T23:10:00.000Z">
+<meta property="article:modified_time" content="2021-06-22T07:10:53.576Z">
+<meta property="article:author" content="aplyc1a">
+<meta property="article:tag" content="社工">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/06/22/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7-RainCode/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/06/22/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7-RainCode/","path":"2021/06/22/社工字典生成工具-RainCode/","title":"社工字典生成工具RainCode"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>社工字典生成工具RainCode | aplyc1a's blogs</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">aplyc1a's blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%94%9F%E6%88%90%E8%87%AA%E7%84%B6%E4%BA%BA%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8"><span class="nav-number">1.1.</span> <span class="nav-text">1 生成自然人社工字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%90%8E%E5%8F%B0"><span class="nav-number">1.2.</span> <span class="nav-text">2 后台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95-%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">附录-目录说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#model"><span class="nav-number">2.1.</span> <span class="nav-text">model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#db"><span class="nav-number">2.2.</span> <span class="nav-text">db</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#common"><span class="nav-number">2.3.</span> <span class="nav-text">common</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">aplyc1a</p>
+  <div class="site-description" itemprop="description">Always good to see</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7-RainCode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          社工字典生成工具RainCode
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 15:10:00" itemprop="dateCreated datePublished" datetime="2021-06-22T15:10:00-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 23:10:53" itemprop="dateModified" datetime="2021-06-21T23:10:53-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>网上的社工字典生成工具有很多，但不少工具的定制化程度很低，用起来比较难受，最重要的是没有区分目标对象的类型。<br>之前花了一定时间研究了口令编排的习惯模式，发现语言习惯（如：英语语系、汉语语系）、不同身份类型（上班族、学生）、以及帐号的拥有者（如：虚拟用户、测试用户、普通用户）的字典模式是有一定差别的。<br>网上的工具没有很好的考虑这方面问题，要么导致口令没有包含在内，要么导致字典过大。因此，写了一个比较容易上手且能够高度定制化的能够针对不同角色用户来生成字典。同时还集成了一些默认的高频弱口令及字典制作过程中可能用到的小工具脚本。</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>通过定制化不同角色的密码模型文件（*.model）及信息元数据文件（config.json）可以极大概率的产生正确的用户密码。</p>
+<h3 id="1-生成自然人社工字典"><a href="#1-生成自然人社工字典" class="headerlink" title="1 生成自然人社工字典"></a>1 生成自然人社工字典</h3><p><strong>step1</strong>：收集目标的各类信息，填入<strong>human.json</strong>。</p>
+<p><strong>step2</strong>：选择对应的模型文件(<strong>*.model</strong>)。</p>
+<p><strong>step3</strong>：执行之。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">python3 raincode.py -j *.json -m *.model [-i dicfilename] [-o [result.txt]]</span><br><span class="line">-j/--json *  : 指定需要加载的目标元数据文件。</span><br><span class="line">-m/--model * : 指定需要加载的目标模型文件。</span><br><span class="line">-o/--output [filename]: 指定输出文件名称。</span><br><span class="line">-i/--import *: 导入外置字典</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">输出到标准屏幕</span></span><br><span class="line">python3 raincode.py -j human.json -m model/chinese-password.model</span><br><span class="line"><span class="meta">#</span><span class="bash">输出密码到文件</span></span><br><span class="line">python3 raincode.py -j human.json -m model/chinese-password.model -o result.txt</span><br><span class="line"><span class="meta">#</span><span class="bash">导入密码</span></span><br><span class="line">python3 raincode.py -j human.json -m model/chinese-password.model -i common/chinese-password.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-后台"><a href="#2-后台" class="headerlink" title="2 后台"></a>2 后台</h3><p><strong>step1</strong>：收集目标的各类信息，填入<strong>backend.json</strong>。</p>
+<p><strong>step2</strong>：选择对应的模型文件(<strong>*.model</strong>)。</p>
+<p><strong>step3</strong>：执行之。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">python3 raincode.py -j *.json -m *.model [-i dicfilename] [-o [result.txt]]</span><br><span class="line">-j/--json : 指定需要加载的目标元数据文件。</span><br><span class="line">-m/--model: 指定需要加载的目标模型文件。</span><br><span class="line">-o/--output [filename]: 指定输出文件名称。</span><br><span class="line">-i/--import [filename]: 导入外置字典</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">输出到标准屏幕</span></span><br><span class="line">python3 raincode.py -j backend.json -m model/backend.model</span><br><span class="line"><span class="meta">#</span><span class="bash">输出密码到文件</span></span><br><span class="line">python3 raincode.py -j backend.json -m model/backend.model -o result.txt</span><br><span class="line"><span class="meta">#</span><span class="bash">导入密码</span></span><br><span class="line">python3 raincode.py -j backend.json -m model/backend.model -i common/backend-password.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="附录-目录说明"><a href="#附录-目录说明" class="headerlink" title="附录-目录说明"></a>附录-目录说明</h2><h3 id="model"><a href="#model" class="headerlink" title="model"></a>model</h3><p>存储用于生成字典的核心模型文件。模型描述的是密码的结构。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>chinese-password.model</td>
+<td>中文密码模型</td>
+</tr>
+<tr>
+<td>engish-password.model</td>
+<td>英语密码模型</td>
+</tr>
+<tr>
+<td>backend-password.model</td>
+<td>后台常见密码模型</td>
+</tr>
+</tbody></table>
+<h3 id="db"><a href="#db" class="headerlink" title="db"></a>db</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%m%d.txt</td>
+<td>4位月日-数字字典</td>
+</tr>
+<tr>
+<td>%Y%m%d.txt</td>
+<td>6位年月日-数字字典</td>
+</tr>
+<tr>
+<td>chinesename-l3.txt</td>
+<td>3位名字-字母字典</td>
+</tr>
+<tr>
+<td>sfz_l4.txt</td>
+<td>某证后4位-字母字典</td>
+</tr>
+<tr>
+<td>sfz_l6.txt</td>
+<td>某证后6位-字母字典</td>
+</tr>
+<tr>
+<td>百家姓.txt</td>
+<td>百家姓频数排序-字符字典</td>
+</tr>
+</tbody></table>
+<p>使用<strong>db2json.py</strong>将txt字典转化为可加入json文件中的材料。</p>
+<p>python3 db2json.py -i chinesename-l3.txt -n name &gt; 1.json</p>
+<h3 id="common"><a href="#common" class="headerlink" title="common"></a>common</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>chinese-password.txt</td>
+<td>国内高频弱口令</td>
+</tr>
+<tr>
+<td>english-password.txt</td>
+<td>国外高频弱口令(暂缺)</td>
+</tr>
+<tr>
+<td>linux-account.txt</td>
+<td>linux常见用户</td>
+</tr>
+<tr>
+<td>backend-account.txt</td>
+<td>后台常见用户</td>
+</tr>
+<tr>
+<td>backend-password.txt</td>
+<td>后台常见弱口令</td>
+</tr>
+<tr>
+<td>backend-sqlinject-user.txt</td>
+<td>后台常见万能账户</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A4%BE%E5%B7%A5/" rel="tag"># 社工</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/22/GPG%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" rel="prev" title="GPG加密工具使用">
+                  <i class="fa fa-chevron-left"></i> GPG加密工具使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">aplyc1a</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

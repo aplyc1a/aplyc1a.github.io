@@ -118,12 +118,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -161,7 +161,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8C%BF%E5%90%8D%E5%AE%89%E5%85%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7-RainCode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8C%BF%E5%90%8D%E5%AE%89%E5%85%A8/" class="post-title-link" itemprop="url">浏览器匿名安全</a>
+          <a href="/2021/06/22/%E7%A4%BE%E5%B7%A5%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7-RainCode/" class="post-title-link" itemprop="url">社工字典生成工具RainCode</a>
         </h2>
 
         <div class="post-meta-container">
@@ -185,14 +185,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-06-22 11:50:10" itemprop="dateCreated datePublished" datetime="2021-06-22T11:50:10-08:00">2021-06-22</time>
+      <time title="Created: 2021-06-22 15:10:00" itemprop="dateCreated datePublished" datetime="2021-06-22T15:10:00-08:00">2021-06-22</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-21 19:50:40" itemprop="dateModified" datetime="2021-06-21T19:50:40-08:00">2021-06-21</time>
+        <time title="Modified: 2021-06-21 23:10:53" itemprop="dateModified" datetime="2021-06-21T23:10:53-08:00">2021-06-21</time>
       </span>
 
   
@@ -205,160 +205,109 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="浏览器安全"><a href="#浏览器安全" class="headerlink" title="浏览器安全"></a>浏览器安全</h3><p>打开浏览器浏览网页的过程中实际上会存在很多的安全风险。这一节主要记录反审查场景下的浏览器安全。</p>
-<h4 id="1-前端动态脚本"><a href="#1-前端动态脚本" class="headerlink" title="1 前端动态脚本"></a>1 前端动态脚本</h4><p>从web前端技术栈的角度来看，网站拥有者能通过JS等动态脚本在用户浏览器侧实现很多功能（如：客户端情报分析、控制浏览器、窃取cookie、0day利用等）。下面给出的这个网站能帮助我们了解浏览器究竟能泄露什么信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://panopticlick.eff.orghttps://coveryourtracks.eff.org/kcarter?aat=1https://wzyboy.im/post/1130.html</span><br></pre></td></tr></table></figure>
-
-<h5 id="1-1-NoScript"><a href="#1-1-NoScript" class="headerlink" title="1.1 NoScript"></a>1.1 NoScript</h5><p>Firefox有一个可以称之为神器的插件，名叫NoScript。NoScript通过对网页资源的加载进行控制实现对浏览器客户端的信息保护，确保浏览器在受信任的站点运行动态内容。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_002402.png" alt="2021-06-20_002402"></p>
-<p>首次使用这个插件时可能比较难受，需要对访问的各种网站进行加载策略配置，等待对常见资源的策略清单收集的差不多的时候，使用将会变得比较容易。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_122610.png" alt="2021-06-20_122610"></p>
-<p>默认情况下，每当访问一个从未打开的网页都需要对网站资源进行配置，Noscript支持5种预置的访问策略控制，每种策略的资源加载种类也可以具体在Noscript的设置选项中进行配置。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_120616.png" alt="2021-06-20_120616"></p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_110322.png" alt="2021-06-20_110322"></p>
-<p>NoScript还会贴心的提示当前页面屏蔽了多少动态对象的加载。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_123216.png" alt="2021-06-20_123216"></p>
-<h5 id="1-2-uBlock-origin"><a href="#1-2-uBlock-origin" class="headerlink" title="1.2 uBlock origin"></a>1.2 uBlock origin</h5><p>uBlock是另一款FireFox上热门的隐私保护工具，支持对多种浏览器可能涉及的隐私问题的选项设置。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_153748.png" alt="2021-06-21_153748"></p>
-<p>工具的复杂度较NoScript要高一些，说实话本人并没怎么使用过。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_154136.png" alt="2021-06-21_154136"></p>
-<h4 id="2-流媒体泄露"><a href="#2-流媒体泄露" class="headerlink" title="2 流媒体泄露"></a>2 流媒体泄露</h4><p>实际上，对任何页面上可能会产生的udp报文而言，都可能在代理场景下产生泄漏问题。虽然socks5标准支持udp，但并非每一个socks5工具都支持代理udp，这就导致本地机器可能直接向目标设备发送udp报文。如果我们本身的tcp流量是经过代理的，这时udp流量便泄露了我们的真实IP。</p>
-<p>比如不少流媒体协议，流媒体协议往往应用于视频、音频等需要大数据量的场景，为了传输速率，普遍基于面向非连接的UDP协议。历史上关于流媒体协议族泄露用户真实IP的报道与文章已经层出不穷了。比如，WebRTC是用于实时语音对话或视频对话的流媒体类的API，它默认使用UDP方式进行传输。</p>
-<p><a target="_blank" rel="noopener" href="https://webrtc.org.cn/is-webrtc-safe/">https://webrtc.org.cn/is-webrtc-safe/</a></p>
-<h4 id="3-DNS请求泄露"><a href="#3-DNS请求泄露" class="headerlink" title="3 DNS请求泄露"></a>3 DNS请求泄露</h4><p>当我们没配置DNSoverHTTPS或DNSoverSocks5时就会产生这种问题。正常来说我们访问一个网页，要先向DNS服务器发一个域名解析请求获得网站真实地址，之后再向真实设备发请求。如果目标域名是运营商的黑名单，那通过分析短时间内的发包请求可以关联出代理服务器的地址，如果进一步反向溯源的话可能会定位到我们，当然只是可能，具体能不能定位到取决于从公网逐渐向小网逐层深入时是不是固定IP，有没有数据包记录等等。</p>
-<p>下图是Firefox的代理设置页面，如果开启了DNS over Socks5就能绕过GFW对DNS流量的劫持，将实际请求放在远端发送。反之就会引发DNS泄露问题，产生一定的问题。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_152435.png" alt="2021-06-21_152435"></p>
-<h4 id="4-证书安全"><a href="#4-证书安全" class="headerlink" title="4 证书安全"></a>4 证书安全</h4><p>浏览器的证书安全常常被人忽略。简单来说，如果浏览器被导入了不可信证书，将无法感知到https协商过程出现证书调包问题。而通过证书调包，中间人可以实现对数据的篡改与监听，实际上Web安全中非常出名的Burpsuite工具就使用了这种原理，企业网中实现对员工的数据监控也是基于这一原理。</p>
-<p>想要完全明白为什么会出现中间人问题，需要搞明白https网站的加密协商原理。HTTPS本质是HTTP套了一层加密，这套TLS/SSL加密最核心是实际上通过对称加密实现的。然而如何让浏览器客户端与服务器之间在公开网络中决定<strong>使用什么样的对称加密算法</strong>及<strong>对称密钥的内容</strong>是个比较棘手的问题。为了确保这些信息不为其他人所知，这里引入了非对称加密，非对称加密体系的核心时公钥与私钥，私钥用于签名与解密、公钥用于加密与验签。具体解决方案如下：浏览器客户端与服务器在商定对称加密的具体方式时由服务器告知浏览器客户端公钥，这个公钥是依附在一张证书中的，客户端使用这个公钥来加密指定的算法及密钥，服务器使用私钥解出这些内容，协商便基本完成。</p>
-<p>基本协商过程就是这样，但是中间有点问题。网站服务器将公钥回复给浏览器客户端时，客户端需要想办法确认这个公钥到底是不是服务器的公钥，而对公钥身份的认证就要用到证书，这也是为什么公钥要依附在证书里发给浏览器客户端的原因。这时，对公钥的认证就转化为了对证书的认证。证书验证通常是个信任链传导问题，通俗来说，要检查一个证书是否可信，需要按照证书内提供的信息去询问给它签发证书的机构这本证书是否可信。证书就是这么一个东西，提供对公钥的信任背书。现代浏览器客户端内往往内置了大量的CA颁发机构，常见的各种https网站中的证书向上回溯时都可以回溯到这些CA颁发机构上，因此访问这些网站时不会跳出感叹号告诉你有安全风险。反之，一旦https协商过程中用到的证书的颁发机构不在范围内，就会跳出告警页面询问你是否添加例外。BurpSuite和大型企业为了实现对https流量的控制，会让浏览器导入一份已自己作为证书颁发机构的CA证书。当用户向web网站发起https请求时，它们将网站返回的证书替换成自己的证书，客户端使用被替换的证书后实际将与中间人进行协商，而后续中间人再与网站进行协商，进而完美的插入双方的通信过程而双方无法感知。</p>
-<p>因此可以看出如果浏览器预制或被导入了攻击者的证书颁发机构CA证书，将会对隐私安全造成极大的安全风险。当然，不可否认的是想要切实的实施这种攻击，攻击复杂度是比较高的，攻击者需要想尽办法先搞定我们的浏览器，之后使用ARP欺骗在局域网或在流量路由转发中实施流量拦截才行。</p>
-<h5 id="4-1-Firefox检查证书"><a href="#4-1-Firefox检查证书" class="headerlink" title="4.1 Firefox检查证书"></a>4.1 Firefox检查证书</h5><p>方法一：在URL框中查看当前网页的证书信息，如果不是浏览器原生的证书，浏览器会给出相应的提示。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_195547.png" alt="2021-06-18_195547"></p>
-<p>方法二：“打开应用程序菜单”=&gt;“隐私与安全”=&gt;“证书”=&gt;“查看证书”=&gt;“证书颁发机构”</p>
-<h5 id="4-2-Chrome检查证书"><a href="#4-2-Chrome检查证书" class="headerlink" title="4.2 Chrome检查证书"></a>4.2 Chrome检查证书</h5><p>方法一：查看地址栏中的证书信息。</p>
-<p><img src="/.com//Users\HASEE\AppData\Roaming\Typora\typora-user-images\image-20210618200241475.png" alt="image-20210618200241475"></p>
-<p>方法二：”设置”=&gt;”隐私设置和安全性”=&gt;”安全”=&gt;”管理证书”=&gt;”受信任的根证书颁发机构”</p>
-<h4 id="5-搜索引擎安全"><a href="#5-搜索引擎安全" class="headerlink" title="5 搜索引擎安全"></a>5 搜索引擎安全</h4><p>搜索引擎通过获取搜索记录进行分析已经不是个秘密了，商业公司是要赚钱的，对搜索记录筛查、提取、分析进而用于广告投放，是这些搜索公司业务中比较重要的一部分。当这项技术通过账号与政府、运营商联合起来使用后就能用于精准定位。</p>
-<p>下面给出一些比较注重用户隐私的搜索引擎，以及使用不安全搜索引擎时的安全设置。</p>
-<h5 id="5-1-DuckDuckGo"><a href="#5-1-DuckDuckGo" class="headerlink" title="5.1 DuckDuckGo"></a>5.1 DuckDuckGo</h5><p>DuckDuckGo是一款互联网搜索引擎，它注重用户隐私避免个性化检索所致的数据收集问题。它与其它搜索引擎不同的地方在于其不会分析自己的用户、对所有使用同一组关键词的用户显示同样的结果。</p>
-<p><strong>搜索地址：</strong><a target="_blank" rel="noopener" href="https://duckduckgo.com/">https://duckduckgo.com/</a></p>
-<h5 id="5-2-searx"><a href="#5-2-searx" class="headerlink" title="5.2 searx"></a>5.2 searx</h5><p>DuckDuckGo是一款基于<code>Python</code>的完全开源免费搜索引擎平台，不会存储你的任何搜索信息它注重用户隐私避免个性化检索所致的数据收集问题。用户甚至可以在自己本地搭建。</p>
-<p><strong>安装方式：</strong><a target="_blank" rel="noopener" href="https://searx.github.io/searx/admin/installation.html">https://searx.github.io/searx/admin/installation.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          <p>网上的社工字典生成工具有很多，但不少工具的定制化程度很低，用起来比较难受，最重要的是没有区分目标对象的类型。<br>之前花了一定时间研究了口令编排的习惯模式，发现语言习惯（如：英语语系、汉语语系）、不同身份类型（上班族、学生）、以及帐号的拥有者（如：虚拟用户、测试用户、普通用户）的字典模式是有一定差别的。<br>网上的工具没有很好的考虑这方面问题，要么导致口令没有包含在内，要么导致字典过大。因此，写了一个比较容易上手且能够高度定制化的能够针对不同角色用户来生成字典。同时还集成了一些默认的高频弱口令及字典制作过程中可能用到的小工具脚本。</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>通过定制化不同角色的密码模型文件（*.model）及信息元数据文件（config.json）可以极大概率的产生正确的用户密码。</p>
+<h3 id="1-生成自然人社工字典"><a href="#1-生成自然人社工字典" class="headerlink" title="1 生成自然人社工字典"></a>1 生成自然人社工字典</h3><p><strong>step1</strong>：收集目标的各类信息，填入<strong>human.json</strong>。</p>
+<p><strong>step2</strong>：选择对应的模型文件(<strong>*.model</strong>)。</p>
+<p><strong>step3</strong>：执行之。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">python3 raincode.py -j *.json -m *.model [-i dicfilename] [-o [result.txt]]</span><br><span class="line">-j/--json *  : 指定需要加载的目标元数据文件。</span><br><span class="line">-m/--model * : 指定需要加载的目标模型文件。</span><br><span class="line">-o/--output [filename]: 指定输出文件名称。</span><br><span class="line">-i/--import *: 导入外置字典</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">输出到标准屏幕</span></span><br><span class="line">python3 raincode.py -j human.json -m model/chinese-password.model</span><br><span class="line"><span class="meta">#</span><span class="bash">输出密码到文件</span></span><br><span class="line">python3 raincode.py -j human.json -m model/chinese-password.model -o result.txt</span><br><span class="line"><span class="meta">#</span><span class="bash">导入密码</span></span><br><span class="line">python3 raincode.py -j human.json -m model/chinese-password.model -i common/chinese-password.txt</span><br></pre></td></tr></table></figure>
 
 
 
+<h3 id="2-后台"><a href="#2-后台" class="headerlink" title="2 后台"></a>2 后台</h3><p><strong>step1</strong>：收集目标的各类信息，填入<strong>backend.json</strong>。</p>
+<p><strong>step2</strong>：选择对应的模型文件(<strong>*.model</strong>)。</p>
+<p><strong>step3</strong>：执行之。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">python3 raincode.py -j *.json -m *.model [-i dicfilename] [-o [result.txt]]</span><br><span class="line">-j/--json : 指定需要加载的目标元数据文件。</span><br><span class="line">-m/--model: 指定需要加载的目标模型文件。</span><br><span class="line">-o/--output [filename]: 指定输出文件名称。</span><br><span class="line">-i/--import [filename]: 导入外置字典</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">输出到标准屏幕</span></span><br><span class="line">python3 raincode.py -j backend.json -m model/backend.model</span><br><span class="line"><span class="meta">#</span><span class="bash">输出密码到文件</span></span><br><span class="line">python3 raincode.py -j backend.json -m model/backend.model -o result.txt</span><br><span class="line"><span class="meta">#</span><span class="bash">导入密码</span></span><br><span class="line">python3 raincode.py -j backend.json -m model/backend.model -i common/backend-password.txt</span><br></pre></td></tr></table></figure>
 
-    
 
 
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="aplyc1a">
-      <meta itemprop="description" content="Always good to see">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="aplyc1a's blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/22/%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">磁盘加密工具</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-22 11:50:10" itemprop="dateCreated datePublished" datetime="2021-06-22T11:50:10-08:00">2021-06-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-21 19:50:22" itemprop="dateModified" datetime="2021-06-21T19:50:22-08:00">2021-06-21</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="磁盘加密"><a href="#磁盘加密" class="headerlink" title="磁盘加密"></a>磁盘加密</h4><h5 id="1-BitLocker-windows"><a href="#1-BitLocker-windows" class="headerlink" title="1 BitLocker-windows"></a>1 BitLocker-windows</h5><p>BitLocker是微软专为windows专业版用户设计的驱动器加密工具，只有windows专业版有这个功能。微软对外宣称开启对驱动器的BitLocker能保证磁盘被取出后仍然无法获得驱动器内的数据。</p>
-<p>但是，从实际效果来看，近些年关于BitLocker的漏洞与破解事件还是比较多，譬如BitLocker的加密强度问题，BitLocker在固态硬盘上的<a target="_blank" rel="noopener" href="https://www.ru.nl/publish/pages/909275/draft-paper_1.pdf">加密机制问题</a>、CVE-2020-1398（锁屏绕过漏洞）。同时BitLocker支持加密的磁盘类型是有限制的，存在对部分型号U盘、SD卡无法加密的问题。</p>
-<p>下面可以看一下，BitLocker是怎么玩的，顺便感受以下其中的特点。</p>
-<ol>
-<li>首先，对支持BitLocker加密的驱动器而言，右键就能看到<strong>启用BitLocker</strong>选项。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_142023.png" alt="2021-06-18_142023"></p>
-<ol start="2">
-<li>BitLocker支持两种类型的驱动器解锁方式。这里我们选择常规的<strong>使用密码解锁驱动器</strong>。BitLocker使用AES对称加密算法对驱动器进行加密，默认AES-128。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_110959.png" alt="2021-06-18_110959"></p>
-<p>在组策略中可以将强度改的更高一点，但是会造成加密磁盘时时间较长慢及后期跨磁盘间数据移动时效率低。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_115400.png" alt="2021-06-18_115400"></p>
-<ol start="3">
-<li>BitLocker支持导出恢复密钥，理论上不应将备份密钥托管到微软账户上及备份到本地其他磁盘，这些都会造成潜在的安全问题。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_111015.png" alt="2021-06-18_111015"></p>
-<ol start="4">
-<li>在加密磁盘时可以选择两种加密方案，一种是加密磁盘内已用空间，一种是对磁盘的整体加密。同时还有两种加密模式，可以看出BitLocker进行过大改，存在上下兼容问题。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_111923.png" alt="2021-06-18_111923"></p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_111945.png" alt="2021-06-18_111945"></p>
-<ol start="5">
-<li>完成对以上设置后等待对磁盘加密完成即可，每次重新登录系统都后想要访问磁盘都要输入密码。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_112013.png" alt="2021-06-18_112013"></p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_112303.png" alt="2021-06-18_112303"></p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_112341.png" alt="2021-06-18_112341"></p>
-<h5 id="2-veracrypt-windows"><a href="#2-veracrypt-windows" class="headerlink" title="2 veracrypt-windows"></a>2 veracrypt-windows</h5><p>下载地址：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/veracrypt/">https://sourceforge.net/projects/veracrypt/</a></p>
-<p>教程地址：<a target="_blank" rel="noopener" href="https://tlanyan.me/veracrypt-tutorial/">https://tlanyan.me/veracrypt-tutorial/</a></p>
-<h5 id="3-LUKS-Linux"><a href="#3-LUKS-Linux" class="headerlink" title="3 LUKS-Linux"></a>3 LUKS-Linux</h5><p>LUKS是Linux下的一种磁盘加密标准，操作容易，格起来非常慢，需要耐心等待。下面例子演示的是GUI界面下对U盘进行LUKS加密，虽然要求U盘要将U盘的文件系统类型格为ext4，但实际上LUKS加密并不限制分区类型，使用命令行模式对分区进行LUKS加密时会有更多的选择。</p>
-<ol>
-<li> 格式化驱动器时选择ext4+LUKS，选上擦除能保证格式化前将磁盘上全部擦一遍0。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_150311.png" alt="2021-06-18_150311"></p>
-<ol start="2">
-<li>设置后期的LUKS解锁密码，之后一路确定，等待加密完成即可。这个过程会非常漫长。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_150436.png" alt="2021-06-18_150436"></p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_150449.png" alt="2021-06-18_150449"></p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_150505.png" alt="2021-06-18_150505"></p>
-<ol start="3">
-<li>加密完成后，每次重启挂载该驱动器时都会要求输入密码。另外经过LUKS加密后的硬盘在windows上可就打不开了。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_153141.png" alt="2021-06-18_153141"></p>
+<h2 id="附录-目录说明"><a href="#附录-目录说明" class="headerlink" title="附录-目录说明"></a>附录-目录说明</h2><h3 id="model"><a href="#model" class="headerlink" title="model"></a>model</h3><p>存储用于生成字典的核心模型文件。模型描述的是密码的结构。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>chinese-password.model</td>
+<td>中文密码模型</td>
+</tr>
+<tr>
+<td>engish-password.model</td>
+<td>英语密码模型</td>
+</tr>
+<tr>
+<td>backend-password.model</td>
+<td>后台常见密码模型</td>
+</tr>
+</tbody></table>
+<h3 id="db"><a href="#db" class="headerlink" title="db"></a>db</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%m%d.txt</td>
+<td>4位月日-数字字典</td>
+</tr>
+<tr>
+<td>%Y%m%d.txt</td>
+<td>6位年月日-数字字典</td>
+</tr>
+<tr>
+<td>chinesename-l3.txt</td>
+<td>3位名字-字母字典</td>
+</tr>
+<tr>
+<td>sfz_l4.txt</td>
+<td>某证后4位-字母字典</td>
+</tr>
+<tr>
+<td>sfz_l6.txt</td>
+<td>某证后6位-字母字典</td>
+</tr>
+<tr>
+<td>百家姓.txt</td>
+<td>百家姓频数排序-字符字典</td>
+</tr>
+</tbody></table>
+<p>使用<strong>db2json.py</strong>将txt字典转化为可加入json文件中的材料。</p>
+<p>python3 db2json.py -i chinesename-l3.txt -n name &gt; 1.json</p>
+<h3 id="common"><a href="#common" class="headerlink" title="common"></a>common</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>chinese-password.txt</td>
+<td>国内高频弱口令</td>
+</tr>
+<tr>
+<td>english-password.txt</td>
+<td>国外高频弱口令(暂缺)</td>
+</tr>
+<tr>
+<td>linux-account.txt</td>
+<td>linux常见用户</td>
+</tr>
+<tr>
+<td>backend-account.txt</td>
+<td>后台常见用户</td>
+</tr>
+<tr>
+<td>backend-password.txt</td>
+<td>后台常见弱口令</td>
+</tr>
+<tr>
+<td>backend-sqlinject-user.txt</td>
+<td>后台常见万能账户</td>
+</tr>
+</tbody></table>
 
       
     </div>
@@ -416,7 +365,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-21 19:51:21" itemprop="dateModified" datetime="2021-06-21T19:51:21-08:00">2021-06-21</time>
+        <time title="Modified: 2021-06-21 23:09:36" itemprop="dateModified" datetime="2021-06-21T23:09:36-08:00">2021-06-21</time>
       </span>
 
   
@@ -533,6 +482,106 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/22/%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86/" class="post-title-link" itemprop="url">GPG邮件加密</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 11:50:10" itemprop="dateCreated datePublished" datetime="2021-06-22T11:50:10-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 23:09:24" itemprop="dateModified" datetime="2021-06-21T23:09:24-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="使用GPG进行邮件加密"><a href="#使用GPG进行邮件加密" class="headerlink" title="使用GPG进行邮件加密"></a>使用GPG进行邮件加密</h1><p><strong>step1</strong>：获得某人对外发布的公钥，导入该公钥到gpg中。在这一过程中要注意发布的公钥的格式。</p>
+<p>常见的对外发布的公钥是以文本及文件形式存在的。如果是以可见字符ascii形式（也就是gpg的–armor参数）存在的，则内容形式形如如下所示:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP PUBLIC KEY BLOCK-----</span><br><span class="line">Version: GnuPG </span><br><span class="line">v1mQENBGDMWxgBCACgtdOB293iBw5tS0TgED85oImKq62i6azbkk4p/Ueq0ctXX5Do</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">Cqu8i2ILRvMCMqP0rY/HJdgrwYIRs96zu4xTXgpQWkCoSPAg00bBii/cuBLm7BENdr</span><br><span class="line">9YuBSP1AtFPzvCNvb5asDEcZUa+iRTYNpdLwHJehlbcbIhUHYG9CZyGg==</span><br><span class="line">=z44q</span><br><span class="line">-----END PGP PUBLIC KEY BLOCK-----</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP PUBLIC KEY BLOCK-----</span><br><span class="line">mQINBFS7wI8BEAChYhCa6QqmhpZkM63GN78qq4OI7MYvz+rIVo2At1zBu4TNmHqr</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">mBwe169oZ6C2n3SNQFYE7QgwOlu69JbQZ+KrdFi8oZng/lJBFwcCe3gesly6MPJ1M</span><br><span class="line">3NQDCz+b/8UNQbBWF+okwobdl869P06GZtOgG0eh88=</span><br><span class="line">=s1R6</span><br><span class="line">-----END PGP PUBLIC KEY BLOCK-----</span><br></pre></td></tr></table></figure>
+
+<p>具体导入公钥时，图形化类工具的导入都千篇一律。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_114927.png" alt="2021-06-19_114927"></p>
+<p>命令行导入也很简单。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_115246.png" alt="2021-06-19_115246"></p>
+<p>step2：准备好以下3部分内容，将他们通过对方的公钥加密后发送给对方。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.自己想要告知对方的内容</span><br><span class="line">2.自己的公钥。(gpg --armor --output public-key.asc --export aplyc1a@local.me)</span><br><span class="line">3.前两部分内容的签名。[可选](gpg --sign --armor data12.txt)</span><br></pre></td></tr></table></figure>
+
+<p>下面是具体的3部分消息组合起来的内容：</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_115922.png" alt="2021-06-19_115922"></p>
+<p>使用对方公钥加密后的内容如下：</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_120021.png" alt="2021-06-19_120021"></p>
+<p>step3：对方收到来信后，用自己的私钥可以解密出密件内容。从而获得了我们的公钥。收件方也可以用这个公钥尝试对签名进行验签，验证我们这个密钥对的有效性。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_120624.png" alt="2021-06-19_120624"></p>
+<p>用命令来操作就是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpg --decrypt --output plain_msg.txt  received_msg.txt</span><br><span class="line">gpg --verify plain_msg.sig.txt plain_msg.data.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>step4</strong>：在完成上面3步后，双方就可以使用对方的公钥加密内容进行通信了。在密件中还可以带上签名文件，帮助对方判断内容来源的真实性。</p>
+<p>上面提到的都是对文本的加密，对文件的加解密则更简单。下面是具体命令，使用命令行解密时还会自动验签。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 发信者对文件的加密</span></span><br><span class="line">gpg --local-user [发信者ID] --recipient [接收者ID] --armor --sign --encrypt demo.txt</span><br><span class="line"><span class="meta">#</span><span class="bash"> 收信人对文件的解密，解密时会自动验证签名</span></span><br><span class="line">gpg --decrypt --output data.txt msg.txt.asc</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_123535.png" alt="2021-06-19_123535"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7KeePassXC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -564,7 +613,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-21 19:50:55" itemprop="dateModified" datetime="2021-06-21T19:50:55-08:00">2021-06-21</time>
+        <time title="Modified: 2021-06-21 23:08:58" itemprop="dateModified" datetime="2021-06-21T23:08:58-08:00">2021-06-21</time>
       </span>
 
   
@@ -618,7 +667,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8C%BF%E5%90%8D%E5%AE%89%E5%85%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -631,7 +680,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/22/%E4%BD%BF%E7%94%A8GPG%E8%BF%9B%E8%A1%8C%E9%82%AE%E4%BB%B6%E5%8A%A0%E5%AF%86/" class="post-title-link" itemprop="url">GPG邮件加密</a>
+          <a href="/2021/06/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8C%BF%E5%90%8D%E5%AE%89%E5%85%A8/" class="post-title-link" itemprop="url">浏览器匿名安全</a>
         </h2>
 
         <div class="post-meta-container">
@@ -649,7 +698,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-21 19:51:06" itemprop="dateModified" datetime="2021-06-21T19:51:06-08:00">2021-06-21</time>
+        <time title="Modified: 2021-06-21 23:08:48" itemprop="dateModified" datetime="2021-06-21T23:08:48-08:00">2021-06-21</time>
       </span>
 
   
@@ -662,36 +711,160 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="使用GPG进行邮件加密"><a href="#使用GPG进行邮件加密" class="headerlink" title="使用GPG进行邮件加密"></a>使用GPG进行邮件加密</h1><p><strong>step1</strong>：获得某人对外发布的公钥，导入该公钥到gpg中。在这一过程中要注意发布的公钥的格式。</p>
-<p>常见的对外发布的公钥是以文本及文件形式存在的。如果是以可见字符ascii形式（也就是gpg的–armor参数）存在的，则内容形式形如如下所示:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP PUBLIC KEY BLOCK-----</span><br><span class="line">Version: GnuPG </span><br><span class="line">v1mQENBGDMWxgBCACgtdOB293iBw5tS0TgED85oImKq62i6azbkk4p/Ueq0ctXX5Do</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">Cqu8i2ILRvMCMqP0rY/HJdgrwYIRs96zu4xTXgpQWkCoSPAg00bBii/cuBLm7BENdr</span><br><span class="line">9YuBSP1AtFPzvCNvb5asDEcZUa+iRTYNpdLwHJehlbcbIhUHYG9CZyGg==</span><br><span class="line">=z44q</span><br><span class="line">-----END PGP PUBLIC KEY BLOCK-----</span><br></pre></td></tr></table></figure>
+          <h3 id="浏览器安全"><a href="#浏览器安全" class="headerlink" title="浏览器安全"></a>浏览器安全</h3><p>打开浏览器浏览网页的过程中实际上会存在很多的安全风险。这一节主要记录反审查场景下的浏览器安全。</p>
+<h4 id="1-前端动态脚本"><a href="#1-前端动态脚本" class="headerlink" title="1 前端动态脚本"></a>1 前端动态脚本</h4><p>从web前端技术栈的角度来看，网站拥有者能通过JS等动态脚本在用户浏览器侧实现很多功能（如：客户端情报分析、控制浏览器、窃取cookie、0day利用等）。下面给出的这个网站能帮助我们了解浏览器究竟能泄露什么信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://panopticlick.eff.orghttps://coveryourtracks.eff.org/kcarter?aat=1https://wzyboy.im/post/1130.html</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP PUBLIC KEY BLOCK-----</span><br><span class="line">mQINBFS7wI8BEAChYhCa6QqmhpZkM63GN78qq4OI7MYvz+rIVo2At1zBu4TNmHqr</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">................................................................</span><br><span class="line">mBwe169oZ6C2n3SNQFYE7QgwOlu69JbQZ+KrdFi8oZng/lJBFwcCe3gesly6MPJ1M</span><br><span class="line">3NQDCz+b/8UNQbBWF+okwobdl869P06GZtOgG0eh88=</span><br><span class="line">=s1R6</span><br><span class="line">-----END PGP PUBLIC KEY BLOCK-----</span><br></pre></td></tr></table></figure>
+<h5 id="1-1-NoScript"><a href="#1-1-NoScript" class="headerlink" title="1.1 NoScript"></a>1.1 NoScript</h5><p>Firefox有一个可以称之为神器的插件，名叫NoScript。NoScript通过对网页资源的加载进行控制实现对浏览器客户端的信息保护，确保浏览器在受信任的站点运行动态内容。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_002402.png" alt="2021-06-20_002402"></p>
+<p>首次使用这个插件时可能比较难受，需要对访问的各种网站进行加载策略配置，等待对常见资源的策略清单收集的差不多的时候，使用将会变得比较容易。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_122610.png" alt="2021-06-20_122610"></p>
+<p>默认情况下，每当访问一个从未打开的网页都需要对网站资源进行配置，Noscript支持5种预置的访问策略控制，每种策略的资源加载种类也可以具体在Noscript的设置选项中进行配置。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_120616.png" alt="2021-06-20_120616"></p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_110322.png" alt="2021-06-20_110322"></p>
+<p>NoScript还会贴心的提示当前页面屏蔽了多少动态对象的加载。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-20_123216.png" alt="2021-06-20_123216"></p>
+<h5 id="1-2-uBlock-origin"><a href="#1-2-uBlock-origin" class="headerlink" title="1.2 uBlock origin"></a>1.2 uBlock origin</h5><p>uBlock是另一款FireFox上热门的隐私保护工具，支持对多种浏览器可能涉及的隐私问题的选项设置。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_153748.png" alt="2021-06-21_153748"></p>
+<p>工具的复杂度较NoScript要高一些，说实话本人并没怎么使用过。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_154136.png" alt="2021-06-21_154136"></p>
+<h4 id="2-流媒体泄露"><a href="#2-流媒体泄露" class="headerlink" title="2 流媒体泄露"></a>2 流媒体泄露</h4><p>实际上，对任何页面上可能会产生的udp报文而言，都可能在代理场景下产生泄漏问题。虽然socks5标准支持udp，但并非每一个socks5工具都支持代理udp，这就导致本地机器可能直接向目标设备发送udp报文。如果我们本身的tcp流量是经过代理的，这时udp流量便泄露了我们的真实IP。</p>
+<p>比如不少流媒体协议，流媒体协议往往应用于视频、音频等需要大数据量的场景，为了传输速率，普遍基于面向非连接的UDP协议。历史上关于流媒体协议族泄露用户真实IP的报道与文章已经层出不穷了。比如，WebRTC是用于实时语音对话或视频对话的流媒体类的API，它默认使用UDP方式进行传输。</p>
+<p><a target="_blank" rel="noopener" href="https://webrtc.org.cn/is-webrtc-safe/">https://webrtc.org.cn/is-webrtc-safe/</a></p>
+<h4 id="3-DNS请求泄露"><a href="#3-DNS请求泄露" class="headerlink" title="3 DNS请求泄露"></a>3 DNS请求泄露</h4><p>当我们没配置DNSoverHTTPS或DNSoverSocks5时就会产生这种问题。正常来说我们访问一个网页，要先向DNS服务器发一个域名解析请求获得网站真实地址，之后再向真实设备发请求。如果目标域名是运营商的黑名单，那通过分析短时间内的发包请求可以关联出代理服务器的地址，如果进一步反向溯源的话可能会定位到我们，当然只是可能，具体能不能定位到取决于从公网逐渐向小网逐层深入时是不是固定IP，有没有数据包记录等等。</p>
+<p>下图是Firefox的代理设置页面，如果开启了DNS over Socks5就能绕过GFW对DNS流量的劫持，将实际请求放在远端发送。反之就会引发DNS泄露问题，产生一定的问题。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-21_152435.png" alt="2021-06-21_152435"></p>
+<h4 id="4-证书安全"><a href="#4-证书安全" class="headerlink" title="4 证书安全"></a>4 证书安全</h4><p>浏览器的证书安全常常被人忽略。简单来说，如果浏览器被导入了不可信证书，将无法感知到https协商过程出现证书调包问题。而通过证书调包，中间人可以实现对数据的篡改与监听，实际上Web安全中非常出名的Burpsuite工具就使用了这种原理，企业网中实现对员工的数据监控也是基于这一原理。</p>
+<p>想要完全明白为什么会出现中间人问题，需要搞明白https网站的加密协商原理。HTTPS本质是HTTP套了一层加密，这套TLS/SSL加密最核心是实际上通过对称加密实现的。然而如何让浏览器客户端与服务器之间在公开网络中决定<strong>使用什么样的对称加密算法</strong>及<strong>对称密钥的内容</strong>是个比较棘手的问题。为了确保这些信息不为其他人所知，这里引入了非对称加密，非对称加密体系的核心时公钥与私钥，私钥用于签名与解密、公钥用于加密与验签。具体解决方案如下：浏览器客户端与服务器在商定对称加密的具体方式时由服务器告知浏览器客户端公钥，这个公钥是依附在一张证书中的，客户端使用这个公钥来加密指定的算法及密钥，服务器使用私钥解出这些内容，协商便基本完成。</p>
+<p>基本协商过程就是这样，但是中间有点问题。网站服务器将公钥回复给浏览器客户端时，客户端需要想办法确认这个公钥到底是不是服务器的公钥，而对公钥身份的认证就要用到证书，这也是为什么公钥要依附在证书里发给浏览器客户端的原因。这时，对公钥的认证就转化为了对证书的认证。证书验证通常是个信任链传导问题，通俗来说，要检查一个证书是否可信，需要按照证书内提供的信息去询问给它签发证书的机构这本证书是否可信。证书就是这么一个东西，提供对公钥的信任背书。现代浏览器客户端内往往内置了大量的CA颁发机构，常见的各种https网站中的证书向上回溯时都可以回溯到这些CA颁发机构上，因此访问这些网站时不会跳出感叹号告诉你有安全风险。反之，一旦https协商过程中用到的证书的颁发机构不在范围内，就会跳出告警页面询问你是否添加例外。BurpSuite和大型企业为了实现对https流量的控制，会让浏览器导入一份已自己作为证书颁发机构的CA证书。当用户向web网站发起https请求时，它们将网站返回的证书替换成自己的证书，客户端使用被替换的证书后实际将与中间人进行协商，而后续中间人再与网站进行协商，进而完美的插入双方的通信过程而双方无法感知。</p>
+<p>因此可以看出如果浏览器预制或被导入了攻击者的证书颁发机构CA证书，将会对隐私安全造成极大的安全风险。当然，不可否认的是想要切实的实施这种攻击，攻击复杂度是比较高的，攻击者需要想尽办法先搞定我们的浏览器，之后使用ARP欺骗在局域网或在流量路由转发中实施流量拦截才行。</p>
+<h5 id="4-1-Firefox检查证书"><a href="#4-1-Firefox检查证书" class="headerlink" title="4.1 Firefox检查证书"></a>4.1 Firefox检查证书</h5><p>方法一：在URL框中查看当前网页的证书信息，如果不是浏览器原生的证书，浏览器会给出相应的提示。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_195547.png" alt="2021-06-18_195547"></p>
+<p>方法二：“打开应用程序菜单”=&gt;“隐私与安全”=&gt;“证书”=&gt;“查看证书”=&gt;“证书颁发机构”</p>
+<h5 id="4-2-Chrome检查证书"><a href="#4-2-Chrome检查证书" class="headerlink" title="4.2 Chrome检查证书"></a>4.2 Chrome检查证书</h5><p>方法一：查看地址栏中的证书信息。</p>
+<p><img src="/.com//Users\HASEE\AppData\Roaming\Typora\typora-user-images\image-20210618200241475.png" alt="image-20210618200241475"></p>
+<p>方法二：”设置”=&gt;”隐私设置和安全性”=&gt;”安全”=&gt;”管理证书”=&gt;”受信任的根证书颁发机构”</p>
+<h4 id="5-搜索引擎安全"><a href="#5-搜索引擎安全" class="headerlink" title="5 搜索引擎安全"></a>5 搜索引擎安全</h4><p>搜索引擎通过获取搜索记录进行分析已经不是个秘密了，商业公司是要赚钱的，对搜索记录筛查、提取、分析进而用于广告投放，是这些搜索公司业务中比较重要的一部分。当这项技术通过账号与政府、运营商联合起来使用后就能用于精准定位。</p>
+<p>下面给出一些比较注重用户隐私的搜索引擎，以及使用不安全搜索引擎时的安全设置。</p>
+<h5 id="5-1-DuckDuckGo"><a href="#5-1-DuckDuckGo" class="headerlink" title="5.1 DuckDuckGo"></a>5.1 DuckDuckGo</h5><p>DuckDuckGo是一款互联网搜索引擎，它注重用户隐私避免个性化检索所致的数据收集问题。它与其它搜索引擎不同的地方在于其不会分析自己的用户、对所有使用同一组关键词的用户显示同样的结果。</p>
+<p><strong>搜索地址：</strong><a target="_blank" rel="noopener" href="https://duckduckgo.com/">https://duckduckgo.com/</a></p>
+<h5 id="5-2-searx"><a href="#5-2-searx" class="headerlink" title="5.2 searx"></a>5.2 searx</h5><p>DuckDuckGo是一款基于<code>Python</code>的完全开源免费搜索引擎平台，不会存储你的任何搜索信息它注重用户隐私避免个性化检索所致的数据收集问题。用户甚至可以在自己本地搭建。</p>
+<p><strong>安装方式：</strong><a target="_blank" rel="noopener" href="https://searx.github.io/searx/admin/installation.html">https://searx.github.io/searx/admin/installation.html</a></p>
 
-<p>具体导入公钥时，图形化类工具的导入都千篇一律。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_114927.png" alt="2021-06-19_114927"></p>
-<p>命令行导入也很简单。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_115246.png" alt="2021-06-19_115246"></p>
-<p>step2：准备好以下3部分内容，将他们通过对方的公钥加密后发送给对方。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.自己想要告知对方的内容</span><br><span class="line">2.自己的公钥。(gpg --armor --output public-key.asc --export aplyc1a@local.me)</span><br><span class="line">3.前两部分内容的签名。[可选](gpg --sign --armor data12.txt)</span><br></pre></td></tr></table></figure>
+      
+    </div>
 
-<p>下面是具体的3部分消息组合起来的内容：</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_115922.png" alt="2021-06-19_115922"></p>
-<p>使用对方公钥加密后的内容如下：</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_120021.png" alt="2021-06-19_120021"></p>
-<p>step3：对方收到来信后，用自己的私钥可以解密出密件内容。从而获得了我们的公钥。收件方也可以用这个公钥尝试对签名进行验签，验证我们这个密钥对的有效性。</p>
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_120624.png" alt="2021-06-19_120624"></p>
-<p>用命令来操作就是：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpg --decrypt --output plain_msg.txt  received_msg.txt</span><br><span class="line">gpg --verify plain_msg.sig.txt plain_msg.data.txt</span><br></pre></td></tr></table></figure>
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
 
 
-<p><strong>step4</strong>：在完成上面3步后，双方就可以使用对方的公钥加密内容进行通信了。在密件中还可以带上签名文件，帮助对方判断内容来源的真实性。</p>
-<p>上面提到的都是对文本的加密，对文件的加解密则更简单。下面是具体命令，使用命令行解密时还会自动验签。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 发信者对文件的加密</span></span><br><span class="line">gpg --local-user [发信者ID] --recipient [接收者ID] --armor --sign --encrypt demo.txt</span><br><span class="line"><span class="meta">#</span><span class="bash"> 收信人对文件的解密，解密时会自动验证签名</span></span><br><span class="line">gpg --decrypt --output data.txt msg.txt.asc</span><br></pre></td></tr></table></figure>
+
+    
 
 
-<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-19_123535.png" alt="2021-06-19_123535"></p>
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/22/%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">磁盘加密工具</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 11:50:10" itemprop="dateCreated datePublished" datetime="2021-06-22T11:50:10-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 23:08:34" itemprop="dateModified" datetime="2021-06-21T23:08:34-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="磁盘加密"><a href="#磁盘加密" class="headerlink" title="磁盘加密"></a>磁盘加密</h4><h5 id="1-BitLocker-windows"><a href="#1-BitLocker-windows" class="headerlink" title="1 BitLocker-windows"></a>1 BitLocker-windows</h5><p>BitLocker是微软专为windows专业版用户设计的驱动器加密工具，只有windows专业版有这个功能。微软对外宣称开启对驱动器的BitLocker能保证磁盘被取出后仍然无法获得驱动器内的数据。</p>
+<p>但是，从实际效果来看，近些年关于BitLocker的漏洞与破解事件还是比较多，譬如BitLocker的加密强度问题，BitLocker在固态硬盘上的<a target="_blank" rel="noopener" href="https://www.ru.nl/publish/pages/909275/draft-paper_1.pdf">加密机制问题</a>、CVE-2020-1398（锁屏绕过漏洞）。同时BitLocker支持加密的磁盘类型是有限制的，存在对部分型号U盘、SD卡无法加密的问题。</p>
+<p>下面可以看一下，BitLocker是怎么玩的，顺便感受以下其中的特点。</p>
+<ol>
+<li>首先，对支持BitLocker加密的驱动器而言，右键就能看到<strong>启用BitLocker</strong>选项。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_142023.png" alt="2021-06-18_142023"></p>
+<ol start="2">
+<li>BitLocker支持两种类型的驱动器解锁方式。这里我们选择常规的<strong>使用密码解锁驱动器</strong>。BitLocker使用AES对称加密算法对驱动器进行加密，默认AES-128。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_110959.png" alt="2021-06-18_110959"></p>
+<p>在组策略中可以将强度改的更高一点，但是会造成加密磁盘时时间较长慢及后期跨磁盘间数据移动时效率低。</p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_115400.png" alt="2021-06-18_115400"></p>
+<ol start="3">
+<li>BitLocker支持导出恢复密钥，理论上不应将备份密钥托管到微软账户上及备份到本地其他磁盘，这些都会造成潜在的安全问题。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_111015.png" alt="2021-06-18_111015"></p>
+<ol start="4">
+<li>在加密磁盘时可以选择两种加密方案，一种是加密磁盘内已用空间，一种是对磁盘的整体加密。同时还有两种加密模式，可以看出BitLocker进行过大改，存在上下兼容问题。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_111923.png" alt="2021-06-18_111923"></p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_111945.png" alt="2021-06-18_111945"></p>
+<ol start="5">
+<li>完成对以上设置后等待对磁盘加密完成即可，每次重新登录系统都后想要访问磁盘都要输入密码。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_112013.png" alt="2021-06-18_112013"></p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_112303.png" alt="2021-06-18_112303"></p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_112341.png" alt="2021-06-18_112341"></p>
+<h5 id="2-veracrypt-windows"><a href="#2-veracrypt-windows" class="headerlink" title="2 veracrypt-windows"></a>2 veracrypt-windows</h5><p>下载地址：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/veracrypt/">https://sourceforge.net/projects/veracrypt/</a></p>
+<p>教程地址：<a target="_blank" rel="noopener" href="https://tlanyan.me/veracrypt-tutorial/">https://tlanyan.me/veracrypt-tutorial/</a></p>
+<h5 id="3-LUKS-Linux"><a href="#3-LUKS-Linux" class="headerlink" title="3 LUKS-Linux"></a>3 LUKS-Linux</h5><p>LUKS是Linux下的一种磁盘加密标准，操作容易，格起来非常慢，需要耐心等待。下面例子演示的是GUI界面下对U盘进行LUKS加密，虽然要求U盘要将U盘的文件系统类型格为ext4，但实际上LUKS加密并不限制分区类型，使用命令行模式对分区进行LUKS加密时会有更多的选择。</p>
+<ol>
+<li> 格式化驱动器时选择ext4+LUKS，选上擦除能保证格式化前将磁盘上全部擦一遍0。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_150311.png" alt="2021-06-18_150311"></p>
+<ol start="2">
+<li>设置后期的LUKS解锁密码，之后一路确定，等待加密完成即可。这个过程会非常漫长。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_150436.png" alt="2021-06-18_150436"></p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_150449.png" alt="2021-06-18_150449"></p>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_150505.png" alt="2021-06-18_150505"></p>
+<ol start="3">
+<li>加密完成后，每次重启挂载该驱动器时都会要求输入密码。另外经过LUKS加密后的硬盘在windows上可就打不开了。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/aplyc1a/blogs_picture/master/2021-06-18_153141.png" alt="2021-06-18_153141"></p>
 
       
     </div>
@@ -1122,93 +1295,6 @@
 
 <p>例子</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">(1) 50分钟前，1天内 权限755文件的访问记录</span></span><br><span class="line">find / -atime -1 -amin +50 -perm 755</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">(2) 1天前，10天内，访问的文件</span></span><br><span class="line">find / -atime -10 -atime +1 2&gt;/dev/null</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">(3) 检查PATH对应的目录内一段时间内发生变动的文件</span></span><br><span class="line">OLD_IFS=&quot;$IFS&quot; </span><br><span class="line">IFS=&quot;:&quot; </span><br><span class="line">arr=($PATH) </span><br><span class="line">IFS=&quot;$OLD_IFS&quot; </span><br><span class="line">for s in $&#123;arr[@]&#125; </span><br><span class="line">do </span><br><span class="line">find $s -atime -10 -amin +50</span><br><span class="line">find $s -ctime -10 -cmin +50</span><br><span class="line">find $s -mtime -10 -mmin +50</span><br><span class="line">done</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">(4)web目录内文件的时间戳排序</span></span><br><span class="line">for i in `find /var/www/html/ -type f`;do a=`stat $i|sed -n 6p`; echo &quot;$a  $i&quot;; done |sort -nr</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">(5)满足modify时间戳在2020-04-27 10:04:36接下来1s内的文件。</span></span><br><span class="line">find / -newermt &#x27;2020-04-27 10:04:36&#x27; ! -newermt &#x27;2020-04-27 10:04:37&#x27; 2&gt;/dev/null</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">(6)满足change时间戳在2020-04-27 10:04:31接下来1s内的文件。</span></span><br><span class="line">find / ! -newerct &#x27;2020-12-24 15:27:32&#x27; -newerct &#x27;2020-12-24 15:27:31&#x27; 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(1)-%E8%BD%AF%E4%BB%B6%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="aplyc1a">
-      <meta itemprop="description" content="Always good to see">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="aplyc1a's blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(1)-%E8%BD%AF%E4%BB%B6%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C/" class="post-title-link" itemprop="url">Linux取证辅助技术(1)-软件完整性校验</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-22 10:16:12" itemprop="dateCreated datePublished" datetime="2021-06-22T10:16:12-08:00">2021-06-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-21 19:15:44" itemprop="dateModified" datetime="2021-06-21T19:15:44-08:00">2021-06-21</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="完整性校验"><a href="#完整性校验" class="headerlink" title="完整性校验"></a>完整性校验</h2><h3 id="1-包管理器校验"><a href="#1-包管理器校验" class="headerlink" title="1 包管理器校验"></a>1 包管理器校验</h3><p>如果使用仓库源（apt/yum）安装的方式或包管理器安装的方式（dpkg/rpm），使用下面方法可以确定归属。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian:</span></span><br><span class="line">dpkg -S $filename   #确定所属的包</span><br><span class="line"></span><br><span class="line">dpkg -l $package    #获得包版本</span><br><span class="line">apt-cache policy $package #等效于上面的命令</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RHEL:</span></span><br><span class="line">rpm -qf $filename</span><br></pre></td></tr></table></figure>
-
-<p>之后进行包管理自检</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian:</span></span><br><span class="line">dpkg -V $package   #确定所属的包</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RHEL:</span></span><br><span class="line">rpm -V $package</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-手工下载校验"><a href="#2-手工下载校验" class="headerlink" title="2 手工下载校验"></a>2 手工下载校验</h3><p>包管理器不可用的话，需要手工下载对应版本的包并进行散列校验。解包命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian系：</span></span><br><span class="line">dpkg -X ./xxx.deb extract	#解压到extract目录</span><br><span class="line">dpkg -i ./xxx.deb			#安装该deb包</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RHEL系：</span></span><br><span class="line">rpm2cpio xxx.rpm | cpio -div	#解压到当前目录</span><br><span class="line">rpm -i xxx.rpm			#安装该rpm包</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> bin文件：</span></span><br><span class="line">chmod +x xxx.bin; ./xxx.bin</span><br><span class="line"><span class="meta">#</span><span class="bash">这类文件比较特殊，可以在虚拟机里面安装后获得二进制，再算散列值。</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">解包之后，将待分析的文件与解包出的文件分别计算散列值进行比较。</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-python文件校验"><a href="#3-python文件校验" class="headerlink" title="3 python文件校验"></a>3 python文件校验</h3><p>对于python文件的定位上面比较捉急，可以采用下面的办法。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">step 1获得目标脚本所在的路径，记为<span class="variable">$py_pth</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">匹配该路径是否属于pip管理</span></span><br><span class="line">python -m site |grep $py_pth</span><br><span class="line">python3 -m site |grep $py_pth</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">确认所属包</span></span><br><span class="line">pip3 list|grep $&#123;关键字&#125;</span><br><span class="line">pip3 show xxx</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">重新下载一份该版本的包，如</span></span><br><span class="line">pip3 download robotframework==2.8.7 -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host  pypi.tuna.tsinghua.edu.cn</span><br><span class="line"><span class="meta">#</span><span class="bash">解压之。如果文件扩展名为whl当成zip解压即可。</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">比较新下载的文件与待分析文件散列值</span></span><br><span class="line">md5sum a.pyc b.pyc</span><br></pre></td></tr></table></figure>
-
-<p>当然，也可以考虑pyc逆向，网上有不少文章。如，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/121054235">https://zhuanlan.zhihu.com/p/121054235</a></p>
-<h3 id="4-哈希列表校验"><a href="#4-哈希列表校验" class="headerlink" title="4 哈希列表校验"></a>4 哈希列表校验</h3><p>定期批量计算关键目录文件哈希并导出到日志文件，在出现异常情况后通过比对文件散列哈希，确定哪些文件被篡改。</p>
-<p>比如下面这个我自己写的shell脚本,将它加入定时任务中定期执行即可</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> https://github.com/aplyc1a/toolkits/blob/master/0x05%20%E5%8F%96%E8%AF%81/chksum.sh</span></span><br><span class="line">LOG_FILE=&quot;/var/log/.chksum/&quot;`date +%Y.%m.%d-%k:%M:%S.log`</span><br><span class="line"><span class="meta">#</span><span class="bash">a=(`<span class="built_in">echo</span> <span class="variable">$PATH</span>| tr : <span class="string">&quot; &quot;</span>`)</span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/usr&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/sbin&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/bin&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;~/&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/var&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/etc&quot;</span></span></span><br><span class="line"></span><br><span class="line">check_sum()&#123;</span><br><span class="line">    path_type=`ls -adl $&#123;1&#125;|cut -c 1`</span><br><span class="line">    if [ $&#123;path_type&#125; != &#x27;d&#x27; ];then</span><br><span class="line">        echo &quot;[Err]&quot;`ls -adl $&#123;1&#125;`</span><br><span class="line">        return</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    find &quot;$&#123;1&#125;&quot; -type l -o -type f |grep -v &quot;/usr/share&quot; | while read f;</span><br><span class="line">    do</span><br><span class="line">        if [ `ls -adl &quot;$&#123;f&#125;&quot;|cut -c 1` != &quot;-&quot; ];then</span><br><span class="line">            continue</span><br><span class="line">        fi</span><br><span class="line">        sum_value=`md5sum &quot;$&#123;f&#125;&quot;`</span><br><span class="line">        echo $&#123;sum_value&#125;</span><br><span class="line">        echo $&#123;sum_value&#125; &gt;&gt; $&#123;LOG_FILE&#125;</span><br><span class="line">    done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">i=0</span><br><span class="line">while [ $i -lt $&#123;#a[*]&#125; ]</span><br><span class="line">do</span><br><span class="line">    echo -e &quot;[+]Entering: \033[40;32m$&#123;a[$&#123;i&#125;]&#125;\033[0m&quot;</span><br><span class="line">    check_sum $&#123;a[$&#123;i&#125;]&#125;</span><br><span class="line">    let i=i+1</span><br><span class="line">    echo -ne &quot;[-]Done\n\n&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 
       

@@ -118,12 +118,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -152,6 +152,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(1)-%E8%BD%AF%E4%BB%B6%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="aplyc1a">
+      <meta itemprop="description" content="Always good to see">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aplyc1a's blogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/22/Linux%E5%8F%96%E8%AF%81%E8%BE%85%E5%8A%A9%E6%8A%80%E6%9C%AF(1)-%E8%BD%AF%E4%BB%B6%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C/" class="post-title-link" itemprop="url">Linux取证辅助技术(1)-软件完整性校验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-22 10:16:12" itemprop="dateCreated datePublished" datetime="2021-06-22T10:16:12-08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-21 19:15:44" itemprop="dateModified" datetime="2021-06-21T19:15:44-08:00">2021-06-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="完整性校验"><a href="#完整性校验" class="headerlink" title="完整性校验"></a>完整性校验</h2><h3 id="1-包管理器校验"><a href="#1-包管理器校验" class="headerlink" title="1 包管理器校验"></a>1 包管理器校验</h3><p>如果使用仓库源（apt/yum）安装的方式或包管理器安装的方式（dpkg/rpm），使用下面方法可以确定归属。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian:</span></span><br><span class="line">dpkg -S $filename   #确定所属的包</span><br><span class="line"></span><br><span class="line">dpkg -l $package    #获得包版本</span><br><span class="line">apt-cache policy $package #等效于上面的命令</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RHEL:</span></span><br><span class="line">rpm -qf $filename</span><br></pre></td></tr></table></figure>
+
+<p>之后进行包管理自检</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian:</span></span><br><span class="line">dpkg -V $package   #确定所属的包</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RHEL:</span></span><br><span class="line">rpm -V $package</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-手工下载校验"><a href="#2-手工下载校验" class="headerlink" title="2 手工下载校验"></a>2 手工下载校验</h3><p>包管理器不可用的话，需要手工下载对应版本的包并进行散列校验。解包命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian系：</span></span><br><span class="line">dpkg -X ./xxx.deb extract	#解压到extract目录</span><br><span class="line">dpkg -i ./xxx.deb			#安装该deb包</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RHEL系：</span></span><br><span class="line">rpm2cpio xxx.rpm | cpio -div	#解压到当前目录</span><br><span class="line">rpm -i xxx.rpm			#安装该rpm包</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> bin文件：</span></span><br><span class="line">chmod +x xxx.bin; ./xxx.bin</span><br><span class="line"><span class="meta">#</span><span class="bash">这类文件比较特殊，可以在虚拟机里面安装后获得二进制，再算散列值。</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">解包之后，将待分析的文件与解包出的文件分别计算散列值进行比较。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-python文件校验"><a href="#3-python文件校验" class="headerlink" title="3 python文件校验"></a>3 python文件校验</h3><p>对于python文件的定位上面比较捉急，可以采用下面的办法。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">step 1获得目标脚本所在的路径，记为<span class="variable">$py_pth</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">匹配该路径是否属于pip管理</span></span><br><span class="line">python -m site |grep $py_pth</span><br><span class="line">python3 -m site |grep $py_pth</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">确认所属包</span></span><br><span class="line">pip3 list|grep $&#123;关键字&#125;</span><br><span class="line">pip3 show xxx</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">重新下载一份该版本的包，如</span></span><br><span class="line">pip3 download robotframework==2.8.7 -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host  pypi.tuna.tsinghua.edu.cn</span><br><span class="line"><span class="meta">#</span><span class="bash">解压之。如果文件扩展名为whl当成zip解压即可。</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">比较新下载的文件与待分析文件散列值</span></span><br><span class="line">md5sum a.pyc b.pyc</span><br></pre></td></tr></table></figure>
+
+<p>当然，也可以考虑pyc逆向，网上有不少文章。如，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/121054235">https://zhuanlan.zhihu.com/p/121054235</a></p>
+<h3 id="4-哈希列表校验"><a href="#4-哈希列表校验" class="headerlink" title="4 哈希列表校验"></a>4 哈希列表校验</h3><p>定期批量计算关键目录文件哈希并导出到日志文件，在出现异常情况后通过比对文件散列哈希，确定哪些文件被篡改。</p>
+<p>比如下面这个我自己写的shell脚本,将它加入定时任务中定期执行即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> https://github.com/aplyc1a/toolkits/blob/master/0x05%20%E5%8F%96%E8%AF%81/chksum.sh</span></span><br><span class="line">LOG_FILE=&quot;/var/log/.chksum/&quot;`date +%Y.%m.%d-%k:%M:%S.log`</span><br><span class="line"><span class="meta">#</span><span class="bash">a=(`<span class="built_in">echo</span> <span class="variable">$PATH</span>| tr : <span class="string">&quot; &quot;</span>`)</span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/usr&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/sbin&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/bin&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;~/&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/var&quot;</span></span></span><br><span class="line"><span class="meta">a[$</span><span class="bash">&#123;<span class="comment">#a[*]&#125;]=&quot;/etc&quot;</span></span></span><br><span class="line"></span><br><span class="line">check_sum()&#123;</span><br><span class="line">    path_type=`ls -adl $&#123;1&#125;|cut -c 1`</span><br><span class="line">    if [ $&#123;path_type&#125; != &#x27;d&#x27; ];then</span><br><span class="line">        echo &quot;[Err]&quot;`ls -adl $&#123;1&#125;`</span><br><span class="line">        return</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    find &quot;$&#123;1&#125;&quot; -type l -o -type f |grep -v &quot;/usr/share&quot; | while read f;</span><br><span class="line">    do</span><br><span class="line">        if [ `ls -adl &quot;$&#123;f&#125;&quot;|cut -c 1` != &quot;-&quot; ];then</span><br><span class="line">            continue</span><br><span class="line">        fi</span><br><span class="line">        sum_value=`md5sum &quot;$&#123;f&#125;&quot;`</span><br><span class="line">        echo $&#123;sum_value&#125;</span><br><span class="line">        echo $&#123;sum_value&#125; &gt;&gt; $&#123;LOG_FILE&#125;</span><br><span class="line">    done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">i=0</span><br><span class="line">while [ $i -lt $&#123;#a[*]&#125; ]</span><br><span class="line">do</span><br><span class="line">    echo -e &quot;[+]Entering: \033[40;32m$&#123;a[$&#123;i&#125;]&#125;\033[0m&quot;</span><br><span class="line">    check_sum $&#123;a[$&#123;i&#125;]&#125;</span><br><span class="line">    let i=i+1</span><br><span class="line">    echo -ne &quot;[-]Done\n\n&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1270,142 +1357,6 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chattr +a ~root/.bash_history</span><br><span class="line">chattr +a ~&#123;other_user&#125;/.bash_history</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-4-其他"><a href="#2-4-其他" class="headerlink" title="2.4 其他"></a>2.4 其他</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/skate6/article/details/66971077">https://blog.csdn.net/skate6/article/details/66971077</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/%E4%B8%BB%E6%9C%BA%E6%95%8F%E6%84%9F%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="aplyc1a">
-      <meta itemprop="description" content="Always good to see">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="aplyc1a's blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/21/%E4%B8%BB%E6%9C%BA%E6%95%8F%E6%84%9F%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/" class="post-title-link" itemprop="url">后渗透-主机敏感数据搜集</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-21 20:12:00 / Modified: 04:20:05" itemprop="dateCreated datePublished" datetime="2021-06-21T20:12:00-08:00">2021-06-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="0x00-文件目录操作"><a href="#0x00-文件目录操作" class="headerlink" title="0x00 文件目录操作"></a>0x00 文件目录操作</h2><h3 id="1-查找文件"><a href="#1-查找文件" class="headerlink" title="1.查找文件"></a>1.查找文件</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> /r 目录名 %变量名 <span class="keyword">in</span> (匹配模式<span class="number">1</span>,匹配模式<span class="number">2</span>) <span class="keyword">do</span> 命令</span><br><span class="line"><span class="keyword">for</span> /r d: %i <span class="keyword">in</span> (*) <span class="keyword">do</span> @<span class="built_in">echo</span> %i</span><br><span class="line"><span class="keyword">for</span> /r d: %i <span class="keyword">in</span> (*.txt,*.jpg) <span class="keyword">do</span> @<span class="built_in">echo</span> %i</span><br><span class="line"><span class="keyword">for</span> /r d: %i <span class="keyword">in</span> (*shell.jsp) <span class="keyword">do</span> @<span class="built_in">echo</span> %i</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-查看文件内容"><a href="#2-查看文件内容" class="headerlink" title="2.查看文件内容"></a>2.查看文件内容</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> &quot;D:\www\shell.jsp&quot;</span><br></pre></td></tr></table></figure>
-
-<p>powershell:</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Content</span> <span class="string">&quot;D:\www\shell.jsp&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-删除文件"><a href="#3-删除文件" class="headerlink" title="3.删除文件"></a>3.删除文件</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#删文件</span><br><span class="line"><span class="built_in">del</span> index.js</span><br><span class="line">#删文件夹</span><br><span class="line"><span class="built_in">rd</span> app</span><br></pre></td></tr></table></figure>
-
-<p>powershell:</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">remove-item</span> w.ps1 <span class="literal">-Force</span> <span class="literal">-Recurse</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="4-查看目录"><a href="#4-查看目录" class="headerlink" title="4.查看目录"></a>4.查看目录</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#下载目录</span><br><span class="line"><span class="built_in">dir</span> C:\Users\<span class="variable">%username%</span>\Downloads</span><br><span class="line">#桌面</span><br><span class="line"><span class="built_in">dir</span> C:\Users\<span class="variable">%username%</span>\Desktop</span><br><span class="line">#微信</span><br><span class="line"><span class="built_in">dir</span> C:\Users\<span class="variable">%username%</span>\Documents\WeChat Files\wx*\FileStorage\File\</span><br><span class="line">#磁盘盘符数</span><br><span class="line">powershell -Command &quot;[Environment]::GetLogicalDrives()&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="0x01-注册表"><a href="#0x01-注册表" class="headerlink" title="0x01 注册表"></a>0x01 注册表</h2><h3 id="1-常见注册表项"><a href="#1-常见注册表项" class="headerlink" title="1.常见注册表项"></a>1.常见注册表项</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#启动项</span><br><span class="line">HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce</span><br><span class="line">#账户</span><br><span class="line">HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names</span><br><span class="line">REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa</span><br><span class="line">REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa /v LimitBlankPasswordUse</span><br><span class="line">#网口配置文件</span><br><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\</span><br><span class="line">#隐藏文件置<span class="number">0</span></span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Hidden\SHOWALL</span><br><span class="line">#网络连接历史</span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles</span><br><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged</span><br></pre></td></tr></table></figure>
-<h3 id="2-查看"><a href="#2-查看" class="headerlink" title="2.查看"></a>2.查看</h3><p>cmd:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa</span><br><span class="line">REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa /v LimitBlankPasswordUse</span><br></pre></td></tr></table></figure>
-<p>powershell:</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$key</span>=<span class="built_in">Get-ItemProperty</span> <span class="literal">-Path</span> <span class="string">&quot;Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion&quot;</span></span><br><span class="line"><span class="variable">$key</span>``.CommonFilesDir</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-添加"><a href="#3-添加" class="headerlink" title="3.添加"></a>3.添加</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v &quot;Keyname&quot; /t REG_SZ /d &quot;C:\Users\Administrator\Desktop\shell.exe&quot; /f </span><br></pre></td></tr></table></figure>
-
-<h3 id="4-导出"><a href="#4-导出" class="headerlink" title="4.导出"></a>4.导出</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg export HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa AppBkUp.reg</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x02-密码收集"><a href="#0x02-密码收集" class="headerlink" title="0x02 密码收集"></a>0x02 密码收集</h2><h3 id="1-企业域内账号凭据"><a href="#1-企业域内账号凭据" class="headerlink" title="1 企业域内账号凭据"></a>1 企业域内账号凭据</h3><p>1&gt; C:/User/账户名/pip/pip.ini</p>
-<p>pip.ini 内网中可能还有http代理信息，代理信息中可能含有账户名及密码。</p>
-<p>2&gt;</p>
-<h3 id="2-无线密码"><a href="#2-无线密码" class="headerlink" title="2 无线密码"></a>2 无线密码</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#执行下面命令，密码导出在生成的xml文件中</span></span><br><span class="line">netsh WLAN export profile key=<span class="built_in">clear</span> folder=.</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-mobaxterm"><a href="#3-mobaxterm" class="headerlink" title="3 mobaxterm"></a>3 mobaxterm</h3><p>对于安装版的moba，可以通过读取注册表，得到明文密码。</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reg query HKEY_CURRENT_USER\Software\Mobatek\MobaXterm</span><br><span class="line">reg query HKEY_CURRENT_USER\Software\Mobatek\MobaXterm\P</span><br></pre></td></tr></table></figure>
-
-<p>更多：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/yang34/p/14236230.html">https://www.cnblogs.com/yang34/p/14236230.html</a></p>
-<h3 id="4-XShell"><a href="#4-XShell" class="headerlink" title="4 XShell"></a>4 XShell</h3><p><a target="_blank" rel="noopener" href="https://github.com/dzxs/Xdecrypt">https://github.com/dzxs/Xdecrypt</a></p>
-<h3 id="5-浏览器"><a href="#5-浏览器" class="headerlink" title="5 浏览器"></a>5 浏览器</h3><p>提供以下两种方法：</p>
-<p><strong>5.1 工具</strong>：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/AlessandroZ/LaZagne/releases">https://github.com/AlessandroZ/LaZagne/releases</a></p>
-<p><strong>5.2 可操作桌面时</strong>：</p>
-<p>火狐-&gt;打开菜单-&gt;我的密码</p>
-<p>Chrome-&gt;设置-&gt;自动填充-&gt;密码</p>
-<h3 id="6-数据库密码"><a href="#6-数据库密码" class="headerlink" title="6 数据库密码"></a>6 数据库密码</h3><p>本地web目录下找配置目录中的配置文件</p>
-<h3 id="x-to-be-continue"><a href="#x-to-be-continue" class="headerlink" title="[x] to be continue"></a>[x] to be continue</h3><p>filezilla/teamviewer/vnc/系统哈希/navicat</p>
-<h2 id="0x03-敏感数据发现"><a href="#0x03-敏感数据发现" class="headerlink" title="0x03 敏感数据发现"></a>0x03 敏感数据发现</h2><h3 id="1-回收站分析"><a href="#1-回收站分析" class="headerlink" title="1 回收站分析"></a>1 回收站分析</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FOR</span> /f <span class="string">&quot;skip=1 tokens=1,2 delims= &quot;</span> %c <span class="keyword">in</span> (<span class="string">&#x27;wmic useraccount get name,sid&#x27;</span>) <span class="keyword">do</span> <span class="built_in">dir</span> /a /b C:\<span class="variable">$Recycle</span>.Bin\%d\ &gt;%c.txt</span><br><span class="line">PowerShell <span class="literal">-Command</span>  <span class="string">&quot;<span class="variable">$Recycler</span> =(New-Object -ComObject Shell.Application).NameSpace(0xa);foreach(<span class="variable">$file</span> in <span class="variable">$Recycler</span>.items())&#123;echo &quot;</span>---------------------<span class="string">&quot;;<span class="variable">$file</span>.path;<span class="variable">$file</span>.ExtendedProperty(\&quot;</span>&#123;<span class="number">9</span>B174B33<span class="literal">-40FF</span><span class="literal">-11D2</span><span class="literal">-A27E</span><span class="literal">-00C04FC30871</span>&#125; <span class="number">2</span>\<span class="string">&quot;)+&#x27;\&#x27;+<span class="variable">$file</span>.name&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-常见目录"><a href="#2-常见目录" class="headerlink" title="2 常见目录"></a>2 常见目录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 桌面</span></span><br><span class="line">C:\Users\%username%\Desktop</span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载目录</span></span><br><span class="line">C:\Users\%username%\Downloads</span><br><span class="line"><span class="meta">#</span><span class="bash"> 微信下载目录</span></span><br><span class="line">C:\Users\%username%\Documents\WeChat Files\微信号\FileStorage\File\归档日期</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-VMware"><a href="#3-VMware" class="headerlink" title="3 VMware"></a>3 VMware</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">一些传送的文件</span></span><br><span class="line">C:\Users\%username%\AppData\Local\Temp\vmware-%username%\VMwareDnD</span><br><span class="line"><span class="meta">#</span><span class="bash">每台vmware的<span class="built_in">log</span>日志都含有启动操作信息。</span></span><br><span class="line">C:\Users\%username%\AppData\Local\Temp\vmware-%username%\</span><br><span class="line"><span class="meta">#</span><span class="bash">vmware内主机的备注信息</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="0x04-历史记录"><a href="#0x04-历史记录" class="headerlink" title="0x04 历史记录"></a>0x04 历史记录</h2><h3 id="1-Git-Bash历史记录"><a href="#1-Git-Bash历史记录" class="headerlink" title="1 Git-Bash历史记录:"></a>1 Git-Bash历史记录:</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\%<span class="title">username</span>%\.<span class="title">bash_history</span></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Users</span>\%<span class="title">username</span>%\.<span class="title">gitconfig</span></span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-运行框历史记录"><a href="#2-运行框历史记录" class="headerlink" title="2 运行框历史记录"></a>2 运行框历史记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reg query HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</span><br><span class="line">reg query HKEY_USERS\&lt;sid&gt;\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-powershell历史记录"><a href="#3-powershell历史记录" class="headerlink" title="3 powershell历史记录"></a>3 powershell历史记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-Content (Get-PSReadLineOption).HistorySavePath</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-DNS缓存记录"><a href="#4-DNS缓存记录" class="headerlink" title="4 DNS缓存记录"></a>4 DNS缓存记录</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ipconfig</span> /displaydns</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="0x00-历史记录"><a href="#0x00-历史记录" class="headerlink" title="0x00 历史记录"></a>0x00 历史记录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /root/ 及 /home/*/</span></span><br><span class="line">.bash_history</span><br><span class="line">.zsh_history</span><br><span class="line">.mysql_history</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x01-各类凭据"><a href="#0x01-各类凭据" class="headerlink" title="0x01 各类凭据"></a>0x01 各类凭据</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> web服务类</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -- 定位到服务目录下的配置目录。查看配置文件中的数据库口令</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 登录用户</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 结合 <span class="built_in">history</span>|grep ssh 及~/.ssh/authorized_keys拿到其他设备的登录权限。</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> redis</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> -- 定位配置文件中的requirepass</span></span><br><span class="line">find / -name redis.conf</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 密码搜集</span></span><br><span class="line">grep -rn &quot;pass&quot; -a / | grep -v &quot;php\|jsp\|\.js\|\|.java&quot;</span><br><span class="line">find / -name *.properties -o -name *.xml -o -name *.conf -o -name *.json -exec grep -Hn &quot;passw&quot; &#123;&#125; \;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/*MySQL数据库内找密码*/</span><br><span class="line">SELECT TABLE_NAME FROM `information_schema`.`COLUMNS` where `COLUMN_NAME` like &#x27;%pass%&#x27;;</span><br><span class="line">SELECT TABLE_NAME FROM `information_schema`.`COLUMNS` where `COLUMN_NAME` like &#x27;%pwd%&#x27;;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
