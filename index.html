@@ -192,7 +192,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-21 23:10:53" itemprop="dateModified" datetime="2021-06-21T23:10:53-08:00">2021-06-21</time>
+        <time title="Modified: 2021-06-21 23:13:30" itemprop="dateModified" datetime="2021-06-21T23:13:30-08:00">2021-06-21</time>
       </span>
 
   
@@ -205,7 +205,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>网上的社工字典生成工具有很多，但不少工具的定制化程度很低，用起来比较难受，最重要的是没有区分目标对象的类型。<br>之前花了一定时间研究了口令编排的习惯模式，发现语言习惯（如：英语语系、汉语语系）、不同身份类型（上班族、学生）、以及帐号的拥有者（如：虚拟用户、测试用户、普通用户）的字典模式是有一定差别的。<br>网上的工具没有很好的考虑这方面问题，要么导致口令没有包含在内，要么导致字典过大。因此，写了一个比较容易上手且能够高度定制化的能够针对不同角色用户来生成字典。同时还集成了一些默认的高频弱口令及字典制作过程中可能用到的小工具脚本。</p>
+          <p>网上的社工字典生成工具有很多，但不少工具的定制化程度很低，用起来比较难受，最重要的是没有区分目标对象的类型。</p>
+<p>之前花了一定时间研究了口令编排的习惯模式，发现语言习惯（如：英语语系、汉语语系）、不同身份类型（上班族、学生）、以及帐号的拥有者（如：虚拟用户、测试用户、普通用户）的字典模式是有一定差别的。</p>
+<p>网上工具没有很好的考虑这方面问题，要么导致口令没有包含在内，要么导致字典过大。</p>
+<p>因此，写了一个比较容易上手且能够高度定制化的能够针对不同角色用户来生成字典。同时还集成了一些默认的高频弱口令及字典制作过程中可能用到的小工具脚本。</p>
+<p>仓库地址： <a target="_blank" rel="noopener" href="https://github.com/aplyc1a/RainCode">https://github.com/aplyc1a/RainCode</a></p>
 <h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>通过定制化不同角色的密码模型文件（*.model）及信息元数据文件（config.json）可以极大概率的产生正确的用户密码。</p>
 <h3 id="1-生成自然人社工字典"><a href="#1-生成自然人社工字典" class="headerlink" title="1 生成自然人社工字典"></a>1 生成自然人社工字典</h3><p><strong>step1</strong>：收集目标的各类信息，填入<strong>human.json</strong>。</p>
 <p><strong>step2</strong>：选择对应的模型文件(<strong>*.model</strong>)。</p>
